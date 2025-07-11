@@ -42,6 +42,69 @@
             font-weight: 700;
             font-size: 1.5rem;
             color: var(--primary-color) !important;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color), #667eea, #764ba2);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s ease-in-out infinite, logoFloat 4s ease-in-out infinite;
+        }
+
+        .navbar-brand::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(37, 99, 235, 0.3), transparent);
+            animation: logoShine 2s ease-in-out infinite;
+        }
+
+        .navbar-brand::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: logoPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-2px) rotate(1deg); }
+            50% { transform: translateY(-4px) rotate(0deg); }
+            75% { transform: translateY(-2px) rotate(-1deg); }
+        }
+
+        @keyframes logoShine {
+            0% { left: -100%; }
+            50% { left: 100%; }
+            100% { left: 100%; }
+        }
+
+        @keyframes logoPulse {
+            0%, 100% { 
+                width: 0; 
+                height: 0; 
+                opacity: 0.8; 
+            }
+            50% { 
+                width: 120px; 
+                height: 120px; 
+                opacity: 0; 
+            }
         }
 
         .nav-link {
@@ -369,6 +432,290 @@
             40% { transform: translateX(-50%) translateY(-10px); }
             60% { transform: translateX(-50%) translateY(-5px); }
         }
+
+        /* Enhanced Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes slideInFromBottom {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 5px rgba(37, 99, 235, 0.3); }
+            50% { box-shadow: 0 0 20px rgba(37, 99, 235, 0.6); }
+        }
+
+        /* Animation Classes */
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .animate-fade-in-left {
+            animation: fadeInLeft 0.8s ease-out;
+        }
+
+        .animate-fade-in-right {
+            animation: fadeInRight 0.8s ease-out;
+        }
+
+        .animate-slide-in-bottom {
+            animation: slideInFromBottom 0.8s ease-out;
+        }
+
+        .animate-pulse {
+            animation: pulse 2s infinite;
+        }
+
+        .animate-rotate {
+            animation: rotate 20s linear infinite;
+        }
+
+        .animate-glow {
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        /* Enhanced Hover Effects */
+        .hero-title {
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-subtitle {
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .btn-primary {
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .tech-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .tech-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .tech-card:hover .tech-icon {
+            animation: pulse 1s ease-in-out;
+        }
+
+        .service-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .service-card:hover .service-icon {
+            animation: pulse 1s ease-in-out;
+        }
+
+        .navbar-brand {
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand:hover {
+            transform: scale(1.1) rotate(2deg);
+            animation: logoHover 0.6s ease-in-out;
+            filter: drop-shadow(0 0 10px rgba(37, 99, 235, 0.5));
+        }
+
+        .navbar-brand:hover::before {
+            animation: logoShine 0.8s ease-in-out;
+        }
+
+        .navbar-brand:hover::after {
+            animation: logoPulse 0.6s ease-in-out;
+        }
+
+        @keyframes logoHover {
+            0% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.15) rotate(3deg); }
+            100% { transform: scale(1.1) rotate(2deg); }
+        }
+
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Floating animation for hero elements */
+        .hero-content {
+            animation: fadeInLeft 1s ease-out;
+        }
+
+        .floating-shapes .shape {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-shapes .shape:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .floating-shapes .shape:nth-child(2) {
+            animation-delay: 2s;
+        }
+
+        .floating-shapes .shape:nth-child(3) {
+            animation-delay: 4s;
+        }
+
+        /* Parallax effect for sections */
+        .parallax-section {
+            transform: translateZ(0);
+            will-change: transform;
+        }
+
+        /* Loading animation for tech icons */
+        .tech-icon {
+            transition: all 0.3s ease;
+        }
+
+        .tech-card:hover .tech-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        /* Form field animations */
+        .form-control {
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            transform: scale(1.02);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        /* Social links hover effect */
+        .social-links a {
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-3px) scale(1.2);
+            color: var(--primary-color) !important;
+        }
+
+        /* Scroll-triggered animations */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .scroll-animate.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Cursor effects */
+        .cursor-pointer {
+            cursor: pointer;
+        }
+
+        /* Loading spinner for form submission */
+        .loading {
+            display: none;
+            animation: rotate 1s linear infinite;
+        }
+
+        /* Enhanced section transitions */
+        .section {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .section:hover::before {
+            left: 100%;
+        }
     </style>
 </head>
 <body>
@@ -455,42 +802,42 @@
             <p class="section-subtitle">We leverage the latest technologies and frameworks to build robust, scalable, and high-performance applications.</p>
             
             <div class="tech-grid">
-                <div class="tech-card">
+                <div class="tech-card scroll-animate" data-delay="0">
                     <i class="fab fa-react tech-icon"></i>
                     <h4>React & React Native</h4>
                     <p>Modern UI development for web and mobile</p>
                 </div>
-                <div class="tech-card">
+                <div class="tech-card scroll-animate" data-delay="100">
                     <i class="fab fa-node-js tech-icon"></i>
                     <h4>Node.js</h4>
                     <p>Scalable backend development</p>
                 </div>
-                <div class="tech-card">
+                <div class="tech-card scroll-animate" data-delay="200">
                     <i class="fab fa-python tech-icon"></i>
                     <h4>Python</h4>
                     <p>Data science and AI integration</p>
                 </div>
-                <div class="tech-card">
+                <div class="tech-card scroll-animate" data-delay="300">
                     <i class="fab fa-aws tech-icon"></i>
                     <h4>AWS Cloud</h4>
                     <p>Cloud infrastructure and deployment</p>
                 </div>
-                <div class="tech-card">
+                <div class="tech-card scroll-animate" data-delay="400">
                     <i class="fab fa-docker tech-icon"></i>
                     <h4>Docker</h4>
                     <p>Containerization and DevOps</p>
                 </div>
-                <div class="tech-card">
+                <div class="tech-card scroll-animate" data-delay="500">
                     <i class="fab fa-angular tech-icon"></i>
                     <h4>Angular</h4>
                     <p>Enterprise-grade applications</p>
                 </div>
-                <div class="tech-card">
+                <div class="tech-card scroll-animate" data-delay="600">
                     <i class="fab fa-vuejs tech-icon"></i>
                     <h4>Vue.js</h4>
                     <p>Progressive web applications</p>
                 </div>
-                <div class="tech-card">
+                <div class="tech-card scroll-animate" data-delay="700">
                     <i class="fas fa-database tech-icon"></i>
                     <h4>Databases</h4>
                     <p>MongoDB, PostgreSQL, MySQL</p>
@@ -506,49 +853,49 @@
             <p class="section-subtitle">Comprehensive digital solutions tailored to your business needs</p>
             
             <div class="services-grid">
-                <div class="service-card">
+                <div class="service-card scroll-animate" data-delay="0">
                     <i class="fas fa-laptop-code service-icon"></i>
                     <h3 class="service-title">Frontend Development</h3>
                     <p class="service-description">Create stunning, responsive user interfaces with modern frameworks like React, Vue.js, and Angular. We focus on performance, accessibility, and user experience.</p>
                 </div>
                 
-                <div class="service-card">
+                <div class="service-card scroll-animate" data-delay="100">
                     <i class="fas fa-server service-icon"></i>
                     <h3 class="service-title">Backend Development</h3>
                     <p class="service-description">Build robust, scalable APIs and server-side applications using Node.js, Python, and other modern technologies. Secure, fast, and maintainable code.</p>
                 </div>
                 
-                <div class="service-card">
+                <div class="service-card scroll-animate" data-delay="200">
                     <i class="fas fa-mobile-alt service-icon"></i>
                     <h3 class="service-title">Mobile App Development</h3>
                     <p class="service-description">Native and cross-platform mobile applications for iOS and Android. React Native, Flutter, and native development solutions.</p>
                 </div>
                 
-                <div class="service-card">
+                <div class="service-card scroll-animate" data-delay="300">
                     <i class="fas fa-palette service-icon"></i>
                     <h3 class="service-title">UI/UX Design</h3>
                     <p class="service-description">User-centered design that combines aesthetics with functionality. Wireframes, prototypes, and pixel-perfect designs that delight users.</p>
                 </div>
                 
-                <div class="service-card">
+                <div class="service-card scroll-animate" data-delay="400">
                     <i class="fas fa-tasks service-icon"></i>
                     <h3 class="service-title">Project Management</h3>
                     <p class="service-description">Agile project management with transparent communication, regular updates, and on-time delivery. We keep you informed every step of the way.</p>
                 </div>
                 
-                <div class="service-card">
+                <div class="service-card scroll-animate" data-delay="500">
                     <i class="fas fa-bug service-icon"></i>
                     <h3 class="service-title">QA Testing</h3>
                     <p class="service-description">Comprehensive testing strategies including unit testing, integration testing, and automated testing to ensure your application is bug-free and reliable.</p>
                 </div>
                 
-                <div class="service-card">
+                <div class="service-card scroll-animate" data-delay="600">
                     <i class="fas fa-shield-alt service-icon"></i>
                     <h3 class="service-title">Quality Assurance</h3>
                     <p class="service-description">Rigorous quality control processes to ensure your application meets the highest standards of performance, security, and reliability.</p>
                 </div>
                 
-                <div class="service-card">
+                <div class="service-card scroll-animate" data-delay="700">
                     <i class="fas fa-cloud service-icon"></i>
                     <h3 class="service-title">DevOps</h3>
                     <p class="service-description">Continuous integration, deployment automation, and infrastructure management. Streamline your development and deployment processes.</p>
@@ -628,7 +975,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Smooth scrolling for navigation links
+        // Enhanced smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -642,26 +989,44 @@
             });
         });
 
-        // Navbar background change on scroll
+        // Enhanced navbar background change on scroll
         window.addEventListener('scroll', function() {
             const navbar = document.querySelector('.navbar');
-            if (window.scrollY > 50) {
+            const scrolled = window.scrollY > 50;
+            
+            if (scrolled) {
                 navbar.style.background = 'rgba(255, 255, 255, 0.98)';
                 navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+                navbar.style.backdropFilter = 'blur(15px)';
             } else {
                 navbar.style.background = 'rgba(255, 255, 255, 0.95)';
                 navbar.style.boxShadow = 'none';
+                navbar.style.backdropFilter = 'blur(10px)';
             }
         });
 
-        // Form submission
+        // Enhanced form submission with loading animation
         document.querySelector('form').addEventListener('submit', function(e) {
             e.preventDefault();
-            alert('Thank you for your message! We will get back to you soon.');
-            this.reset();
+            const submitBtn = this.querySelector('.btn-submit');
+            const originalText = submitBtn.innerHTML;
+            
+            // Add loading animation
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            submitBtn.disabled = true;
+            
+            // Simulate form submission
+            setTimeout(() => {
+                submitBtn.innerHTML = '<i class="fas fa-check"></i> Sent!';
+                setTimeout(() => {
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                    this.reset();
+                }, 2000);
+            }, 1500);
         });
 
-        // Animate elements on scroll
+        // Enhanced scroll-triggered animations
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -670,19 +1035,273 @@
         const observer = new IntersectionObserver(function(entries) {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
+                    const delay = entry.target.dataset.delay || 0;
+                    setTimeout(() => {
+                        entry.target.classList.add('animate');
+                    }, delay);
                 }
             });
         }, observerOptions);
 
-        // Observe all cards and sections
-        document.querySelectorAll('.tech-card, .service-card, .about-content').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        // Observe all scroll-animate elements
+        document.querySelectorAll('.scroll-animate').forEach(el => {
             observer.observe(el);
         });
+
+        // Parallax effect for hero section
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('.hero-section');
+            const speed = scrolled * 0.5;
+            
+            if (parallax) {
+                parallax.style.transform = `translateY(${speed}px)`;
+            }
+        });
+
+        // Mouse move effect for hero section
+        document.addEventListener('mousemove', function(e) {
+            const hero = document.querySelector('.hero-section');
+            if (hero) {
+                const x = e.clientX / window.innerWidth;
+                const y = e.clientY / window.innerHeight;
+                
+                const shapes = hero.querySelectorAll('.shape');
+                shapes.forEach((shape, index) => {
+                    const speed = (index + 1) * 0.5;
+                    shape.style.transform = `translate(${x * speed * 20}px, ${y * speed * 20}px)`;
+                });
+            }
+        });
+
+        // Enhanced hover effects for cards
+        document.querySelectorAll('.tech-card, .service-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Typing effect for hero title
+        function typeWriter(element, text, speed = 100) {
+            let i = 0;
+            element.innerHTML = '';
+            
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            type();
+        }
+
+        // Initialize typing effect when page loads
+        window.addEventListener('load', function() {
+            const heroTitle = document.querySelector('.hero-title');
+            if (heroTitle) {
+                const originalText = heroTitle.textContent;
+                typeWriter(heroTitle, originalText, 50);
+            }
+        });
+
+        // Enhanced button click effects
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                // Create ripple effect
+                const ripple = document.createElement('span');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                ripple.classList.add('ripple');
+                
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+
+        // Add ripple effect CSS
+        const style = document.createElement('style');
+        style.textContent = `
+            .btn {
+                position: relative;
+                overflow: hidden;
+            }
+            
+            .ripple {
+                position: absolute;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.3);
+                transform: scale(0);
+                animation: ripple-animation 0.6s linear;
+                pointer-events: none;
+            }
+            
+            @keyframes ripple-animation {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Smooth reveal animations for sections
+        const sectionObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(30px)';
+            section.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+            sectionObserver.observe(section);
+        });
+
+        // Enhanced social links hover effect
+        document.querySelectorAll('.social-links a').forEach(link => {
+            link.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px) scale(1.2)';
+            });
+            
+            link.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Special logo click animation
+        const logo = document.querySelector('.navbar-brand');
+        if (logo) {
+            logo.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Create particle effect
+                for (let i = 0; i < 8; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'logo-particle';
+                    particle.style.left = e.clientX + 'px';
+                    particle.style.top = e.clientY + 'px';
+                    particle.style.transform = `rotate(${i * 45}deg) translateY(-20px)`;
+                    document.body.appendChild(particle);
+                    
+                    setTimeout(() => {
+                        if (particle.parentNode) {
+                            particle.remove();
+                        }
+                    }, 1000);
+                }
+                
+                // Add click animation class
+                this.classList.add('logo-click');
+                setTimeout(() => {
+                    this.classList.remove('logo-click');
+                }, 300);
+            });
+        }
+
+        // Add logo particle CSS
+        const logoStyle = document.createElement('style');
+        logoStyle.textContent = `
+            .logo-particle {
+                position: fixed;
+                width: 4px;
+                height: 4px;
+                background: var(--primary-color);
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 10000;
+                animation: particleExplode 1s ease-out forwards;
+            }
+            
+            @keyframes particleExplode {
+                0% { 
+                    opacity: 1; 
+                    transform: scale(1); 
+                }
+                100% { 
+                    opacity: 0; 
+                    transform: scale(0) translateY(-50px); 
+                }
+            }
+            
+            .logo-click {
+                animation: logoClick 0.3s ease-in-out;
+            }
+            
+            @keyframes logoClick {
+                0% { transform: scale(1) rotate(0deg); }
+                50% { transform: scale(0.9) rotate(-5deg); }
+                100% { transform: scale(1) rotate(0deg); }
+            }
+        `;
+        document.head.appendChild(logoStyle);
+
+        // Add cursor trail effect
+        let mouseX = 0, mouseY = 0;
+        let cursorTrail = [];
+
+        document.addEventListener('mousemove', function(e) {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            
+            // Create cursor trail
+            const trail = document.createElement('div');
+            trail.className = 'cursor-trail';
+            trail.style.left = mouseX + 'px';
+            trail.style.top = mouseY + 'px';
+            document.body.appendChild(trail);
+            
+            cursorTrail.push(trail);
+            
+            if (cursorTrail.length > 5) {
+                cursorTrail.shift().remove();
+            }
+            
+            setTimeout(() => {
+                if (trail.parentNode) {
+                    trail.remove();
+                }
+            }, 1000);
+        });
+
+        // Add cursor trail CSS
+        const cursorStyle = document.createElement('style');
+        cursorStyle.textContent = `
+            .cursor-trail {
+                position: fixed;
+                width: 6px;
+                height: 6px;
+                background: var(--primary-color);
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 9999;
+                opacity: 0.6;
+                animation: cursor-fade 1s ease-out forwards;
+            }
+            
+            @keyframes cursor-fade {
+                0% { opacity: 0.6; transform: scale(1); }
+                100% { opacity: 0; transform: scale(0); }
+            }
+        `;
+        document.head.appendChild(cursorStyle);
     </script>
 </body>
 </html> 
