@@ -113,19 +113,30 @@
             right: 0;
             bottom: 0;
             background: 
-                radial-gradient(circle at 20% 80%, rgba(37, 99, 235, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(59, 130, 246, 0.05) 0%, transparent 50%);
+                radial-gradient(circle at 20% 80%, rgba(37, 99, 235, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.05) 0%, transparent 50%);
         }
 
-        .hero-section::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+        .hero-highlights {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .highlight-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: #94a3b8;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .highlight-item i {
+            color: #60a5fa;
+            font-size: 1.25rem;
         }
 
         .hero-content {
@@ -1050,23 +1061,14 @@
 
     <!-- Hero Section -->
     <section id="home" class="hero-section">
-        <div class="floating-shapes">
-            <div class="shape"></div>
-            <div class="shape"></div>
-            <div class="shape"></div>
-        </div>
         <div class="container">
             <div class="hero-content">
-                <div class="hero-badge">
-                    <i class="fas fa-star"></i> Trusted by 100+ Companies
-                </div>
-                
                 <h1 class="hero-title">
-                    Where Innovation Meets <span>Excellence</span>
+                    We Build <span>Digital Solutions</span> That Drive Growth
                 </h1>
                 
                 <p class="hero-subtitle">
-                    Located in the heart of Lahore, DeviaTech is your trusted partner for all your web, mobile, and SaaS application development needs. We transform ideas into powerful digital solutions.
+                    DeviaTech is a leading software development agency in Lahore, Pakistan. We specialize in creating custom web applications, mobile apps, and SaaS solutions that help businesses scale and succeed.
                 </p>
                 
                 <div class="hero-actions">
@@ -1075,52 +1077,26 @@
                         Start Your Project
                     </a>
                     <a href="#services" class="btn btn-secondary">
-                        <i class="fas fa-eye"></i>
-                        View Services
+                        <i class="fas fa-briefcase"></i>
+                        Our Services
                     </a>
                 </div>
                 
-                <div class="hero-stats">
-                    <div class="stat-item">
-                        <span class="stat-number">100+</span>
-                        <span class="stat-label">Projects Completed</span>
+                <div class="hero-highlights">
+                    <div class="highlight-item">
+                        <i class="fas fa-code"></i>
+                        <span>Custom Development</span>
                     </div>
-                    <div class="stat-item">
-                        <span class="stat-number">50+</span>
-                        <span class="stat-label">Happy Clients</span>
+                    <div class="highlight-item">
+                        <i class="fas fa-mobile-alt"></i>
+                        <span>Mobile Apps</span>
                     </div>
-                    <div class="stat-item">
-                        <span class="stat-number">5+</span>
-                        <span class="stat-label">Years Experience</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number">24/7</span>
-                        <span class="stat-label">Support</span>
-                    </div>
-                </div>
-                
-                <div class="hero-features">
-                    <div class="feature-item">
-                        <i class="fas fa-check-circle feature-icon"></i>
-                        <span>Modern Tech Stack</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-check-circle feature-icon"></i>
-                        <span>Agile Development</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-check-circle feature-icon"></i>
-                        <span>Quality Assurance</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-check-circle feature-icon"></i>
-                        <span>24/7 Support</span>
+                    <div class="highlight-item">
+                        <i class="fas fa-cloud"></i>
+                        <span>Cloud Solutions</span>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="scroll-indicator">
-            <i class="fas fa-chevron-down"></i>
         </div>
     </section>
 
@@ -1486,20 +1462,7 @@
             }
         });
 
-        // Mouse move effect for hero section
-        document.addEventListener('mousemove', function(e) {
-            const hero = document.querySelector('.hero-section');
-            if (hero) {
-                const x = e.clientX / window.innerWidth;
-                const y = e.clientY / window.innerHeight;
-                
-                const shapes = hero.querySelectorAll('.shape');
-                shapes.forEach((shape, index) => {
-                    const speed = (index + 1) * 0.5;
-                    shape.style.transform = `translate(${x * speed * 20}px, ${y * speed * 20}px)`;
-                });
-            }
-        });
+
 
         // Enhanced hover effects for cards
         document.querySelectorAll('.tech-card, .service-card').forEach(card => {
@@ -1612,123 +1575,6 @@
                 this.style.transform = 'translateY(0) scale(1)';
             });
         });
-
-        // Special logo click animation
-        const logo = document.querySelector('.navbar-brand');
-        if (logo) {
-            logo.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                // Create particle effect
-                for (let i = 0; i < 8; i++) {
-                    const particle = document.createElement('div');
-                    particle.className = 'logo-particle';
-                    particle.style.left = e.clientX + 'px';
-                    particle.style.top = e.clientY + 'px';
-                    particle.style.transform = `rotate(${i * 45}deg) translateY(-20px)`;
-                    document.body.appendChild(particle);
-                    
-                    setTimeout(() => {
-                        if (particle.parentNode) {
-                            particle.remove();
-                        }
-                    }, 1000);
-                }
-                
-                // Add click animation class
-                this.classList.add('logo-click');
-                setTimeout(() => {
-                    this.classList.remove('logo-click');
-                }, 300);
-            });
-        }
-
-        // Add logo particle CSS
-        const logoStyle = document.createElement('style');
-        logoStyle.textContent = `
-            .logo-particle {
-                position: fixed;
-                width: 4px;
-                height: 4px;
-                background: var(--primary-color);
-                border-radius: 50%;
-                pointer-events: none;
-                z-index: 10000;
-                animation: particleExplode 1s ease-out forwards;
-            }
-            
-            @keyframes particleExplode {
-                0% { 
-                    opacity: 1; 
-                    transform: scale(1); 
-                }
-                100% { 
-                    opacity: 0; 
-                    transform: scale(0) translateY(-50px); 
-                }
-            }
-            
-            .logo-click {
-                animation: logoClick 0.3s ease-in-out;
-            }
-            
-            @keyframes logoClick {
-                0% { transform: scale(1) rotate(0deg); }
-                50% { transform: scale(0.9) rotate(-5deg); }
-                100% { transform: scale(1) rotate(0deg); }
-            }
-        `;
-        document.head.appendChild(logoStyle);
-
-        // Add cursor trail effect
-        let mouseX = 0, mouseY = 0;
-        let cursorTrail = [];
-
-        document.addEventListener('mousemove', function(e) {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            
-            // Create cursor trail
-            const trail = document.createElement('div');
-            trail.className = 'cursor-trail';
-            trail.style.left = mouseX + 'px';
-            trail.style.top = mouseY + 'px';
-            document.body.appendChild(trail);
-            
-            cursorTrail.push(trail);
-            
-            if (cursorTrail.length > 5) {
-                cursorTrail.shift().remove();
-            }
-            
-            setTimeout(() => {
-                if (trail.parentNode) {
-                    trail.remove();
-                }
-            }, 1000);
-        });
-
-        // Add cursor trail CSS
-        const cursorStyle = document.createElement('style');
-        cursorStyle.textContent = `
-            .cursor-trail {
-                position: fixed;
-                width: 6px;
-                height: 6px;
-                background: var(--primary-color);
-                border-radius: 50%;
-                pointer-events: none;
-                z-index: 9999;
-                opacity: 0.6;
-                animation: cursor-fade 1s ease-out forwards;
-            }
-            
-            @keyframes cursor-fade {
-                0% { opacity: 0.6; transform: scale(1); }
-                100% { opacity: 0; transform: scale(0); }
-            }
-        `;
-        document.head.appendChild(cursorStyle);
     </script>
 </body>
 </html> 
