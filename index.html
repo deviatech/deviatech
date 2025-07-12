@@ -21,9 +21,9 @@
     <meta property="og:url" content="https://deviatech.com">
     <meta property="og:title" content="DeviaTech Agency - Custom Software Development & Web Solutions">
     <meta property="og:description" content="Leading software development agency in Lahore, Pakistan. We build custom web applications, mobile apps, and SaaS solutions for startups and businesses. Transform your vision into reality.">
-    <meta property="og:image" content="https://deviatech.com/img/header.png">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
+    <meta property="og:image" content="https://deviatech.com/logo/icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
     <meta property="og:site_name" content="DeviaTech Agency">
     <meta property="og:locale" content="en_US">
     
@@ -32,7 +32,7 @@
     <meta property="twitter:url" content="https://deviatech.com">
     <meta property="twitter:title" content="DeviaTech Agency - Custom Software Development & Web Solutions">
     <meta property="twitter:description" content="Leading software development agency in Lahore, Pakistan. We build custom web applications, mobile apps, and SaaS solutions for startups and businesses.">
-    <meta property="twitter:image" content="https://deviatech.com/img/header.png">
+    <meta property="twitter:image" content="https://deviatech.com/logo/icon-512.png">
     
     <!-- Additional SEO Meta Tags -->
     <meta name="geo.region" content="PK-LH">
@@ -73,7 +73,7 @@
             "@type": "Organization",
             "name": "DeviaTech Agency",
             "url": "https://deviatech.com",
-            "logo": "https://deviatech.com/img/header.png",
+            "logo": "https://deviatech.com/logo/icon-512.png",
             "description": "Leading software development agency in Lahore, Pakistan",
             "address": {
                 "@type": "PostalAddress",
@@ -203,9 +203,10 @@
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/logo/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/logo/icon-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/logo/icon-512.png">
+    <link rel="mask-icon" href="/logo/safari-pinned-tab.svg" color="#000000">
     <link rel="manifest" href="/site.webmanifest">
     
     <!-- Preconnect to external domains -->
@@ -259,21 +260,28 @@
             background: rgba(13, 17, 23, 0.98);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
-        .navbar-brand {
-            font-weight: 800;
-            font-size: 1.5rem;
-            color: #f8fafc !important;
-            letter-spacing: -0.02em;
-            background: linear-gradient(135deg, #60a5fa 0%, #a855f7 50%, #ec4899 100%);
-            background-size: 200% 200%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: gradientShift 4s ease-in-out infinite;
-        }
+
         .navbar-brand:hover {
             transform: scale(1.05);
             filter: drop-shadow(0 0 8px rgba(96, 165, 250, 0.3));
+        }
+        
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        
+        .navbar-logo {
+            height: 40px;
+            width: auto;
+            transition: all 0.3s ease;
+            filter: brightness(1) contrast(1);
+        }
+        
+        .navbar-brand:hover .navbar-logo {
+            transform: scale(1.05);
+            filter: brightness(1.1) contrast(1.1) drop-shadow(0 0 8px rgba(96, 165, 250, 0.3));
         }
         .nav-link {
             font-weight: 500;
@@ -1244,23 +1252,19 @@
         }
 
         .navbar-brand:hover {
-            transform: scale(1.1) rotate(2deg);
-            animation: logoHover 0.6s ease-in-out;
+            transform: scale(1.05);
             filter: drop-shadow(0 0 10px rgba(37, 99, 235, 0.5));
         }
 
-        .navbar-brand:hover::before {
-            animation: logoShine 0.8s ease-in-out;
-        }
-
-        .navbar-brand:hover::after {
-            animation: logoPulse 0.6s ease-in-out;
+        .navbar-brand:hover .navbar-logo {
+            transform: scale(1.05);
+            animation: logoHover 0.6s ease-in-out;
         }
 
         @keyframes logoHover {
-            0% { transform: scale(1) rotate(0deg); }
-            50% { transform: scale(1.15) rotate(3deg); }
-            100% { transform: scale(1.1) rotate(2deg); }
+            0% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+            100% { transform: scale(1.05); }
         }
 
         .nav-link {
@@ -1399,7 +1403,9 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="#home">DeviaTech</a>
+            <a class="navbar-brand" href="#home">
+                <img src="/logo/typography-logo-orange.png" alt="DeviaTech Logo" class="navbar-logo">
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>

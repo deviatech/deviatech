@@ -1,0 +1,27 @@
+{
+    "name": "DeviaTech Agency",
+    "short_name": "DeviaTech",
+    "description": "Custom software development agency in Lahore, Pakistan",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#0d1117",
+    "theme_color": "#3b82f6",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "/logo/icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/logo/icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "categories": ["business", "productivity"],
+    "lang": "en",
+    "dir": "ltr"
+} 
