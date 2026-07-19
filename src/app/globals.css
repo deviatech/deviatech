@@ -1,0 +1,92 @@
+@import "tailwindcss";
+
+:root {
+  --paper: #F3F4EE;
+  --ink: #16213E;
+  --ink-soft: #45516E;
+  --line-grid: #D8DCCF;
+  --accent-amber: #E2A63B;
+  --accent-rust: #B4552F;
+  --surface: #FFFFFF;
+  --footer-bg: #202124;
+  --footer-text: #C7CAD1;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-line-grid: var(--line-grid);
+  --color-accent-amber: var(--accent-amber);
+  --color-accent-rust: var(--accent-rust);
+  --color-surface: var(--surface);
+  --color-footer-bg: var(--footer-bg);
+  --color-footer-text: var(--footer-text);
+
+  --font-display: var(--font-space-grotesk);
+  --font-body: var(--font-inter);
+  --font-mono: var(--font-ibm-plex-mono);
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 2rem;
+  --text-3xl: 2.75rem;
+  --text-4xl: 3.5rem;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body), sans-serif;
+}
+
+.markdown-content h2 {
+  font-family: var(--font-display);
+  color: var(--ink);
+  font-size: var(--text-xl);
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.markdown-content p {
+  color: var(--ink-soft);
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+.markdown-content ul {
+  list-style: disc;
+  padding-left: 1.5rem;
+  color: var(--ink-soft);
+  margin-bottom: 1rem;
+}
+
+.markdown-content li {
+  margin-bottom: 0.4rem;
+}
+
+.markdown-content strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.markdown-content a {
+  color: var(--accent-rust);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
