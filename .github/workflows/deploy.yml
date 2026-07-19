@@ -51,7 +51,11 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            docker pull ghcr.io/${{ env.IMAGE_NAME }}:latest
+            set -e
+            DOCKER_CFG=$(mktemp -d)
+            echo '${{ secrets.GHCR_PULL_TOKEN }}' | docker --config "$DOCKER_CFG" login ghcr.io -u '${{ secrets.GHCR_PULL_USER }}' --password-stdin
+            docker --config "$DOCKER_CFG" pull ghcr.io/${{ env.IMAGE_NAME }}:latest
+            rm -rf "$DOCKER_CFG"
             docker stop deviatech-web || true
             docker rm deviatech-web || true
             docker run -d \
