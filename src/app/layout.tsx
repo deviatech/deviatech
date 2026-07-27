@@ -33,11 +33,6 @@ export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title,
   description,
-  icons: {
-    icon: ["/logo/icon-192.png", "/logo/icon-512.png"],
-    apple: "/logo/apple-touch-icon.png",
-    other: [{ rel: "mask-icon", url: "/logo/safari-pinned-tab.svg" }],
-  },
   openGraph: {
     title: "DeviaTech Agency - Custom Software Development & Web Solutions",
     description:
