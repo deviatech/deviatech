@@ -7,6 +7,15 @@ import { getAllPosts } from "@/lib/blog";
 export const metadata: Metadata = {
   title: "Blog | DeviaTech",
   description: "Notes on building software and stores for local businesses and startup founders in Lahore.",
+  alternates: {
+    canonical: "/blog",
+  },
+  openGraph: {
+    title: "DeviaTech Blog | Software and Shopify insights from Lahore",
+    description: "Practical notes on Shopify stores, MVP development, pricing, and launching software in Lahore.",
+    url: "/blog",
+    type: "website",
+  },
 };
 
 export default function BlogIndexPage() {

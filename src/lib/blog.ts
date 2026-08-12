@@ -11,6 +11,8 @@ export interface BlogPostMeta {
   date: string;
   excerpt: string;
   tags: string[];
+  image?: string;
+  imageAlt?: string;
 }
 
 export interface BlogPost extends BlogPostMeta {
@@ -36,6 +38,8 @@ export function getAllPosts(): BlogPostMeta[] {
         date: data.date ?? "",
         excerpt: data.excerpt ?? "",
         tags: data.tags ?? [],
+        image: data.image,
+        imageAlt: data.imageAlt,
       };
     })
     .sort((a, b) => (a.date < b.date ? 1 : -1));
@@ -52,6 +56,8 @@ export function getPostBySlug(slug: string): BlogPost | null {
     date: data.date ?? "",
     excerpt: data.excerpt ?? "",
     tags: data.tags ?? [],
+    image: data.image,
+    imageAlt: data.imageAlt,
     html: marked.parse(content, { async: false }) as string,
   };
 }

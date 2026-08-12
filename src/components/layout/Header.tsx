@@ -5,10 +5,10 @@ import { site } from "@/content/site";
 
 const navLinks = [
   { label: "Work", href: "/#work" },
-  { label: "Services", href: "/#services" },
+  { label: "Services", href: "/shopify-development-lahore" },
   { label: "Stack", href: "/#stack" },
   { label: "Blog", href: "/blog" },
-  { label: "Contact", href: "/#contact" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export default function Header() {
@@ -40,6 +40,8 @@ export default function Header() {
           href={buildWhatsAppLink(site.whatsappDefaultMessage)}
           target="_blank"
           rel="noopener noreferrer"
+          data-ga-event="whatsapp_click"
+          data-ga-label="header"
           className="rounded-sm bg-accent-amber px-4 py-2 font-body text-sm font-medium text-ink transition-transform hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-amber"
         >
           Chat on WhatsApp

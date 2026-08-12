@@ -3,6 +3,7 @@ export interface WorkItem {
   description: string;
   tags: string[];
   url?: string;
+  caseStudySlug?: string;
 }
 
 export const workEyebrow = "PRODUCTS WE'VE BUILT";
@@ -13,11 +14,13 @@ export const work: WorkItem[] = [
     description: "An AI-powered resume builder — cvilo.com",
     tags: ["Next.js", "React", "Golang", "AI"],
     url: "https://cvilo.com",
+    caseStudySlug: "cvilo-ai-resume-builder",
   },
   {
     name: "Ala Gallery",
     description: "A gift shop built for an Instagram-based business in the Lahore market",
     tags: ["E-commerce"],
+    caseStudySlug: "ala-gallery-ecommerce",
   },
   {
     name: "Nabtahvie",
@@ -30,6 +33,7 @@ export const work: WorkItem[] = [
     description: "An NFC read/write platform — a desktop app for writing tags plus the web dashboard behind it — easyfytag.com",
     tags: ["Electron.js", "React", "Go", "Docker"],
     url: "https://easyfytag.com",
+    caseStudySlug: "easyfytag-nfc-platform",
   },
   {
     name: "Breezr",

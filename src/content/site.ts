@@ -2,6 +2,7 @@ export const site = {
   name: "DeviaTech",
   tagline: "From idea to launched — stores and startup products, built in Lahore.",
   url: "https://deviatech.com",
+  domain: "deviatech.com",
   email: "deviatechcom@gmail.com",
   phone: "+92 314 7091422",
   location: "Lahore, Pakistan",

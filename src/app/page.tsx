@@ -8,6 +8,12 @@ import Faq from "@/components/sections/Faq";
 import Contact from "@/components/sections/Contact";
 import RevealSection from "@/components/ui/RevealSection";
 
+export const metadata = {
+  alternates: {
+    canonical: "/",
+  },
+};
+
 export default function Home() {
   return (
     <>

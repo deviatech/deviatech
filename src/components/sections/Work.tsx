@@ -1,5 +1,6 @@
 import SheetFrame from "@/components/ui/SheetFrame";
 import Card from "@/components/ui/Card";
+import Link from "next/link";
 import { work, workEyebrow } from "@/content/work";
 
 export default function Work() {
@@ -31,6 +32,14 @@ export default function Work() {
                 </span>
               ))}
             </div>
+            {item.caseStudySlug && (
+              <Link
+                href={`/case-studies/${item.caseStudySlug}`}
+                className="mt-5 inline-block font-body text-sm text-accent-rust underline underline-offset-2"
+              >
+                Read the case study
+              </Link>
+            )}
           </Card>
         ))}
       </div>

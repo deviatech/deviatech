@@ -4,10 +4,12 @@ import { LinkedInIcon, FacebookIcon, InstagramIcon } from "@/components/ui/Socia
 
 const quickLinks = [
   { label: "Work", href: "/#work" },
-  { label: "Services", href: "/#services" },
+  { label: "Services", href: "/shopify-development-lahore" },
+  { label: "About", href: "/about" },
   { label: "Stack", href: "/#stack" },
   { label: "Blog", href: "/blog" },
-  { label: "Contact", href: "/#contact" },
+  { label: "Case studies", href: "/case-studies" },
+  { label: "Contact", href: "/contact" },
 ];
 
 const socialLinks = [
@@ -47,12 +49,12 @@ export default function Footer() {
             <ul className="mt-4 flex flex-col gap-3 font-body text-sm">
               <li>{site.location}</li>
               <li>
-                <a href={`mailto:${site.email}`} className={linkClass}>
+                <a href={`mailto:${site.email}`} className={linkClass} data-ga-event="email_click" data-ga-label="footer">
                   {site.email}
                 </a>
               </li>
               <li>
-                <a href={`tel:${site.phone.replace(/\s/g, "")}`} className={linkClass}>
+                <a href={`tel:${site.phone.replace(/\s/g, "")}`} className={linkClass} data-ga-event="phone_click" data-ga-label="footer">
                   {site.phone}
                 </a>
               </li>
