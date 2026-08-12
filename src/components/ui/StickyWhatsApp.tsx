@@ -8,6 +8,8 @@ export default function StickyWhatsApp() {
       href={buildWhatsAppLink(site.whatsappDefaultMessage)}
       target="_blank"
       rel="noopener noreferrer"
+      data-ga-event="whatsapp_click"
+      data-ga-label="sticky"
       aria-label="Chat on WhatsApp"
       className="fixed bottom-5 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-accent-amber text-ink shadow-lg transition-transform hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-rust md:hidden"
     >

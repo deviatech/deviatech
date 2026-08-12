@@ -3,16 +3,16 @@ import { Resend } from "resend";
 import { site } from "@/content/site";
 
 export async function POST(req: NextRequest) {
-  const { name, contact, message } = await req.json();
+  const { name, contact, projectType, budget, preferredContact, message } = await req.json();
 
-  if (!name || !contact || !message) {
+  if (!name || !contact || !projectType || !budget || !preferredContact || !message) {
     return NextResponse.json({ error: "Missing fields" }, { status: 400 });
   }
 
   const { RESEND_API_KEY, CONTACT_TO_EMAIL, CONTACT_FROM_EMAIL } = process.env;
 
   if (!RESEND_API_KEY) {
-    console.error("Contact form submission (RESEND_API_KEY not configured):", { name, contact, message });
+    console.error("Contact form submission (RESEND_API_KEY not configured):", { name, contact, projectType, budget, preferredContact, message });
     return NextResponse.json({ error: "Mail not configured" }, { status: 500 });
   }
 
@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
     to: CONTACT_TO_EMAIL || site.email,
     replyTo: contact,
     subject: `New project inquiry from ${name}`,
-    text: `Name: ${name}\nContact: ${contact}\n\n${message}`,
+    text: `Name: ${name}\nContact: ${contact}\nProject type: ${projectType}\nApproximate budget: ${budget}\nPreferred contact: ${preferredContact}\n\n${message}`,
   });
 
   if (error) {

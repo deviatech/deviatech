@@ -6,6 +6,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import BlueprintGrid from "@/components/layout/BlueprintGrid";
 import StickyWhatsApp from "@/components/ui/StickyWhatsApp";
+import AnalyticsEvents from "@/components/analytics/AnalyticsEvents";
 import { site } from "@/content/site";
 
 const spaceGrotesk = Space_Grotesk({
@@ -26,26 +27,27 @@ const ibmPlexMono = IBM_Plex_Mono({
   weight: ["400", "500"],
 });
 
-const title = "DeviaTech Agency - Custom Software Development & Web Solutions | Lahore, Pakistan";
+const title = "Software Development Agency in Lahore | DeviaTech";
 const description =
-  "DeviaTech is a leading software development agency in Lahore, Pakistan. We specialize in custom web applications, mobile apps, SaaS solutions, and digital transformation for startups and businesses. Get your project started today!";
+  "DeviaTech builds Shopify stores, MVPs and custom web applications for businesses and startups in Pakistan, with fixed scope, weekly updates and post-launch support.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title,
   description,
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
-    title: "DeviaTech Agency - Custom Software Development & Web Solutions",
-    description:
-      "Leading software development agency in Lahore, Pakistan. We build custom web applications, mobile apps, and SaaS solutions for startups and businesses. Transform your vision into reality.",
-    url: site.url,
+    title,
+    description,
+    url: "/",
     images: [{ url: "/logo/icon-512.png", width: 512, height: 512 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "DeviaTech Agency - Custom Software Development & Web Solutions",
-    description:
-      "Leading software development agency in Lahore, Pakistan. We build custom web applications, mobile apps, and SaaS solutions for startups and businesses.",
+    title,
+    description,
     images: ["/logo/icon-512.png"],
   },
   other: {
@@ -103,6 +105,7 @@ export default function RootLayout({
             gtag('config', 'G-15GFH194BP');
           `}
         </Script>
+        <AnalyticsEvents />
         <BlueprintGrid />
         <Header />
         <main>{children}</main>
