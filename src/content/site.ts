@@ -15,7 +15,7 @@ export const site = {
   socials: {
     linkedin: "https://www.linkedin.com/company/deviatech-pk",
     github: "https://github.com/deviatech",
-    facebook: "https://facebook.com/deviatech",
+    facebook: "https://www.facebook.com/people/Deviatech/61592537442869/",
     instagram: "https://instagram.com/deviatech",
   },
   whatsappDefaultMessage: "Hi DeviaTech, I want to talk about a project.",
