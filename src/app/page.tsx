@@ -6,7 +6,7 @@ import TechStack from "@/components/sections/TechStack";
 import Founder from "@/components/sections/Founder";
 import Faq from "@/components/sections/Faq";
 import Contact from "@/components/sections/Contact";
-import RevealSection from "@/components/ui/RevealSection";
+import SectionSnap from "@/components/layout/SectionSnap";
 
 export const metadata = {
   alternates: {
@@ -17,28 +17,15 @@ export const metadata = {
 export default function Home() {
   return (
     <>
+      <SectionSnap />
       <Hero />
-      <RevealSection>
-        <TwoTracks />
-      </RevealSection>
-      <RevealSection>
-        <HowItWorks />
-      </RevealSection>
-      <RevealSection>
-        <Work />
-      </RevealSection>
-      <RevealSection>
-        <TechStack />
-      </RevealSection>
-      <RevealSection>
-        <Founder />
-      </RevealSection>
-      <RevealSection>
-        <Faq />
-      </RevealSection>
-      <RevealSection>
-        <Contact />
-      </RevealSection>
+      <TwoTracks />
+      <HowItWorks />
+      <Work />
+      <TechStack />
+      <Founder />
+      <Faq />
+      <Contact />
     </>
   );
 }

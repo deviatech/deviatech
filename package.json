@@ -9,8 +9,10 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@gsap/react": "^2.1.2",
     "framer-motion": "^12.42.2",
     "gray-matter": "^4.0.3",
+    "gsap": "^3.15.0",
     "marked": "^18.0.6",
     "next": "15.5.20",
     "react": "19.1.0",

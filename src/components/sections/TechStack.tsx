@@ -1,4 +1,9 @@
+"use client";
+
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
 import SheetFrame from "@/components/ui/SheetFrame";
+import { gsap, prefersReducedMotion } from "@/lib/gsap";
 import { stack } from "@/content/stack";
 import {
   SiNextdotjs,
@@ -25,9 +30,31 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
 };
 
 export default function TechStack() {
+  const gridRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      if (prefersReducedMotion() || !gridRef.current) return;
+      gsap.from(gridRef.current.children, {
+        opacity: 0,
+        y: 16,
+        scale: 0.9,
+        duration: 0.4,
+        stagger: 0.06,
+        ease: "back.out(1.6)",
+        scrollTrigger: {
+          trigger: gridRef.current,
+          start: "top 85%",
+          once: true,
+        },
+      });
+    },
+    { scope: gridRef, dependencies: [] }
+  );
+
   return (
     <SheetFrame number="05" label="STACK" id="stack">
-      <div className="flex flex-wrap gap-x-10 gap-y-8">
+      <div ref={gridRef} className="flex flex-wrap items-center justify-center gap-x-10 gap-y-8">
         {stack.map((tech) => {
           const Icon = iconMap[tech];
           return (
