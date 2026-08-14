@@ -22,11 +22,11 @@ export async function generateMetadata({
   if (!page) return {};
 
   return {
-    title: `${page.title} | DeviaTech`,
+    title: `${page.metaTitle} | DeviaTech`,
     description: page.description,
     alternates: { canonical: `${site.url}/${page.slug}` },
     openGraph: {
-      title: page.title,
+      title: page.metaTitle,
       description: page.description,
       url: `${site.url}/${page.slug}`,
       type: "website",
@@ -60,6 +60,15 @@ export default async function CommercialPage({
     serviceType: page.name,
   };
 
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: site.url },
+      { "@type": "ListItem", position: 2, name: page.name, item: `${site.url}/${page.slug}` },
+    ],
+  };
+
   const faqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -73,6 +82,7 @@ export default async function CommercialPage({
   return (
     <SheetFrame number="S1" label="SERVICE">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(pageJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
       <p className="font-mono text-xs tracking-wide text-ink-soft">DEVIATECH SERVICES</p>
       <h1 className="mt-3 max-w-4xl font-display text-3xl font-semibold leading-tight text-ink md:text-5xl">

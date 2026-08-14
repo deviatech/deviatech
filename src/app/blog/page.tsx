@@ -3,6 +3,7 @@ import Link from "next/link";
 import SheetFrame from "@/components/ui/SheetFrame";
 import Card from "@/components/ui/Card";
 import { getAllPosts } from "@/lib/blog";
+import { site } from "@/content/site";
 
 export const metadata: Metadata = {
   title: "Blog | DeviaTech",
@@ -21,8 +22,21 @@ export const metadata: Metadata = {
 export default function BlogIndexPage() {
   const posts = getAllPosts();
 
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: site.url },
+      { "@type": "ListItem", position: 2, name: "Blog", item: `${site.url}/blog` },
+    ],
+  };
+
   return (
     <SheetFrame number="B1" label="BLOG">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <p className="font-mono text-xs tracking-wide text-ink-soft">NOTES</p>
       <h1 className="mt-2 font-display text-2xl font-semibold text-ink md:text-3xl">
         From the studio.

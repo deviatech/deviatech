@@ -3,9 +3,26 @@ title: "How much does custom software cost in Lahore?"
 date: "2026-08-12"
 excerpt: "What changes the price of custom software in Lahore, from user roles and integrations to admin workflows, testing, deployment and post-launch support."
 tags: ["custom-software", "cost", "lahore", "web-application"]
+faqs:
+  - question: "Can custom software be built in phases?"
+    answer: "Yes. A phased release is often safer when the workflow or demand is not yet proven. The first phase should answer a meaningful question, not merely be an incomplete version of the entire roadmap."
+  - question: "How long does custom software take?"
+    answer: "A focused first release often takes 3-10 weeks. Integrations, roles, data migration, and approval cycles can extend that timeline."
+  - question: "Do I need a technical specification first?"
+    answer: "No. You need a clear business problem and access to the people who understand the current workflow. Discovery turns that context into a buildable scope."
 ---
 
 Custom software in Lahore does not have one useful fixed price because the word can describe a three-screen internal tool or a multi-role platform with integrations and operational rules. For planning, DeviaTech's focused custom software and MVP work starts from **PKR 150,000**. The quote moves with the risk and complexity in the workflow, not just the number of pages.
+
+
+| Cost driver | Simple end | Expensive end |
+|---|---|---|
+| Users and roles | One user, one workflow | Customers, staff, managers and admins with different data and actions |
+| Core workflow | Create and view records | Approvals, status changes, payments, notifications, reporting, audit history |
+| Integrations | None | Payment, SMS, accounting, courier or third-party APIs |
+| Data | Starts empty | Existing data to clean, map and migrate |
+| Admin | A basic list view | A reporting and operations dashboard |
+| Testing and deployment | Manual verification of one flow | Multi-role testing, staging, monitoring, rollback |
 
 ## What changes the cost
 
@@ -49,18 +66,5 @@ EasyfyTag needed more than a marketing website. The project involved an Electron
 - Underestimating permissions and admin correction flows.
 - Comparing agencies on hourly rate without comparing the delivered scope.
 
-## FAQ
-
-### Can custom software be built in phases?
-
-Yes. A phased release is often safer when the workflow or demand is not yet proven. The first phase should answer a meaningful question, not merely be an incomplete version of the entire roadmap.
-
-### How long does custom software take?
-
-A focused first release often takes 3-10 weeks. Integrations, roles, data migration, and approval cycles can extend that timeline.
-
-### Do I need a technical specification first?
-
-No. You need a clear business problem and access to the people who understand the current workflow. Discovery turns that context into a buildable scope.
 
 If you can describe the manual process or product flow, [request a project consultation](/contact) and we can help identify the smallest useful build.

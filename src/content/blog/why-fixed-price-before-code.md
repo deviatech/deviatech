@@ -1,15 +1,41 @@
 ---
-title: "How to choose a software development company in Pakistan"
+title: "Fixed-price vs hourly software quotes in Pakistan"
+metaTitle: "Fixed-price vs hourly software quotes"
 date: "2026-07-15"
-excerpt: "A practical buying guide for comparing Pakistani software agencies, including scope, communication, ownership, pricing, support and the questions to ask before signing."
-tags: ["software-development", "pakistan", "agency", "pricing"]
+updated: "2026-08-15"
+excerpt: "Why DeviaTech quotes a fixed price before writing code, how fixed-price and hourly quotes compare on risk, and what a written scope should contain before you sign."
+tags: ["fixed-price", "pricing", "software-development", "pakistan", "agency"]
+faqs:
+  - question: "Is a fixed price always better than hourly?"
+    answer: "No. Fixed price suits a project whose scope can be written down before work starts. Open-ended product work with a moving roadmap is often better served by an hourly or capacity arrangement, as long as you get weekly visibility into what the hours bought."
+  - question: "What happens if the scope changes mid-project?"
+    answer: "It gets re-scoped explicitly, in writing, with its own price and timeline impact — rather than quietly consuming the original budget. Changes are normal; hiding their cost is not."
+  - question: "Is the cheapest Pakistani agency the best choice?"
+    answer: "Not necessarily. Compare the scope, communication, ownership, support, and likely rework cost. A lower initial quote can become expensive when key requirements were never included."
+  - question: "Should I pay everything upfront?"
+    answer: "For a scoped project, a deposit plus milestone payments tied to visible progress is usually easier to manage than one full payment before work begins."
+  - question: "How do I evaluate a portfolio?"
+    answer: "Ask what the client needed, what the agency delivered, what constraints existed, what changed during the work, and what the client can operate today. [DeviaTech's case studies](/case-studies) are structured around those questions."
 ---
 
 Most software shops in Lahore quote by the hour. That can be appropriate for open-ended product work, but it means **you**, the client, carry more of the risk when the scope is still uncertain. If the estimate is wrong, you pay for the extra time.
 
 At DeviaTech, a project starts with a short discovery call, then a written scope and a fixed price before a single line of code is written. If something changes mid-project, we re-scope it explicitly rather than quietly running the meter.
 
-That is one signal to look for when comparing an agency. It is not the only one.
+This post explains why we work that way, how the two pricing models compare, and what to check in any quote before you sign. If you are earlier in the process and still comparing vendors, see [how to choose a web development company in Pakistan](/blog/web-development-company-pakistan).
+
+## Fixed price vs hourly: who carries the risk
+
+| | Fixed price | Hourly / time and materials |
+|---|---|---|
+| Who carries estimation risk | The agency | The client |
+| What you know before starting | Total price and deliverables | An hourly rate and an estimate |
+| Best suited to | A scope that can be written down | Open-ended or continuously changing product work |
+| How change is handled | Explicit re-scope with its own price | Absorbed into the running total |
+| Main failure mode | Scope written too vaguely to hold | Budget drifts without anyone deciding to spend more |
+| What you should still demand | Written assumptions and exclusions | Weekly visibility into hours and output |
+
+Neither model is dishonest. The problem is a quote that gives you the *uncertainty* of hourly with none of the flexibility, or a fixed price with no written assumptions behind it.
 
 ## Six questions to ask before choosing an agency
 
@@ -61,18 +87,5 @@ Most of our clients aren't technical, and they're used to negotiating a price up
 - A portfolio made only of screenshots with no explanation of the problem or scope.
 - No named person responsible for communication after payment.
 
-## FAQ
-
-### Is the cheapest Pakistani agency the best choice?
-
-Not necessarily. Compare the scope, communication, ownership, support, and likely rework cost. A lower initial quote can become expensive when key requirements were never included.
-
-### Should I pay everything upfront?
-
-For a scoped project, a deposit plus milestone payments tied to visible progress is usually easier to manage than one full payment before work begins.
-
-### How do I evaluate a portfolio?
-
-Ask what the client needed, what the agency delivered, what constraints existed, what changed during the work, and what the client can operate today. [DeviaTech's case studies](/case-studies) are structured around those questions.
 
 If you are comparing vendors, start with our [MVP development service in Pakistan](/mvp-development), [custom software development service in Lahore](/custom-software-development-lahore), or [request a project consultation](/contact) before deciding what to build.

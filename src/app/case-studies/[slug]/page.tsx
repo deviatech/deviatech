@@ -52,9 +52,20 @@ export default async function CaseStudyPage({
     url: `${site.url}/case-studies/${caseStudy.slug}`,
   };
 
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: site.url },
+      { "@type": "ListItem", position: 2, name: "Case studies", item: `${site.url}/case-studies` },
+      { "@type": "ListItem", position: 3, name: caseStudy.title, item: `${site.url}/case-studies/${caseStudy.slug}` },
+    ],
+  };
+
   return (
     <SheetFrame number="C2" label="CASE STUDY">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(caseStudyJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       <CaseStudyViewTracker slug={caseStudy.slug} />
       <Link href="/case-studies" className="font-mono text-xs text-ink-soft hover:text-ink">
         Back to case studies

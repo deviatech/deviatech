@@ -75,7 +75,12 @@ const jsonLd = {
     latitude: site.geo.lat,
     longitude: site.geo.lng,
   },
-  sameAs: [site.socials.linkedin, site.socials.github],
+  sameAs: [
+    site.socials.linkedin,
+    site.socials.github,
+    site.socials.facebook,
+    site.socials.instagram,
+  ],
 };
 
 export default function RootLayout({

@@ -6,7 +6,10 @@ export interface CommercialFaq {
 export interface CommercialPage {
   slug: string;
   name: string;
+  /** On-page H1. Can be longer and more descriptive. */
   title: string;
+  /** <title> tag text, kept short so it is not truncated in search results. */
+  metaTitle: string;
   description: string;
   intro: string;
   problem: string;
@@ -28,6 +31,7 @@ export const commercialPages: CommercialPage[] = [
     slug: "shopify-development-lahore",
     name: "Shopify development",
     title: "Shopify development company in Lahore for stores ready to launch",
+    metaTitle: "Shopify development company in Lahore",
     description: "DeviaTech builds Shopify stores for Lahore businesses and Pakistani D2C brands, including products, COD, shipping, analytics, and launch support.",
     intro: "Launch a store that is easy for customers to browse and practical for your team to operate. We handle the storefront and the operational details around checkout, shipping, and orders.",
     problem: "Selling through Instagram or WhatsApp can work early on, but product discovery, order details, and follow-up become difficult to manage as demand grows.",
@@ -51,6 +55,7 @@ export const commercialPages: CommercialPage[] = [
     slug: "custom-software-development-lahore",
     name: "Custom software development",
     title: "Custom software development company in Lahore",
+    metaTitle: "Custom software development in Lahore",
     description: "DeviaTech builds custom web software for businesses and startups in Lahore that need a workflow beyond an off-the-shelf tool.",
     intro: "When your workflow is the product, a generic tool can create more work than it removes. We turn the important parts of that workflow into a focused, maintainable web application.",
     problem: "Spreadsheets, disconnected tools, and manual handoffs make it hard to see what is happening and harder to scale a process consistently.",
@@ -74,6 +79,7 @@ export const commercialPages: CommercialPage[] = [
     slug: "mvp-development",
     name: "MVP development",
     title: "MVP development company in Pakistan for startup founders",
+    metaTitle: "MVP development company in Pakistan",
     description: "DeviaTech helps Pakistani founders turn a product assumption into a focused MVP they can put in front of real users.",
     intro: "An MVP should answer an important question, not attempt to finish the whole roadmap. We reduce the scope to the core user flow and build a useful first release around it.",
     problem: "Founders often have a long feature list but no clear first signal. Building everything before testing the core assumption increases time, cost, and uncertainty.",
@@ -97,6 +103,7 @@ export const commercialPages: CommercialPage[] = [
     slug: "web-development-lahore",
     name: "Web development",
     title: "Web development company in Lahore for business websites and applications",
+    metaTitle: "Web development company in Lahore",
     description: "DeviaTech creates fast, responsive business websites and web applications for companies in Lahore and across Pakistan.",
     intro: "Your website should explain what you do, make the next step obvious, and be easy to maintain. We build polished web experiences without adding complexity your team does not need.",
     problem: "Outdated websites and disconnected landing pages can make a credible business look harder to buy from and leave potential customers without a clear next action.",
@@ -120,6 +127,7 @@ export const commercialPages: CommercialPage[] = [
     slug: "maintenance-support",
     name: "Maintenance and support",
     title: "Website maintenance and support for businesses in Pakistan",
+    metaTitle: "Website maintenance and support in Pakistan",
     description: "DeviaTech provides practical website maintenance, bug fixes, updates, and post-launch support for businesses in Pakistan.",
     intro: "A launch is not the end of a website's useful life. We help teams keep their site working, secure, and ready for small improvements without reopening a full rebuild every time.",
     problem: "Small bugs, content changes, dependency updates, and unclear ownership can leave a live website slowly becoming less reliable.",
@@ -143,6 +151,7 @@ export const commercialPages: CommercialPage[] = [
     slug: "dedicated-development-team-pakistan",
     name: "Dedicated development team",
     title: "Dedicated React development team in Pakistan",
+    metaTitle: "Hire dedicated React developers in Pakistan",
     description: "Extend your product team with dedicated React and Next.js development support from Pakistan, with direct communication and weekly updates.",
     intro: "When your roadmap needs more consistent capacity than a one-off project, DeviaTech can work as a focused delivery partner alongside your product or engineering team.",
     problem: "Hiring quickly, keeping context, and maintaining delivery quality can be difficult when an internal team has more roadmap than capacity.",
@@ -166,6 +175,7 @@ export const commercialPages: CommercialPage[] = [
     slug: "white-label-development-partner",
     name: "White-label development partner",
     title: "White-label web development partner for agencies",
+    metaTitle: "White-label web development partner",
     description: "DeviaTech supports agencies and consultants as a white-label web development partner for Shopify, React, Next.js, and custom web projects.",
     intro: "You own the client relationship. We provide the delivery capacity, technical execution, and communication discipline needed to ship work under your brand.",
     problem: "Agencies can win work faster than their delivery team can absorb it, creating pressure to hire before the scope or relationship is proven.",
