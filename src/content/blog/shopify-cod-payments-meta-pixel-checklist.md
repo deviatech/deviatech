@@ -3,26 +3,28 @@ title: "Shopify COD, payments and Meta Pixel checklist for Pakistan"
 metaTitle: "Shopify COD & Meta Pixel checklist (Pakistan)"
 date: "2026-08-05"
 updated: "2026-08-15"
-excerpt: "A Pakistan-specific Shopify launch checklist covering COD operations, payment testing, courier and shipping rules, Meta Pixel events, mobile checkout and the mistakes that cost stores orders."
+excerpt: "The pre-launch checklist we run on Pakistani Shopify stores: COD operations, payment testing, shipping rules, Meta Pixel events and mobile checkout."
 tags: ["shopify", "pakistan", "cod", "payments", "meta-pixel", "launch"]
 faqs:
   - question: "Is COD enough for a Pakistani Shopify store?"
-    answer: "COD can be important, but it is not automatically enough. Offer the payment options your customers trust and your team can reconcile. The right mix depends on the category, average order value, audience, and operational capacity, and COD carries its own failed-delivery and cash-handling cost."
+    answer: "COD matters for most local audiences, but it isn't automatically enough on its own. Offer what your customers trust and what your team can reconcile at the end of the week. COD also carries its own failed-delivery and cash-handling costs, which don't show up until you're running volume."
   - question: "Can DeviaTech set up payment gateways?"
-    answer: "We can configure the agreed payment flow and test it end to end. The provider must approve your account and meet its own business, banking, and compliance requirements, so confirm eligibility with them before promising a gateway on your store."
+    answer: "We configure the agreed payment flow and test it end to end. Approval is the provider's decision, and they have their own business, banking and compliance requirements, so confirm eligibility with them before you advertise a payment method on your store."
   - question: "Do I need Meta Pixel on day one?"
-    answer: "If you plan to use Meta ads or retargeting, set it up before launch and verify it before campaigns start. Tracking added after traffic arrives usually leaves an avoidable data gap you cannot backfill."
+    answer: "If you plan to run Meta ads or retargeting, yes. Set it up before launch and verify it before campaigns start. Tracking added after the traffic arrives leaves a gap you can never backfill."
   - question: "Can Meta Pixel fix a weak checkout?"
-    answer: "No. Pixel data can show where customers drop off, but it cannot repair unclear shipping terms, a failing payment flow, or slow order confirmation. Fix the operation first, then measure it."
+    answer: "No. Pixel data shows you where people drop off. It can't repair vague shipping terms, a failing payment flow, or an order confirmation that takes two days. Fix the operation, then measure it."
   - question: "How much does this setup cost?"
-    answer: "It is part of the scope of a Shopify build, which starts from PKR 40,000 at DeviaTech. The final price depends on catalogue size, theme work, integrations, shipping rules, and content readiness."
+    answer: "It's part of a Shopify build, which starts from PKR 40,000 with us. The final number depends on catalogue size, theme work, integrations, shipping rules and how ready your content is."
   - question: "How long should pre-launch testing take?"
-    answer: "Plan for one to two days of real testing on a finished store: a live order on mobile data, a COD confirmation call, a dispatch, a returns scenario, and an event check in Meta Events Manager. It is far cheaper than diagnosing the same problems with ad spend running."
+    answer: "One to two days on a finished store. A live order over mobile data, a real COD confirmation call, a dispatch, a returns scenario, and an event check in Meta Events Manager. That's far cheaper than diagnosing the same problems with ad spend running."
 ---
 
-Every Shopify launch we work on ends with an operational check before the password page comes off. In Pakistan, a store can look finished while the real buying journey is still broken: the COD order does not reach the person packing it, the shipping policy does not match the courier workflow, or Meta is recording a page view but not a purchase.
+Every Shopify launch we work on ends with an operational check before the password page comes off. In Pakistan, a store can look completely finished while the actual buying journey is broken underneath it.
 
-This is the checklist we use when preparing a store for a local business. It is based on the practical work around DeviaTech's ecommerce projects, not a generic theme setup guide. Work through it before you spend a rupee on ads.
+The COD order never reaches the person packing boxes. The shipping policy describes a courier workflow nobody uses. Meta records a page view and misses the purchase. None of that shows up in a design review.
+
+So we work through this list instead. It comes from our ecommerce projects, not from a theme setup guide, and it's worth finishing before you spend a rupee on ads.
 
 ## The short version
 
@@ -35,39 +37,41 @@ This is the checklist we use when preparing a store for a local business. It is 
 | Meta Pixel | View, add to cart, checkout and purchase events firing once, with values | Whoever runs ads |
 | Customer response | WhatsApp, calls, DMs and order exceptions have a named owner | Named person, not "the team" |
 
-## 1. Test payment and COD with a real order
+## 1. Place a real order, on a real phone
 
-Do not stop at a test order in admin. Place an actual order on a phone over mobile data, then follow it through the notification, fulfilment, dispatch, and customer update steps.
+A test order in admin proves nothing. Place an actual order from a phone on mobile data, then follow it all the way through notification, fulfilment, dispatch and the customer update.
 
-For COD, confirm:
+For COD, confirm that:
 
-- The customer phone number and address are captured in a usable format and visible to the person confirming the order.
-- Someone is named as the person who confirms orders, and how quickly they are expected to do it.
-- The order status and fulfilment notes are clear enough for a small team to act on.
-- What happens when the customer does not answer is written down, not improvised.
-- Failed deliveries, exchanges, and returns have a place to be recorded.
-- The customer receives a confirmation through the channel you actually monitor.
-- The package can be dispatched with the courier process you use.
+- The phone number and address arrive in a usable format, visible to whoever confirms the order.
+- One named person is responsible for confirming orders, and you've agreed how fast.
+- Order status and fulfilment notes are clear enough for a small team to act on without asking.
+- What happens when the customer doesn't answer is written down rather than improvised each time.
+- Failed deliveries, exchanges and returns have somewhere to be recorded.
+- The confirmation reaches the customer on the channel you actually monitor.
+- The package can go out through the courier process you really use.
 
-For online payments, confirm the current gateway or provider works for your business registration, settlement account, currency, and checkout flow. Also test a *failed* payment, the refund path, and how a day's orders get reconciled against a settlement. Availability and Shopify integration options change, so verify the provider's current requirements instead of promising a gateway before checking it.
+For online payments, check that your gateway works for your business registration, settlement account, currency and checkout flow. Then test a payment that fails, walk the refund path, and reconcile a day of orders against a settlement. Provider availability and Shopify integration options change, so verify current requirements rather than promising a gateway you haven't confirmed.
 
-## 2. Make product information usable on a phone
+## 2. Make the product page work on a phone
 
-A store with three different photo styles reads as unfinished, even if the code is perfect. Use consistent images, clear variants, dimensions, material information, and a delivery expectation. Most customers will discover the product from a phone, often through Instagram or WhatsApp, so the first product screen needs to answer the basic buying questions quickly.
+Three different photo styles make a store look unfinished no matter how clean the code is. Use consistent images, clear variants, dimensions, material information and a delivery expectation.
 
-Check the product page on a mid-range Android phone on mobile data, not only on a desktop preview. Look at how long the first image takes to appear, whether the price and add-to-cart are visible without scrolling, and whether variant names make sense to someone who has not seen your catalogue before.
+Most of your customers will arrive from a phone, usually via Instagram or WhatsApp, so the first product screen has to answer the obvious buying questions fast.
 
-## 3. Match shipping and returns to your actual operation
+Check it on a mid-range Android phone on mobile data, not on a desktop preview. How long before the first image appears? Are the price and add-to-cart visible without scrolling? Do the variant names mean anything to someone who has never seen your catalogue?
 
-Buyers in Lahore and elsewhere in Pakistan already have reasons to hesitate before paying. A missing or vague returns policy is one more reason to abandon the cart. State where you deliver, the expected dispatch window, delivery charges, what happens when a customer is unavailable, and whether exchanges or returns are accepted.
+## 3. Match shipping and returns to your real operation
 
-Before publishing the policy, check whether the courier collects from your area, how tracking is shared with the customer, and what happens to an order with an incomplete address. A nationwide shipping claim is only useful if your operation can fulfil it.
+Buyers here already have reasons to hesitate before paying. A vague returns policy is one more.
 
-Do not write a policy your team cannot follow. If you confirm orders on WhatsApp and dispatch through a courier, the policy should describe that reality rather than copy language from a US store.
+State where you deliver, your dispatch window, delivery charges, what happens when a customer isn't home, and whether you accept exchanges or returns. Then check the operational side: does the courier collect from your area, how does tracking reach the customer, and what happens to an order with half an address? A nationwide delivery claim is only worth making if you can fulfil it.
 
-## 4. Verify Meta Pixel events on the real flow
+Above all, don't publish a policy your team can't follow. If you confirm orders on WhatsApp and dispatch through a local courier, say that. Copying the language from a US store creates a promise you'll break by Thursday.
 
-Installing the pixel is not the same as measuring the store. Verify the events that matter with Meta's Events Manager test tool and, where available, your analytics reports. Check the product view, add to cart, checkout, and purchase path before spending a single rupee on ads.
+## 4. Verify Meta Pixel on the real flow
+
+Installing the pixel is not the same as measuring the store. Verify the events in Meta's Events Manager test tool, and in your analytics reports where you have them, before any budget goes live.
 
 | Event | Test it by | Watch for |
 |---|---|---|
@@ -77,24 +81,19 @@ Installing the pixel is not the same as measuring the store. Verify the events t
 | InitiateCheckout | Starting checkout on a phone | Event lost on a redirect to a payment provider |
 | Purchase | Completing one real paid order and one failed one | Purchase firing on a failed payment, or missing order value |
 
-Common mistakes include duplicate page-view events, a purchase event firing before payment succeeds, and a checkout that leaves Meta without enough information to match the conversion. Keep a simple test record with the product, order status, event name, and timestamp so you can prove what was working on launch day.
+The usual culprits are duplicate page views, a purchase event that fires before payment actually succeeds, and a checkout that hands Meta too little information to match the conversion. Keep a short test record with the product, order status, event name and timestamp, so you can prove what was working on launch day when the numbers look strange in week three.
 
-## 5. Assign a person to WhatsApp, calls and order exceptions
+## 5. Give WhatsApp and missed calls a named owner
 
-The first 48 hours after launch is when most questions come in. If nobody is watching WhatsApp, Instagram DMs, missed calls, and failed or incomplete orders, you lose the exact customers who found you fastest.
+Most of your questions arrive in the first 48 hours. If nobody is watching WhatsApp, Instagram DMs, missed calls and half-finished orders during that window, you lose the exact customers who found you fastest.
 
-Write down who handles:
-
-- Product questions and size or variant confusion.
-- COD confirmation and invalid phone numbers.
-- Delivery exceptions and address clarification.
-- Payment failures and customers who need another payment option.
+Write down who handles product and sizing questions, COD confirmation and invalid phone numbers, delivery exceptions and unclear addresses, and payment failures where the customer needs another option. "The team" is not an owner.
 
 ## What a realistic launch budget looks like
 
-For a focused Shopify store, DeviaTech projects start from **PKR 40,000**. That is a starting point, not a universal quote. Product count, theme customisation, copy and images, integrations, shipping rules, analytics, and launch support can move the price up.
+Our focused Shopify projects start from **PKR 40,000**. That's a starting point rather than a universal quote, and product count, theme customisation, copy and images, integrations, shipping rules, analytics and launch support all move it.
 
-Budget separately for the running costs, which are not part of the build:
+Budget separately for what keeps running after launch:
 
 | Cost | Paid to | Frequency |
 |---|---|---|
@@ -105,17 +104,17 @@ Budget separately for the running costs, which are not part of the build:
 | Payment provider fees | Provider | Per transaction |
 | Ad spend | Meta, Google | Ongoing |
 
-For a fuller breakdown of the build side, see [Shopify store development cost in Pakistan](/blog/shopify-store-development-cost-pakistan).
+For the build side in more detail, see [Shopify store development cost in Pakistan](/blog/shopify-store-development-cost-pakistan).
 
-## Common mistakes we see before launch
+## What we see go wrong most often
 
-- Treating COD as only a checkout option instead of an operations workflow.
-- Publishing the store without placing one order the way a real customer will — real phone, mobile data, real notification channel, real fulfilment.
-- Adding every product before deciding which products deserve the clearest launch pages.
-- Promising same-day or nationwide delivery without checking courier coverage and fulfilment capacity.
+- Treating COD as a checkout option rather than an operations workflow.
+- Publishing without placing one order the way a customer will: real phone, mobile data, real notification channel, real fulfilment.
+- Loading every product before deciding which ones deserve the clearest launch pages.
+- Promising same-day or nationwide delivery without checking courier coverage.
 - Sending paid traffic before testing mobile checkout and purchase tracking.
-- Hiding the contact route when a customer has a payment or delivery question.
+- Burying the contact route, so a customer with a payment problem just leaves.
 
-None of this is complicated. It is just easy to skip when you are excited to launch, which is exactly why we treat it as a checklist instead of a memory test. Our [Ala Gallery ecommerce case study](/case-studies/ala-gallery-ecommerce) shows the type of local store context this work is designed around.
+None of this is difficult. It's just easy to skip when you're excited to launch, which is exactly why we treat it as a checklist rather than a memory test. The [Ala Gallery case study](/case-studies/ala-gallery-ecommerce) shows the kind of local store this work is built around.
 
-If you want help with the setup, see our [Shopify development service in Lahore](/shopify-development-lahore) or [request a project consultation](/contact). We normally reply within one business day.
+Want someone to run it with you? See our [Shopify development service in Lahore](/shopify-development-lahore) or [send us your store URL](/contact). We normally reply within one business day.

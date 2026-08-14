@@ -1,32 +1,23 @@
 ---
 title: "Website maintenance cost in Pakistan"
 date: "2026-08-10"
-excerpt: "What website maintenance costs in Pakistan, what a support arrangement should include, and how to compare task-based help with a monthly retainer."
+updated: "2026-08-15"
+excerpt: "What website maintenance actually costs in Pakistan, how task-based work compares to a retainer, and the questions to settle before you sign anything."
 tags: ["maintenance", "support", "website", "pakistan", "cost"]
 faqs:
   - question: "What is a reasonable monthly maintenance price?"
-    answer: "There is no responsible single price without reviewing the system and workload. Ask for a scope based on hours, tasks, response expectations, and excluded work instead of comparing retainers by number alone."
+    answer: "Nobody can give you a responsible number without seeing the system and the workload first. Ask for a scope built on hours, tasks, response expectations and excluded work. Comparing retainers by price alone is how people end up paying monthly for nothing."
   - question: "Can you maintain a site another agency built?"
-    answer: "Often, yes. We first review the codebase, deployment process, dependencies, and access. If the system cannot be safely supported, that should be clear before a commitment."
+    answer: "Usually, yes. We review the codebase, deployment process, dependencies and access first. If a system can't be safely supported, you should hear that before you commit, not after."
   - question: "Does maintenance include hosting?"
-    answer: "Not automatically. Hosting, provider fees, and infrastructure work should be listed separately from development support."
+    answer: "Not automatically. Hosting, provider fees and infrastructure work should appear as separate lines from development support, so you can see what you're actually paying for."
 ---
 
-Website maintenance cost in Pakistan depends on whether you need occasional fixes, regular content and dependency updates, or an ongoing development partner. A cheap monthly number is not useful if nobody has deployment access, backups, monitoring, or a defined response expectation.
+The cheapest maintenance quote is worthless if nobody on that team has deployment access, a backup, or any obligation to answer you within a defined time.
 
-## Three common support models
+That's the real question behind maintenance pricing in Pakistan. Not what a month costs, but what you're entitled to when something breaks on a Friday evening.
 
-### Task-based maintenance
-
-You raise a specific issue, the developer reviews it, and you receive a written estimate. This works for a stable website with occasional needs.
-
-### Monthly maintenance
-
-A recurring arrangement can cover a defined number of hours or tasks, routine updates, and a regular review. It is useful when content, dependencies, and small improvements are continuous.
-
-### Support plus development
-
-Some teams need bug fixes and feature work from the same partner. Separate urgent support from planned improvements so a small issue does not consume the entire product roadmap.
+## Three ways to buy support
 
 | Model | Best for | What you pay for | Watch out for |
 |---|---|---|---|
@@ -34,41 +25,42 @@ Some teams need bug fixes and feature work from the same partner. Separate urgen
 | Monthly retainer | Continuous content, dependency and small-improvement work | Defined hours or tasks, routine updates, regular review | "Unlimited support" with no defined workload |
 | Support plus development | Products that need fixes and new features from one partner | Separated urgent support and planned improvements | Feature work quietly eating the support budget |
 
-## What changes the cost
+For a simple brochure site, task-based work usually beats a retainer. You're paying for attention you don't need most months.
 
-- Technology and framework age.
-- Hosting and deployment access.
-- Number of sites or environments.
-- Expected response time.
-- Monthly task volume.
-- Security, dependency, backup, and monitoring requirements.
-- Whether content edits and new features are included.
+For anything business-critical, the retainer is cheaper than it looks, because the alternative is discovering during an outage that nobody has the hosting password. That discovery costs more than a year of support.
 
-For a simple site, occasional task-based work may be more sensible than a retainer. For a business-critical application, paying for a defined support relationship is usually cheaper than discovering ownership problems during an outage.
+The third model needs a boundary drawn in advance. When bug fixes and new features come from the same budget, features win, and then one urgent issue eats the month.
 
-## What to ask before agreeing
+## What moves the price
 
-Ask who owns the repository, hosting, domain, analytics, and credentials. Ask how changes are tested, how backups are restored, how incidents are communicated, and what happens when a request is actually a feature rather than maintenance.
+The age of the framework matters more than most clients expect: an old stack with abandoned dependencies costs more to keep safe than a current one. Beyond that, price follows how many sites and environments exist, how fast you expect a response, how much work arrives each month, and whether content edits and new features are included or billed separately.
 
-A usable maintenance agreement answers all of these in writing:
+Security, dependency, backup and monitoring requirements sit underneath all of it. They're invisible until they aren't.
 
-- What counts as maintenance, and what counts as new development.
-- Response expectation for an outage versus a cosmetic issue.
-- Who holds deployment, hosting, domain, and analytics access.
-- How backups are taken and, more importantly, how a restore is tested.
+## Settle these in writing first
+
+Who owns the repository, hosting, domain, analytics and credentials? Start there, because everything else depends on the answer.
+
+Then get the agreement to state:
+
+- What counts as maintenance and what counts as new development.
+- The response expectation for an outage, as distinct from a cosmetic issue.
+- Who holds deployment, hosting, domain and analytics access.
+- How backups are taken and, more to the point, how a restore gets tested.
 - Whether dependency and security updates are included or quoted separately.
 - What happens to unused hours at the end of a month.
-- Notice period and how handover works if you leave.
+- The notice period, and how handover works if you leave.
 
-DeviaTech's [maintenance and support service](/maintenance-support) covers review, issue prioritisation, fixes, updates, and clear release notes. We also include a support window after new project handoff. The [Nabtahvie case study](/case-studies/nabtahvie-corporate-website) is an example of a business website connected to a custom CMS that needs an understandable content workflow.
+A partner who resists putting these in writing has told you something useful.
 
-## Common mistakes
+Our [maintenance and support service](/maintenance-support) covers review, issue prioritisation, fixes, updates and release notes you can actually read, plus a support window after every project handoff. The [Nabtahvie case study](/case-studies/nabtahvie-corporate-website) shows a business website connected to a custom CMS, where the content workflow had to stay understandable to the people using it.
 
-- Paying for "unlimited support" without defining response or workload.
-- Letting credentials stay with a former developer.
-- Updating production without a rollback or backup plan.
-- Treating a redesign as a small maintenance task.
-- Ignoring dependencies until an urgent security issue appears.
+## Mistakes that get expensive
 
+- Paying for "unlimited support" with no defined response time or workload.
+- Leaving credentials with a developer who left two years ago.
+- Updating production without a rollback plan or a tested backup.
+- Calling a redesign a maintenance task.
+- Ignoring dependencies until a security issue forces the conversation.
 
-If your live site is becoming difficult to manage, [request a support review](/contact).
+If your live site is getting harder to manage, [book a support review](/contact) and we'll tell you what shape it's in.

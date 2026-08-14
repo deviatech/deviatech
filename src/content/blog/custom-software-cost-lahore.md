@@ -1,19 +1,21 @@
 ---
 title: "How much does custom software cost in Lahore?"
 date: "2026-08-12"
-excerpt: "What changes the price of custom software in Lahore, from user roles and integrations to admin workflows, testing, deployment and post-launch support."
+updated: "2026-08-15"
+excerpt: "What actually moves the price of custom software in Lahore: user roles, integrations, admin workflows, testing, and the support nobody quotes for."
 tags: ["custom-software", "cost", "lahore", "web-application"]
 faqs:
   - question: "Can custom software be built in phases?"
-    answer: "Yes. A phased release is often safer when the workflow or demand is not yet proven. The first phase should answer a meaningful question, not merely be an incomplete version of the entire roadmap."
+    answer: "Yes, and it's usually the safer choice when the workflow or the demand isn't proven yet. Just make sure phase one answers a real question. An incomplete version of the whole roadmap is not a phase, it's a half-built product."
   - question: "How long does custom software take?"
-    answer: "A focused first release often takes 3-10 weeks. Integrations, roles, data migration, and approval cycles can extend that timeline."
+    answer: "A focused first release often takes 3-10 weeks. Integrations, extra roles, data migration, and slow approval cycles are what stretch it."
   - question: "Do I need a technical specification first?"
-    answer: "No. You need a clear business problem and access to the people who understand the current workflow. Discovery turns that context into a buildable scope."
+    answer: "No. You need a clear business problem and access to the people who actually do the work today. Discovery turns that into a buildable scope."
 ---
 
-Custom software in Lahore does not have one useful fixed price because the word can describe a three-screen internal tool or a multi-role platform with integrations and operational rules. For planning, DeviaTech's focused custom software and MVP work starts from **PKR 150,000**. The quote moves with the risk and complexity in the workflow, not just the number of pages.
+Nobody can quote "custom software" honestly, because the phrase covers a three-screen internal tool and a multi-role platform with payment integrations and approval rules. Same two words, wildly different projects.
 
+What we can tell you is where the number comes from. DeviaTech's focused custom software and MVP work starts from **PKR 150,000**, and the quote moves with the risk in your workflow, not the count of your pages.
 
 | Cost driver | Simple end | Expensive end |
 |---|---|---|
@@ -24,47 +26,44 @@ Custom software in Lahore does not have one useful fixed price because the word 
 | Admin | A basic list view | A reporting and operations dashboard |
 | Testing and deployment | Manual verification of one flow | Multi-role testing, staging, monitoring, rollback |
 
-## What changes the cost
+## The two drivers people underestimate
 
-### Users and roles
+Everything in that table costs money. Two lines of it cost more than clients expect.
 
-One authenticated user with one workflow is simpler than customers, staff, managers, and administrators seeing different data and actions. Permission rules need to be designed, implemented, and tested.
+**Permissions.** The jump from one logged-in user to four kinds of user is the single steepest price increase in most projects. Every rule about who sees what has to be designed, built, and then tested from each role's point of view. Clients tend to describe this as "oh, and managers should see everything," which is one sentence to say and a week of work to get right.
 
-### The core workflow
+**Data you already have.** A migration sounds like a copy and paste. In practice someone has to read your existing spreadsheet, find the three different ways people have spelled the same customer name, decide which record wins, and handle the rows that fit nowhere. Budget for it explicitly or it will surface halfway through the build.
 
-Creating a record is different from approvals, status changes, payments, notifications, reporting, exports, and audit history. Write down the decisions the software must support before asking for a build price.
+## What to pin down before you ask for a price
 
-### Integrations and data
+Write down the decisions the software has to support. Not the screens, the decisions. Who approves this, what happens when they reject it, who gets told, and what the record should look like six months later when someone asks why.
 
-Payment providers, email or SMS, maps, accounting tools, CRMs, existing APIs, imports, and migrations all add uncertainty. A vendor should explain whether the integration is included, assumed, or a separate discovery item.
+On integrations, make the vendor say plainly whether each one is included, assumed, or a separate discovery item. That single question prevents most mid-project arguments.
 
-### Admin and operations
-
-The first version needs enough admin capability to see what is happening and correct routine problems. A huge dashboard is often unnecessary; no admin visibility is also a mistake.
-
-### Deployment and support
-
-Hosting, environments, backups, monitoring, security updates, handoff, and post-launch fixes are part of the total ownership cost even when they are not in the first development quote.
+On admin, aim for the middle. A full reporting dashboard in version one is usually money spent early. No admin view at all means you'll be asking a developer to fix routine problems by hand, forever.
 
 ## A practical planning model
 
-- **PKR 150,000-300,000:** focused MVP or internal workflow with a small number of roles and limited integrations.
-- **PKR 300,000-700,000:** multiple roles, a richer admin workflow, integrations, reporting, or more involved product design.
-- **Above PKR 700,000:** larger platforms, complex data rules, migrations, multiple external systems, or a product requiring substantial testing and support.
+These are ranges for a planning conversation, not quotes:
 
-The ranges are for planning conversations, not fabricated quotes. DeviaTech turns the selected scope into a written estimate after discovery through our [custom software development service](/custom-software-development-lahore).
+- **PKR 150,000-300,000** covers a focused MVP or an internal workflow with a small number of roles and limited integrations.
+- **PKR 300,000-700,000** covers multiple roles, a richer admin workflow, integrations, reporting, or more involved product design.
+- **Above PKR 700,000** is for larger platforms, complex data rules, migrations, several external systems, or products that need substantial testing and support.
 
-## Example: EasyfyTag
+We turn the agreed scope into a written estimate after discovery, through our [custom software development service](/custom-software-development-lahore).
 
-EasyfyTag needed more than a marketing website. The project involved an Electron desktop application for writing tags, a React dashboard, Go services, and Docker deployment. That combination is a useful example of why a quote should describe the whole workflow and technology surface, not only say "build a web app." Read the [EasyfyTag case study](/case-studies/easyfytag-nfc-platform).
+One thing that never appears in the build quote and always appears in the bill: hosting, environments, backups, monitoring, security updates, and post-launch fixes. Ask about them now rather than in month four.
+
+## What EasyfyTag actually involved
+
+EasyfyTag is a good argument for scoping the whole surface rather than the website. The project needed an Electron desktop application for writing tags, a React dashboard, Go services, and Docker deployment. If that had been quoted as "build a web app," every one of those pieces would have been a surprise. Read the [EasyfyTag case study](/case-studies/easyfytag-nfc-platform).
 
 ## Common mistakes
 
-- Asking for a quote before defining the first user and the first outcome.
+- Asking for a quote before naming the first user and the first outcome.
 - Treating every future feature as mandatory for version one.
 - Forgetting data migration and cleanup.
-- Underestimating permissions and admin correction flows.
-- Comparing agencies on hourly rate without comparing the delivered scope.
+- Underestimating permissions and the admin screens that fix mistakes.
+- Comparing agencies on hourly rate instead of delivered scope.
 
-
-If you can describe the manual process or product flow, [request a project consultation](/contact) and we can help identify the smallest useful build.
+If you can describe the manual process you're trying to replace, that's enough to start. [Get a scoped estimate](/contact) and we'll help you find the smallest useful build.
