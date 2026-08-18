@@ -12,53 +12,64 @@ export default function SectionSnap() {
   useEffect(() => {
     if (prefersReducedMotion()) return;
 
-    const sections = gsap.utils.toArray<HTMLElement>("[data-snap-section]");
-    if (sections.length < 2) return;
+    let trigger: ScrollTrigger | undefined;
 
-    const nearestSnapProgress = (progress: number) => {
-      const maxScroll = ScrollTrigger.maxScroll(window);
-      if (!maxScroll) return progress;
+    // Other sections register their own ScrollTrigger-driven animations on
+    // mount too; querying/measuring here on the same tick can race with
+    // that layout settling. Deferring a frame lets it finish first.
+    const raf = requestAnimationFrame(() => {
+      const sections = gsap.utils.toArray<HTMLElement>("[data-snap-section]");
+      if (sections.length < 2) return;
 
-      const points = sections.map((section) => {
-        const rect = section.getBoundingClientRect();
-        const top = rect.top + window.scrollY;
-        const center = top + rect.height / 2 - window.innerHeight / 2;
-        return gsap.utils.clamp(0, 1, center / maxScroll);
-      });
+      const nearestSnapProgress = (progress: number) => {
+        const maxScroll = ScrollTrigger.maxScroll(window);
+        if (!maxScroll) return progress;
 
-      // Past the last section's center (footer) or before the first
-      // section's center — there's nothing to magnetize to here, so leave
-      // scroll position untouched instead of pulling back into a section.
-      if (progress > Math.max(...points) || progress < Math.min(...points)) {
-        return progress;
-      }
+        const points = sections.map((section) => {
+          const rect = section.getBoundingClientRect();
+          const top = rect.top + window.scrollY;
+          const center = top + rect.height / 2 - window.innerHeight / 2;
+          return gsap.utils.clamp(0, 1, center / maxScroll);
+        });
 
-      let closest = points[0];
-      let minDiff = Infinity;
-
-      points.forEach((point) => {
-        const diff = Math.abs(progress - point);
-        if (diff < minDiff) {
-          minDiff = diff;
-          closest = point;
+        // Past the last section's center (footer) or before the first
+        // section's center — there's nothing to magnetize to here, so leave
+        // scroll position untouched instead of pulling back into a section.
+        if (progress > Math.max(...points) || progress < Math.min(...points)) {
+          return progress;
         }
+
+        let closest = points[0];
+        let minDiff = Infinity;
+
+        points.forEach((point) => {
+          const diff = Math.abs(progress - point);
+          if (diff < minDiff) {
+            minDiff = diff;
+            closest = point;
+          }
+        });
+
+        return closest;
+      };
+
+      trigger = ScrollTrigger.create({
+        start: 0,
+        end: "max",
+        invalidateOnRefresh: true,
+        snap: {
+          snapTo: nearestSnapProgress,
+          duration: { min: 0.35, max: 0.9 },
+          delay: 0.05,
+          ease: "power2.inOut",
+        },
       });
-
-      return closest;
-    };
-
-    const trigger = ScrollTrigger.create({
-      start: 0,
-      end: "max",
-      snap: {
-        snapTo: nearestSnapProgress,
-        duration: { min: 0.35, max: 0.9 },
-        delay: 0.05,
-        ease: "power2.inOut",
-      },
     });
 
-    return () => trigger.kill();
+    return () => {
+      cancelAnimationFrame(raf);
+      trigger?.kill();
+    };
   }, []);
 
   return null;

@@ -13,10 +13,11 @@ export default function BlueprintGrid() {
       backgroundPositionY: "120px",
       ease: "none",
       scrollTrigger: {
-        trigger: document.body,
+        trigger: document.documentElement,
         start: "top top",
         end: "bottom bottom",
         scrub: 0.8,
+        invalidateOnRefresh: true,
       },
     });
   }, { dependencies: [] });
