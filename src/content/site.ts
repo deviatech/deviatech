@@ -1,6 +1,6 @@
 export const site = {
   name: "DeviaTech",
-  tagline: "From idea to launched — stores and startup products, built in Lahore.",
+  tagline: "From idea to launched: stores and startup products, built in Lahore.",
   url: "https://deviatech.com",
   domain: "deviatech.com",
   email: "hello@deviatech.com",

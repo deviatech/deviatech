@@ -11,7 +11,7 @@ export const workEyebrow = "PRODUCTS WE'VE BUILT";
 export const work: WorkItem[] = [
   {
     name: "Cvilo",
-    description: "An AI-powered resume builder — cvilo.com",
+    description: "An AI-powered resume builder (cvilo.com)",
     tags: ["Next.js", "React", "Golang", "AI"],
     url: "https://cvilo.com",
     caseStudySlug: "cvilo-ai-resume-builder",
@@ -24,13 +24,13 @@ export const work: WorkItem[] = [
   },
   {
     name: "Nabtahvie",
-    description: "A corporate website with a custom Laravel CMS admin panel — nabtahvie.ir",
+    description: "A corporate website with a custom Laravel CMS admin panel (nabtahvie.ir)",
     tags: ["Next.js", "Tailwind CSS", "Laravel"],
     url: "https://nabtahvie.ir",
   },
   {
     name: "EasyfyTag",
-    description: "An NFC read/write platform — a desktop app for writing tags plus the web dashboard behind it — easyfytag.com",
+    description: "An NFC read/write platform: a desktop app for writing tags plus the web dashboard behind it (easyfytag.com)",
     tags: ["Electron.js", "React", "Go", "Docker"],
     url: "https://easyfytag.com",
     caseStudySlug: "easyfytag-nfc-platform",
