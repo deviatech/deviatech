@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useGSAP } from "@gsap/react";
@@ -10,6 +10,8 @@ import {
   LuBoxes,
   LuNewspaper,
   LuMail,
+  LuMenu,
+  LuX,
 } from "react-icons/lu";
 import { buildWhatsAppLink } from "@/lib/whatsapp";
 import { site } from "@/content/site";
@@ -26,6 +28,7 @@ const navLinks = [
 
 export default function Header() {
   const headerRef = useRef<HTMLElement>(null);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useGSAP(() => {
     if (prefersReducedMotion() || !headerRef.current) return;
@@ -78,14 +81,49 @@ export default function Header() {
           data-ga-event="whatsapp_click"
           data-ga-label="header"
           aria-label="Chat on WhatsApp"
-          className="flex items-center justify-center gap-2 rounded-sm bg-accent-amber px-4 py-2 font-body text-sm font-medium text-ink transition-[padding,transform] duration-300 hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-amber [.is-scrolled_&]:px-2.5"
+          className="hidden items-center justify-center gap-2 rounded-sm bg-accent-amber px-4 py-2 font-body text-sm font-medium text-ink transition-[padding,transform] duration-300 hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-amber [.is-scrolled_&]:px-2.5 md:flex"
         >
           <WhatsAppIcon aria-hidden="true" className="h-4 w-4 shrink-0" />
           <span className="whitespace-nowrap [.is-scrolled_&]:hidden">
             Chat on WhatsApp
           </span>
         </Link>
+        <button
+          type="button"
+          onClick={() => setIsMenuOpen((open) => !open)}
+          aria-expanded={isMenuOpen}
+          aria-controls="mobile-nav"
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          className="flex items-center justify-center rounded-sm border border-line-grid p-2 text-ink transition-colors hover:border-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-amber md:hidden"
+        >
+          {isMenuOpen ? (
+            <LuX aria-hidden="true" className="h-5 w-5" />
+          ) : (
+            <LuMenu aria-hidden="true" className="h-5 w-5" />
+          )}
+        </button>
       </div>
+      {isMenuOpen && (
+        <nav
+          id="mobile-nav"
+          className="border-t border-line-grid bg-paper px-6 py-4 md:hidden"
+        >
+          <ul className="flex flex-col gap-1">
+            {navLinks.map((link) => (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  onClick={() => setIsMenuOpen(false)}
+                  className="flex items-center gap-3 rounded-sm px-2 py-3 font-body text-sm text-ink-soft transition-colors hover:bg-line-grid/40 hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-amber"
+                >
+                  <link.icon aria-hidden="true" className="h-[1.1rem] w-[1.1rem] shrink-0" />
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )}
     </header>
   );
 }
