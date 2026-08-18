@@ -71,7 +71,7 @@ export const commercialPages: CommercialPage[] = [
     cta: "Discuss your software workflow",
     faqs: [
       { question: "Can you work with an existing system?", answer: "Yes. We can review the current workflow, codebase, or APIs before recommending whether to extend, replace, or connect it." },
-      { question: "Do you build mobile apps?", answer: "We focus primarily on responsive web applications. We can discuss a mobile requirement during discovery and recommend the right first surface." },
+      { question: "Do you build mobile apps?", answer: "Yes. Alongside web applications, we also build mobile and desktop apps. We'll recommend the right first surface during discovery based on what the product actually needs, not by defaulting to web out of habit." },
       { question: "Who owns the code?", answer: "You receive the agreed project code and deployment handoff after final payment. We do not lock you into our hosting." },
     ],
   },
