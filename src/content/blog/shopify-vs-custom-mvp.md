@@ -47,7 +47,7 @@ The usual mistake is comparing build quotes alone. WooCommerce often looks cheap
 
 **Custom software earns its price when the workflow is the value.** A marketplace, a complicated subscription rule, multi-vendor logistics: things that would be awkward workarounds on a platform. You also need someone who can make scope decisions and a budget for maintenance after launch, because custom software doesn't stop needing attention.
 
-We start custom work from a written scope, not a wishlist. The [EasyfyTag case study](/case-studies/easyfytag-nfc-platform) is an example of a product that needed connected desktop and web experiences rather than a storefront.
+We start custom work from a written scope, not a wishlist. The [EasyfyTag case study](/case-studies/easyfytag-nfc-platform) is an example of a product that needed connected desktop and web experiences rather than a storefront. If you're weighing something similar, [NFC app development in Pakistan](/blog/nfc-app-development-pakistan) walks through what that build actually involved.
 
 ## The short version
 

@@ -56,7 +56,7 @@ One thing that never appears in the build quote and always appears in the bill: 
 
 ## What EasyfyTag actually involved
 
-EasyfyTag is a good argument for scoping the whole surface rather than the website. The project needed an Electron desktop application for writing tags, a React dashboard, Go services, and Docker deployment. If that had been quoted as "build a web app," every one of those pieces would have been a surprise. Read the [EasyfyTag case study](/case-studies/easyfytag-nfc-platform).
+EasyfyTag is a good argument for scoping the whole surface rather than the website. The project needed an Electron desktop application for writing tags, a React dashboard, Go services, and Docker deployment. If that had been quoted as "build a web app," every one of those pieces would have been a surprise. Read the [EasyfyTag case study](/case-studies/easyfytag-nfc-platform), or [see the full breakdown of that build](/blog/nfc-app-development-pakistan).
 
 ## Common mistakes
 

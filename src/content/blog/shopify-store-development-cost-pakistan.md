@@ -65,4 +65,4 @@ Before launch, work through the [Shopify COD, payments and Meta Pixel checklist 
 - Promising a payment method before confirming you're eligible for it.
 - Paying for a custom feature Shopify already handles a simpler way.
 
-For a local example, see the [Ala Gallery case study](/case-studies/ala-gallery-ecommerce). If you want a number based on your actual catalogue, [send us your product list](/contact) and we'll scope it.
+For a local example, see the [Ala Gallery case study](/case-studies/ala-gallery-ecommerce), or read [when it's time to move from Instagram to an online store](/blog/instagram-to-online-store-pakistan) if you're still deciding whether now is the moment. If you want a number based on your actual catalogue, [send us your product list](/contact) and we'll scope it.

@@ -28,7 +28,7 @@ You own the relationship. What you need from the partner is clean work, straight
 
 **Review and handoff.** You should get accessible code, documented decisions, clean pull requests or files, and a handoff that doesn't require a phone call to decode. Agree who owns QA and who signs off the release before anyone starts building.
 
-EasyfyTag is a fair test of delivery range: the project crossed desktop, web, backend and deployment rather than sitting in one lane. Read the [EasyfyTag case study](/case-studies/easyfytag-nfc-platform).
+EasyfyTag is a fair test of delivery range: the project crossed desktop, web, backend and deployment rather than sitting in one lane. Read the [EasyfyTag case study](/case-studies/easyfytag-nfc-platform), or see [what NFC app development in Pakistan actually involves](/blog/nfc-app-development-pakistan) if that's closer to your client's brief.
 
 ## Getting the engagement shape right
 

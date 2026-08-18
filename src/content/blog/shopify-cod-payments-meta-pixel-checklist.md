@@ -115,6 +115,6 @@ For the build side in more detail, see [Shopify store development cost in Pakist
 - Sending paid traffic before testing mobile checkout and purchase tracking.
 - Burying the contact route, so a customer with a payment problem just leaves.
 
-None of this is difficult. It's just easy to skip when you're excited to launch, which is exactly why we treat it as a checklist rather than a memory test. The [Ala Gallery case study](/case-studies/ala-gallery-ecommerce) shows the kind of local store this work is built around.
+None of this is difficult. It's just easy to skip when you're excited to launch, which is exactly why we treat it as a checklist rather than a memory test. The [Ala Gallery case study](/case-studies/ala-gallery-ecommerce) shows the kind of local store this work is built around, and [moving from Instagram to an online store](/blog/instagram-to-online-store-pakistan) covers the decision that usually comes before this checklist does.
 
 Want someone to run it with you? See our [Shopify development service in Lahore](/shopify-development-lahore) or [send us your store URL](/contact). We normally reply within one business day.

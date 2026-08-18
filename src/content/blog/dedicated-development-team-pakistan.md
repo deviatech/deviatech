@@ -39,6 +39,8 @@ Review the codebase and backlog, agree the team shape and working hours, then ru
 
 Only scale up after the team understands both your product and your review process.
 
+For the wider case on whether outsourcing to Pakistan actually works and for whom, see [outsourcing software development to Pakistan](/blog/outsource-software-development-pakistan).
+
 Our [dedicated React development team service](/dedicated-development-team-pakistan) is built for product teams that already have a technical owner and a real backlog.
 
 If that's you, [send us your stack and backlog](/contact) and tell us what capacity you're missing.
