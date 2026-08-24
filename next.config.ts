@@ -15,6 +15,13 @@ const nextConfig: NextConfig = {
         destination: "/blog/mvp-development-cost-timeline",
         statusCode: 301,
       },
+      // /index.html is a legacy static-site artifact; Google Search Console
+      // flagged it as a 404. It's effectively the homepage.
+      {
+        source: "/index.html",
+        destination: "/",
+        statusCode: 301,
+      },
     ];
   },
 };
