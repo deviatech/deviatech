@@ -7,7 +7,7 @@ export default function Faq() {
       <p className="font-mono text-xs tracking-wide text-ink-soft">COMMON QUESTIONS</p>
       <div className="mt-8 flex flex-col divide-y divide-line-grid border-t border-b border-line-grid">
         {faqs.map((faq) => (
-          <details key={faq.question} className="group py-5">
+          <details key={faq.question} className="faq-item group py-5">
             <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-body text-base font-medium text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-amber">
               {faq.question}
               <span

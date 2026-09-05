@@ -31,7 +31,7 @@ export default function TechStack() {
         {stack.map((tech) => {
           const Icon = iconMap[tech];
           return (
-            <div key={tech} className="flex flex-col items-center gap-2 text-ink-soft">
+            <div key={tech} className="stack-item flex flex-col items-center gap-2 text-ink-soft">
               {Icon && <Icon aria-hidden="true" className="h-8 w-8" />}
               <span className="font-mono text-xs">{tech}</span>
             </div>

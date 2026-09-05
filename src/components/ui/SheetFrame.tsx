@@ -38,7 +38,7 @@ export default function SheetFrame({
       data-snap-section
       className={`relative mx-auto flex min-h-screen max-w-6xl flex-col justify-center px-6 py-16 md:py-24 ${className}`}
     >
-      <div className="relative border border-line-grid px-4 py-10 md:px-10 md:py-16">
+      <div className={`${number === "01" ? "" : "reveal-sheet"} relative border border-line-grid px-4 py-10 md:px-10 md:py-16`}>
         <CornerMark position="tl" />
         <CornerMark position="tr" />
         <CornerMark position="bl" />

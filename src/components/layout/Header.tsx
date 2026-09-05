@@ -102,7 +102,7 @@ export default function Header() {
       {isMenuOpen && (
         <nav
           id="mobile-nav"
-          className="border-t border-line-grid bg-paper px-6 py-4 md:hidden"
+          className="mobile-menu-enter border-t border-line-grid bg-paper px-6 py-4 md:hidden"
         >
           <ul className="flex flex-col gap-1">
             {navLinks.map((link) => (

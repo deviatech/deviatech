@@ -43,6 +43,67 @@ body {
   font-family: var(--font-body), sans-serif;
 }
 
+/* Lightweight brand motion: CSS-only, compositor-friendly transforms. */
+@keyframes hero-illustration-in {
+  from { transform: translateY(14px) scale(0.985); }
+  to { transform: translateY(0) scale(1); }
+}
+
+@keyframes draw-line {
+  from { stroke-dashoffset: 1000; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes menu-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes grid-drift {
+  from { background-position-y: 0; }
+  to { background-position-y: 120px; }
+}
+
+@keyframes reveal-up {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.signature-illustration {
+  animation: hero-illustration-in 600ms cubic-bezier(0.2, 0, 0, 1) both;
+}
+
+.signature-illustration [data-draw] {
+  stroke-dasharray: 1000;
+  animation: draw-line 900ms cubic-bezier(0.2, 0, 0, 1) both;
+}
+
+.signature-illustration [data-draw]:nth-child(3n + 2) { animation-delay: 60ms; }
+.signature-illustration [data-draw]:nth-child(3n) { animation-delay: 120ms; }
+.mobile-menu-enter { animation: menu-in 220ms cubic-bezier(0.2, 0, 0, 1) both; }
+
+@supports (animation-timeline: view()) {
+  .blueprint-grid {
+    animation: grid-drift linear both;
+    animation-timeline: scroll(root);
+  }
+
+  .reveal-sheet,
+  .reveal-card,
+  .stack-item,
+  .faq-item {
+    animation: reveal-up 420ms cubic-bezier(0.2, 0, 0, 1) both;
+    animation-timeline: view();
+    animation-range: entry 8% entry 32%;
+  }
+
+  .reveal-card:nth-child(2n),
+  .stack-item:nth-child(3n + 2),
+  .faq-item:nth-child(2n) {
+    animation-range: entry 12% entry 38%;
+  }
+}
+
 .markdown-content h2 {
   font-family: var(--font-display);
   color: var(--ink);
@@ -88,6 +149,11 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  .signature-illustration [data-draw] {
+    stroke-dasharray: none;
+    stroke-dashoffset: 0;
   }
 }
 

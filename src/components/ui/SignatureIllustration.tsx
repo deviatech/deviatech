@@ -2,7 +2,7 @@ export default function SignatureIllustration() {
   return (
     <svg
       viewBox="0 0 480 400"
-      className="h-auto w-full max-w-md"
+      className="signature-illustration h-auto w-full max-w-md"
       role="img"
       aria-label="A hand-drawn wireframe sketch resolving into a finished storefront screen"
     >
