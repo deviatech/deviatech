@@ -1,9 +1,8 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useGSAP } from "@gsap/react";
 import {
   LuBriefcase,
   LuLayers,
@@ -15,7 +14,6 @@ import {
 } from "react-icons/lu";
 import { buildWhatsAppLink } from "@/lib/whatsapp";
 import { site } from "@/content/site";
-import { ScrollTrigger, prefersReducedMotion } from "@/lib/gsap";
 import { WhatsAppIcon } from "@/components/ui/SocialIcons";
 
 const navLinks = [
@@ -27,21 +25,19 @@ const navLinks = [
 ];
 
 export default function Header() {
-  const headerRef = useRef<HTMLElement>(null);
+  const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  useGSAP(() => {
-    if (prefersReducedMotion() || !headerRef.current) return;
-    ScrollTrigger.create({
-      start: 48,
-      toggleClass: { targets: headerRef.current, className: "is-scrolled" },
-    });
-  }, { dependencies: [] });
+  useEffect(() => {
+    const updateHeader = () => setIsScrolled(window.scrollY > 48);
+    updateHeader();
+    window.addEventListener("scroll", updateHeader, { passive: true });
+    return () => window.removeEventListener("scroll", updateHeader);
+  }, []);
 
   return (
     <header
-      ref={headerRef}
-      className="sticky top-0 z-40 border-b border-line-grid bg-paper/90 backdrop-blur transition-shadow duration-300 [&.is-scrolled]:shadow-sm"
+      className={`sticky top-0 z-40 border-b border-line-grid bg-paper/90 backdrop-blur transition-shadow duration-300 ${isScrolled ? "is-scrolled shadow-sm" : ""}`}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4 transition-[padding] duration-300 [.is-scrolled_&]:py-2.5">
         <Link

@@ -1,36 +1,6 @@
-"use client";
-
-import { useEffect, useRef, useState } from "react";
-
 export default function SignatureIllustration() {
-  const svgRef = useRef<SVGSVGElement>(null);
-  const [reduceMotion, setReduceMotion] = useState(false);
-
-  useEffect(() => {
-    const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReduceMotion(mql.matches);
-    const listener = (e: MediaQueryListEvent) => setReduceMotion(e.matches);
-    mql.addEventListener("change", listener);
-    return () => mql.removeEventListener("change", listener);
-  }, []);
-
-  useEffect(() => {
-    if (reduceMotion || !svgRef.current) return;
-    const paths = svgRef.current.querySelectorAll<SVGPathElement>("path[data-draw]");
-    paths.forEach((path, i) => {
-      const length = path.getTotalLength();
-      path.style.strokeDasharray = `${length}`;
-      path.style.strokeDashoffset = `${length}`;
-      path.style.transition = `stroke-dashoffset 1.2s cubic-bezier(0.65, 0, 0.35, 1) ${i * 0.08}s`;
-      requestAnimationFrame(() => {
-        path.style.strokeDashoffset = "0";
-      });
-    });
-  }, [reduceMotion]);
-
   return (
     <svg
-      ref={svgRef}
       viewBox="0 0 480 400"
       className="h-auto w-full max-w-md"
       role="img"

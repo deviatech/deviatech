@@ -17,11 +17,11 @@ export default function TwoTracks() {
       <div className="mt-8 grid gap-6 md:grid-cols-2">
         {tracks.map((track, index) => (
           <Card key={track.name}>
-            <h3 className="font-display text-xl font-semibold text-ink">
+            <h2 className="font-display text-xl font-semibold text-ink">
               <Link href={serviceLinks[index]} className="hover:text-accent-rust">
                 {track.name}
               </Link>
-            </h3>
+            </h2>
             <p className="mt-2 font-body text-lg font-medium text-ink">{track.headline}</p>
             <p className="mt-3 font-body text-ink-soft">{track.copy}</p>
             <p className="mt-4 font-mono text-xs text-accent-rust">{track.startingPrice}</p>

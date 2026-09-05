@@ -1,64 +1,12 @@
-"use client";
-
-import { useRef } from "react";
-import { useGSAP } from "@gsap/react";
 import SheetFrame from "@/components/ui/SheetFrame";
 import Button from "@/components/ui/Button";
 import SignatureIllustration from "@/components/ui/SignatureIllustration";
 import { buildWhatsAppLink } from "@/lib/whatsapp";
 import { site } from "@/content/site";
-import { gsap, prefersReducedMotion } from "@/lib/gsap";
 
 export default function Hero() {
-  const rootRef = useRef<HTMLDivElement>(null);
-  const illustrationRef = useRef<HTMLDivElement>(null);
-
-  useGSAP(
-    () => {
-      if (prefersReducedMotion() || !rootRef.current) return;
-
-      gsap
-        .timeline({ delay: 0.35, defaults: { ease: "power3.out" } })
-        .from("[data-hero-eyebrow]", { opacity: 0, y: 10, duration: 0.4 })
-        .from(
-          "[data-hero-heading]",
-          { opacity: 0, y: 24, duration: 0.6 },
-          "-=0.2"
-        )
-        .from(
-          "[data-hero-sub]",
-          { opacity: 0, y: 16, duration: 0.5, stagger: 0.12 },
-          "-=0.35"
-        )
-        .from(
-          "[data-hero-cta]",
-          { opacity: 0, y: 12, duration: 0.4, stagger: 0.08 },
-          "-=0.3"
-        )
-        .from(
-          illustrationRef.current,
-          { opacity: 0, y: 16, scale: 0.97, duration: 0.6 },
-          "-=0.5"
-        );
-
-      if (illustrationRef.current) {
-        gsap.to(illustrationRef.current, {
-          y: -28,
-          ease: "none",
-          scrollTrigger: {
-            trigger: rootRef.current,
-            start: "top top",
-            end: "bottom top",
-            scrub: 0.5,
-          },
-        });
-      }
-    },
-    { scope: rootRef, dependencies: [] }
-  );
-
   return (
-    <div ref={rootRef}>
+    <div>
       <SheetFrame number="01" label="HERO" id="hero">
         <div className="grid items-center gap-10 md:grid-cols-2">
           <div>
@@ -97,7 +45,7 @@ export default function Hero() {
               </span>
             </div>
           </div>
-          <div ref={illustrationRef} className="flex justify-center md:justify-end">
+          <div className="flex justify-center md:justify-end">
             <SignatureIllustration />
           </div>
         </div>

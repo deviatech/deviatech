@@ -73,12 +73,14 @@ export default function Contact() {
           <input
             required
             name="name"
+            aria-label="Name"
             placeholder="Name"
             className="rounded-sm border border-line-grid bg-surface px-4 py-3 text-sm text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-amber"
           />
           <select
             required
             name="projectType"
+            aria-label="Project type"
             defaultValue=""
             className="rounded-sm border border-line-grid bg-surface px-4 py-3 text-sm text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-amber"
           >
@@ -94,6 +96,7 @@ export default function Contact() {
           <select
             required
             name="budget"
+            aria-label="Approximate budget"
             defaultValue=""
             className="rounded-sm border border-line-grid bg-surface px-4 py-3 text-sm text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-amber"
           >
@@ -107,6 +110,7 @@ export default function Contact() {
           <select
             required
             name="preferredContact"
+            aria-label="Preferred contact method"
             defaultValue=""
             className="rounded-sm border border-line-grid bg-surface px-4 py-3 text-sm text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-amber"
           >
@@ -118,12 +122,14 @@ export default function Contact() {
           <input
             required
             name="contact"
+            aria-label="Email or phone"
             placeholder="Email or phone"
             className="rounded-sm border border-line-grid bg-surface px-4 py-3 text-sm text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-amber"
           />
           <textarea
             required
             name="message"
+            aria-label="Project details"
             placeholder="What are you building?"
             rows={4}
             className="rounded-sm border border-line-grid bg-surface px-4 py-3 text-sm text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-amber"

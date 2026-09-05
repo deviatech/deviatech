@@ -7,6 +7,7 @@ export function trackEvent(name: string, params: AnalyticsParams = {}) {
 
 declare global {
   interface Window {
-    gtag?: (command: string, eventName: string, params?: AnalyticsParams) => void;
+    dataLayer?: unknown[][];
+    gtag?: (...args: unknown[]) => void;
   }
 }
