@@ -1,0 +1,103 @@
+.footer {
+  background: var(--luma-footer, #293234);
+  color: var(--luma-footer-muted, #aeb7b6);
+  padding-block: 56px 32px;
+}
+
+@media (min-width: 1024px) {
+  .footer {
+    padding-block: 80px 40px;
+  }
+}
+
+.grid {
+  display: grid;
+  gap: 40px;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: 1.4fr 1fr 1.2fr;
+    gap: 32px;
+  }
+}
+
+.brandCol {
+  max-width: 360px;
+}
+
+.brandName {
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.25rem;
+  margin: 0 0 12px;
+}
+
+.brandBlurb {
+  line-height: 1.7;
+  font-size: 0.9375rem;
+  margin: 0;
+}
+
+.colHeading {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  margin: 0 0 16px;
+}
+
+.linkList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.link {
+  color: var(--luma-footer-muted, #aeb7b6);
+  text-decoration: none;
+  font-size: 0.9375rem;
+}
+
+.link:hover {
+  color: #fff;
+}
+
+.contactCta {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  margin: 0 0 16px;
+}
+
+.deviatechButton {
+  margin-bottom: 12px;
+  width: 100%;
+}
+
+.bookLink {
+  width: 100%;
+  border-color: var(--luma-footer-muted, #aeb7b6);
+  color: #fff;
+}
+
+.legalRow {
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.conceptNotice {
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  margin: 0;
+  max-width: 640px;
+}

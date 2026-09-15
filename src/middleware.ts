@@ -14,6 +14,13 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(url, 301);
   }
 
+  if (host === "demo.deviatech.com") {
+    const url = request.nextUrl.clone();
+    const path = request.nextUrl.pathname === "/" ? "" : request.nextUrl.pathname;
+    url.pathname = `/therapist-demo${path}`;
+    return NextResponse.rewrite(url);
+  }
+
   return NextResponse.next();
 }
 
