@@ -3,6 +3,42 @@ import { Resend } from "resend";
 import { site } from "@/content/site";
 
 const MAX_LENGTH = 2000;
+const MAX_BODY_BYTES = 20_000;
+
+const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
+const RATE_LIMIT_MAX_REQUESTS = 5;
+const rateLimitHits = new Map<string, number[]>();
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const windowStart = now - RATE_LIMIT_WINDOW_MS;
+  const hits = (rateLimitHits.get(ip) ?? []).filter((timestamp) => timestamp > windowStart);
+
+  if (hits.length >= RATE_LIMIT_MAX_REQUESTS) {
+    rateLimitHits.set(ip, hits);
+    return true;
+  }
+
+  hits.push(now);
+  rateLimitHits.set(ip, hits);
+
+  // Bound memory: drop stale IPs once the map grows large.
+  if (rateLimitHits.size > 5000) {
+    for (const [key, timestamps] of rateLimitHits) {
+      if (timestamps.every((timestamp) => timestamp <= windowStart)) {
+        rateLimitHits.delete(key);
+      }
+    }
+  }
+
+  return false;
+}
+
+function getClientIp(req: NextRequest): string {
+  const forwardedFor = req.headers.get("x-forwarded-for");
+  if (forwardedFor) return forwardedFor.split(",")[0].trim();
+  return req.headers.get("x-real-ip") ?? "unknown";
+}
 
 function clean(value: unknown, maxLength = MAX_LENGTH): string {
   if (typeof value !== "string") return "";
@@ -87,14 +123,39 @@ async function handleTherapistLead(body: Record<string, unknown>) {
 }
 
 export async function POST(req: NextRequest) {
-  const body = await req.json();
+  const ip = getClientIp(req);
+  if (isRateLimited(ip)) {
+    return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+  }
+
+  const contentLength = Number(req.headers.get("content-length") ?? "0");
+  if (contentLength > MAX_BODY_BYTES) {
+    return NextResponse.json({ error: "Request too large" }, { status: 413 });
+  }
+
+  let body: Record<string, unknown>;
+  try {
+    const rawText = await req.text();
+    if (rawText.length > MAX_BODY_BYTES) {
+      return NextResponse.json({ error: "Request too large" }, { status: 413 });
+    }
+    body = JSON.parse(rawText);
+  } catch {
+    return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+  }
+
   const source = typeof body.source === "string" ? body.source : "";
 
   if (THERAPIST_SOURCES.has(source)) {
     return handleTherapistLead(body);
   }
 
-  const { name, contact, projectType, budget, preferredContact, message } = body;
+  const name = clean(body.name, 200);
+  const contact = clean(body.contact, 320);
+  const projectType = clean(body.projectType, 200);
+  const budget = clean(body.budget, 200);
+  const preferredContact = clean(body.preferredContact, 200);
+  const message = clean(body.message, MAX_LENGTH);
 
   if (!name || !contact || !projectType || !budget || !preferredContact || !message) {
     return NextResponse.json({ error: "Missing fields" }, { status: 400 });

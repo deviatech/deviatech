@@ -1,5 +1,6 @@
 import { Fraunces, Inter, Vazirmatn } from "next/font/google";
 import type { TherapistLandingContent } from "../content/types";
+import DocumentLocale from "./DocumentLocale";
 import LandingHero from "./LandingHero";
 import TrustBar from "./TrustBar";
 import ConceptShowcase from "./ConceptShowcase";
@@ -41,6 +42,7 @@ export default function TherapistLanding({ content }: { content: TherapistLandin
       dir={content.dir}
       className={`${styles.root} ${fraunces.variable} ${inter.variable} ${vazirmatn.variable}`}
     >
+      <DocumentLocale locale={content.locale} />
       <LandingHero content={content} />
       <TrustBar content={content} />
       <ConceptShowcase content={content} />

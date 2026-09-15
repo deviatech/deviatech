@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import { LuCalendarCheck } from "react-icons/lu";
 import type { ConceptTabContent, TherapistLandingContent } from "../content/types";
 import { therapistLandingConfig } from "../config";
@@ -9,16 +9,27 @@ import styles from "../therapistLanding.module.css";
 
 type Device = "desktop" | "mobile";
 
+const DESKTOP_QUERY = "(min-width: 1024px)";
+
 export default function ConceptShowcase({ content }: { content: TherapistLandingContent }) {
   const { concept } = content;
   const isRtl = content.dir === "rtl";
   const tabs = concept.tabs;
   const [activeId, setActiveId] = useState(tabs[0].id);
   const [device, setDevice] = useState<Device>("desktop");
+  const [isVerticalLayout, setIsVerticalLayout] = useState(false);
   const baseId = useId();
   const { liveDemoUrl } = therapistLandingConfig;
 
   const activeIndex = tabs.findIndex((tab) => tab.id === activeId);
+
+  useEffect(() => {
+    const mql = window.matchMedia(DESKTOP_QUERY);
+    setIsVerticalLayout(mql.matches);
+    const handleChange = (event: MediaQueryListEvent) => setIsVerticalLayout(event.matches);
+    mql.addEventListener("change", handleChange);
+    return () => mql.removeEventListener("change", handleChange);
+  }, []);
 
   function focusTabByIndex(index: number) {
     const nextIndex = (index + tabs.length) % tabs.length;
@@ -29,8 +40,10 @@ export default function ConceptShowcase({ content }: { content: TherapistLanding
   }
 
   function handleKeyDown(event: React.KeyboardEvent) {
-    const isNext = isRtl ? event.key === "ArrowUp" || event.key === "ArrowLeft" : event.key === "ArrowDown" || event.key === "ArrowRight";
-    const isPrev = isRtl ? event.key === "ArrowDown" || event.key === "ArrowRight" : event.key === "ArrowUp" || event.key === "ArrowLeft";
+    const nextKey = isVerticalLayout ? "ArrowDown" : isRtl ? "ArrowLeft" : "ArrowRight";
+    const prevKey = isVerticalLayout ? "ArrowUp" : isRtl ? "ArrowRight" : "ArrowLeft";
+    const isNext = event.key === nextKey;
+    const isPrev = event.key === prevKey;
 
     if (isNext) {
       event.preventDefault();
@@ -79,7 +92,7 @@ export default function ConceptShowcase({ content }: { content: TherapistLanding
           <div
             role="tablist"
             aria-label={concept.heading}
-            aria-orientation="vertical"
+            aria-orientation={isVerticalLayout ? "vertical" : "horizontal"}
             className="flex gap-2 overflow-x-auto pb-2 lg:flex-col lg:overflow-visible lg:pb-0"
             style={{ scrollbarWidth: "thin" }}
           >

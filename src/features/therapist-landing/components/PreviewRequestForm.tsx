@@ -117,9 +117,15 @@ export default function PreviewRequestForm({ content }: { content: TherapistLand
           style={{ boxShadow: "var(--tl-shadow-sm)" }}
         >
           <form onSubmit={handleSubmit} onChange={trackStart} noValidate>
-            <div aria-hidden="true" className={styles.visuallyHidden}>
+            <div className={styles.visuallyHidden}>
               <label htmlFor="companyWebsite">Leave this field empty</label>
-              <input id="companyWebsite" name="companyWebsite" type="text" tabIndex={-1} autoComplete="off" />
+              <input
+                id="companyWebsite"
+                name="companyWebsite"
+                type="text"
+                tabIndex={-1}
+                autoComplete="off"
+              />
             </div>
 
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
