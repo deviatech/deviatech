@@ -1,0 +1,196 @@
+.formGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.formRow2 {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 640px) {
+  .formRow2 { grid-template-columns: repeat(2, 1fr); }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--luma-text, #2d3436);
+}
+
+.optional {
+  font-weight: 400;
+  color: var(--luma-text-muted, #8b9294);
+  font-size: 0.8125rem;
+}
+
+.input,
+.textarea,
+.select {
+  height: 50px;
+  padding: 0 16px;
+  border-radius: 10px;
+  border: 1px solid var(--luma-border, #e5e5e5);
+  background: var(--luma-surface, #fff);
+  color: var(--luma-text, #2d3436);
+  font-size: 1rem;
+  font-family: inherit;
+  width: 100%;
+}
+
+.textarea {
+  height: auto;
+  min-height: 128px;
+  padding-block: 12px;
+  resize: vertical;
+}
+
+.select {
+  cursor: pointer;
+}
+
+.input:focus-visible,
+.textarea:focus-visible,
+.select:focus-visible {
+  outline: 2px solid var(--luma-focus, #58796c);
+  outline-offset: 2px;
+}
+
+.inputError {
+  border-color: var(--luma-danger, #a13d36);
+}
+
+.errorText {
+  color: var(--luma-danger, #a13d36);
+  font-size: 0.8125rem;
+}
+
+.choiceGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.choiceOption {
+  display: inline-flex;
+}
+
+.choiceInput {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.choiceLabel {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 18px;
+  border-radius: 999px;
+  border: 1px solid var(--luma-border, #e5e5e5);
+  color: var(--luma-text-body, #667074);
+  font-size: 0.9375rem;
+  cursor: pointer;
+}
+
+.choiceInput:checked + .choiceLabel {
+  background: var(--luma-text, #2d3436);
+  border-color: var(--luma-text, #2d3436);
+  color: #fff;
+}
+
+.choiceInput:focus-visible + .choiceLabel {
+  outline: 2px solid var(--luma-focus, #58796c);
+  outline-offset: 2px;
+}
+
+.formNotice {
+  background: var(--luma-surface-muted, #f3f1eb);
+  border-radius: var(--luma-radius-md, 12px);
+  padding: 16px 20px;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--luma-text-body, #667074);
+}
+
+.submitRow {
+  margin-top: 8px;
+}
+
+.statusRegion {
+  border-radius: var(--luma-radius-md, 12px);
+  padding: 16px 20px;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+
+.statusSuccess {
+  background: var(--luma-sage-soft, #edf1ee);
+  color: var(--luma-success, #47715f);
+}
+
+.statusError {
+  background: #fbeceb;
+  color: var(--luma-danger, #a13d36);
+}
+
+.honeypot {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.contactGrid {
+  display: grid;
+  gap: 48px;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 1024px) {
+  .contactGrid {
+    grid-template-columns: 1.3fr 1fr;
+  }
+}
+
+.contactChannels {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.channelCard {
+  display: block;
+  padding: 20px 24px;
+  border-radius: var(--luma-radius-md, 12px);
+  border: 1px solid var(--luma-border, #e5e5e5);
+  text-decoration: none;
+  color: inherit;
+}
+
+.channelCard:hover {
+  border-color: var(--luma-sage, #8da399);
+}
+
+.channelLabel {
+  font-weight: 600;
+  color: var(--luma-text, #2d3436);
+  margin: 0 0 4px;
+}
+
+.channelDescription {
+  color: var(--luma-text-body, #667074);
+  font-size: 0.9375rem;
+  margin: 0;
+}

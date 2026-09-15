@@ -74,6 +74,76 @@ async function sendMail(subject: string, text: string, replyTo: string) {
 
 const THERAPIST_SOURCES = new Set(["therapist-website-design-en", "therapist-website-design-fa"]);
 
+const DEMO_SOURCES = new Set([
+  "therapist-demo-contact-en",
+  "therapist-demo-contact-fa",
+  "therapist-demo-booking-en",
+  "therapist-demo-booking-fa",
+]);
+
+async function handleDemoLead(body: Record<string, unknown>) {
+  // Honeypot: bots fill hidden fields; humans never see or fill this one.
+  if (clean(body.companyWebsite, 200)) {
+    return NextResponse.json({ ok: true });
+  }
+
+  const source = clean(body.source, 60);
+  const locale = body.locale === "fa" ? "fa" : "en";
+  const isBooking = source.endsWith("-booking-en") || source.endsWith("-booking-fa");
+
+  const fullName = clean(body.fullName, 200);
+  const email = clean(body.email, 320);
+  const whatsapp = clean(body.whatsapp, 60);
+
+  if (!fullName || (!email && !whatsapp)) {
+    return NextResponse.json({ error: "Missing fields" }, { status: 400 });
+  }
+
+  if (email && !EMAIL_PATTERN.test(email)) {
+    return NextResponse.json({ error: "Invalid email" }, { status: 400 });
+  }
+
+  const lines = [`Source: ${source}`, `Locale: ${locale}`, `Name: ${fullName}`, `Email: ${email || "-"}`, `WhatsApp: ${whatsapp || "-"}`];
+
+  if (isBooking) {
+    const serviceInterest = clean(body.serviceInterest, 100);
+    const sessionPreference = clean(body.sessionPreference, 60);
+    const preferredDateRange = clean(body.preferredDateRange, 200);
+    const preferredTimeOfDay = clean(body.preferredTimeOfDay, 60);
+    const note = clean(body.note, MAX_LENGTH);
+
+    lines.push(
+      `Service interest: ${serviceInterest || "-"}`,
+      `Session preference: ${sessionPreference || "-"}`,
+      `Preferred date range: ${preferredDateRange || "-"}`,
+      `Preferred time of day: ${preferredTimeOfDay || "-"}`,
+      "",
+      note,
+    );
+  } else {
+    const subject = clean(body.subject, 200);
+    const message = clean(body.message, MAX_LENGTH);
+
+    if (!subject || !message) {
+      return NextResponse.json({ error: "Missing fields" }, { status: 400 });
+    }
+
+    lines.push(`Subject: ${subject}`, "", message);
+  }
+
+  const result = await sendMail(
+    `[Luma Therapy demo] New ${isBooking ? "booking" : "contact"} enquiry from ${fullName}`,
+    lines.join("\n"),
+    email || site.email,
+  );
+
+  if (!result.ok) {
+    return NextResponse.json({ error: result.error }, { status: result.status });
+  }
+
+  return NextResponse.json({ ok: true });
+}
+
 async function handleTherapistLead(body: Record<string, unknown>) {
   // Honeypot: bots fill hidden fields; humans never see or fill this one.
   if (clean(body.companyWebsite, 200)) {
@@ -148,6 +218,10 @@ export async function POST(req: NextRequest) {
 
   if (THERAPIST_SOURCES.has(source)) {
     return handleTherapistLead(body);
+  }
+
+  if (DEMO_SOURCES.has(source)) {
+    return handleDemoLead(body);
   }
 
   const name = clean(body.name, 200);
