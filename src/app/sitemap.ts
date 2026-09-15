@@ -36,6 +36,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "yearly",
       priority: 0.7,
     },
+    {
+      url: `${site.url}/therapist-website-design`,
+      lastModified: new Date("2026-09-15"),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${site.url}/fa/therapist-website-design`,
+      lastModified: new Date("2026-09-15"),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
   ];
 
   return [
