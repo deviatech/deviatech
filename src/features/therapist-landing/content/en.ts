@@ -12,6 +12,7 @@ export const en: TherapistLandingContent = {
   localeSwitch: {
     en: "English",
     fa: "فارسی",
+    ur: "اردو",
   },
   hero: {
     eyebrow: "Websites for Therapists, by DeviaTech",
@@ -241,7 +242,7 @@ export const en: TherapistLandingContent = {
       {
         question: "Can the website support multiple languages?",
         answer:
-          "Yes. Multilingual support, including right-to-left languages such as Persian, is available as part of the Practice and International packages.",
+          "Yes. Multilingual support, including right-to-left languages such as Persian and Urdu, is available as part of the Practice and International packages.",
       },
       {
         question: "Will I own the finished website?",

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import { site } from "@/content/site";
+import { SUPPORTED_LOCALES, type Locale } from "@/lib/locales";
 
 const MAX_LENGTH = 2000;
 const MAX_BODY_BYTES = 20_000;
@@ -85,14 +86,29 @@ async function sendMail(subject: string, text: string, replyTo: string) {
   return { ok: true as const };
 }
 
-const THERAPIST_SOURCES = new Set(["therapist-website-design-en", "therapist-website-design-fa"]);
+const THERAPIST_SOURCES = new Set(
+  SUPPORTED_LOCALES.map((locale) => `therapist-website-design-${locale}`),
+);
 
 const DEMO_SOURCES = new Set([
-  "therapist-demo-contact-en",
-  "therapist-demo-contact-fa",
-  "therapist-demo-booking-en",
-  "therapist-demo-booking-fa",
+  ...SUPPORTED_LOCALES.map((locale) => `therapist-demo-contact-${locale}`),
+  ...SUPPORTED_LOCALES.map((locale) => `therapist-demo-booking-${locale}`),
 ]);
+
+/**
+ * Extracts the locale from a source id's trailing -en/-fa/-ur suffix — the
+ * source string is the allowlisted, structurally-verified value, so this
+ * is authoritative. Used to validate that body.locale (client-supplied,
+ * not trusted on its own) actually agrees with it, so a payload can never
+ * silently coerce e.g. source=...-ur with locale="fa" into being handled
+ * as either locale inconsistently.
+ */
+function localeFromSource(source: string): Locale | null {
+  for (const locale of SUPPORTED_LOCALES) {
+    if (source.endsWith(`-${locale}`)) return locale;
+  }
+  return null;
+}
 
 async function handleDemoLead(body: Record<string, unknown>) {
   // Honeypot: bots fill hidden fields; humans never see or fill this one.
@@ -101,8 +117,11 @@ async function handleDemoLead(body: Record<string, unknown>) {
   }
 
   const source = clean(body.source, 60);
-  const locale = body.locale === "fa" ? "fa" : "en";
-  const isBooking = source.endsWith("-booking-en") || source.endsWith("-booking-fa");
+  const locale = localeFromSource(source);
+  if (!locale || (typeof body.locale === "string" && body.locale !== locale)) {
+    return NextResponse.json({ error: "Invalid source/locale" }, { status: 400 });
+  }
+  const isBooking = source.startsWith("therapist-demo-booking-");
 
   const fullName = clean(body.fullName, 200);
   const email = clean(body.email, 320);
@@ -164,7 +183,10 @@ async function handleTherapistLead(body: Record<string, unknown>) {
   }
 
   const source = clean(body.source, 60);
-  const locale = body.locale === "fa" ? "fa" : "en";
+  const locale = localeFromSource(source);
+  if (!locale || (typeof body.locale === "string" && body.locale !== locale)) {
+    return NextResponse.json({ error: "Invalid source/locale" }, { status: 400 });
+  }
   const fullName = clean(body.fullName, 200);
   const role = clean(body.role, 200);
   const country = clean(body.country, 200);

@@ -31,11 +31,20 @@
   font-family: var(--font-tl-display), serif;
 }
 
-.root[dir="rtl"] :global(h1),
-.root[dir="rtl"] :global(h2),
-.root[dir="rtl"] :global(h3),
-.root[dir="rtl"] {
+.root[data-locale="fa"] :global(h1),
+.root[data-locale="fa"] :global(h2),
+.root[data-locale="fa"] :global(h3),
+.root[data-locale="fa"] {
   font-family: var(--font-tl-persian), sans-serif;
+}
+
+.root[data-locale="ur"] :global(h1),
+.root[data-locale="ur"] :global(h2),
+.root[data-locale="ur"] :global(h3),
+.root[data-locale="ur"] {
+  font-family: var(--font-tl-urdu), sans-serif;
+  line-height: 1.85;
+  letter-spacing: normal;
 }
 
 .container {

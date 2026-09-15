@@ -1,3 +1,5 @@
+import type { Locale, Direction } from "@/lib/locales";
+
 export type ConceptTabId = "home" | "about" | "services" | "blog" | "contact" | "booking";
 
 export interface ConceptTabContent {
@@ -39,8 +41,8 @@ export interface FaqItem {
 }
 
 export interface TherapistLandingContent {
-  locale: "en" | "fa";
-  dir: "ltr" | "rtl";
+  locale: Locale;
+  dir: Direction;
   meta: {
     title: string;
     description: string;
@@ -49,6 +51,7 @@ export interface TherapistLandingContent {
   localeSwitch: {
     en: string;
     fa: string;
+    ur: string;
   };
   hero: {
     eyebrow: string;

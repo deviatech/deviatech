@@ -1,4 +1,4 @@
-import { Fraunces, Inter, Vazirmatn } from "next/font/google";
+import { Fraunces, Inter, Vazirmatn, Noto_Sans_Arabic } from "next/font/google";
 import type { TherapistLandingContent } from "../content/types";
 import LandingHero from "./LandingHero";
 import TrustBar from "./TrustBar";
@@ -32,6 +32,13 @@ const vazirmatn = Vazirmatn({
   display: "swap",
 });
 
+const notoSansArabic = Noto_Sans_Arabic({
+  variable: "--font-tl-urdu",
+  subsets: ["arabic"],
+  weight: ["400", "500", "600"],
+  display: "swap",
+});
+
 export default function TherapistLanding({ content }: { content: TherapistLandingContent }) {
   return (
     <div
@@ -39,7 +46,7 @@ export default function TherapistLanding({ content }: { content: TherapistLandin
       data-locale={content.locale}
       lang={content.locale}
       dir={content.dir}
-      className={`${styles.root} ${fraunces.variable} ${inter.variable} ${vazirmatn.variable}`}
+      className={`${styles.root} ${fraunces.variable} ${inter.variable} ${vazirmatn.variable} ${notoSansArabic.variable}`}
     >
       <LandingHero content={content} />
       <TrustBar content={content} />

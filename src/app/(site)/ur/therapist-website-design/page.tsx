@@ -1,69 +1,70 @@
 import type { Metadata } from "next";
 import TherapistLanding from "@/features/therapist-landing/components/TherapistLanding";
-import { en } from "@/features/therapist-landing/content/en";
+import { ur } from "@/features/therapist-landing/content/ur";
 import { site } from "@/content/site";
 
-const canonicalPath = "/therapist-website-design";
+const canonicalPath = "/ur/therapist-website-design";
 
 export const metadata: Metadata = {
-  title: en.meta.title,
-  description: en.meta.description,
+  title: ur.meta.title,
+  description: ur.meta.description,
   alternates: {
     canonical: canonicalPath,
     languages: {
-      en: canonicalPath,
+      en: "/therapist-website-design",
       fa: "/fa/therapist-website-design",
-      ur: "/ur/therapist-website-design",
-      "x-default": canonicalPath,
+      ur: canonicalPath,
+      "x-default": "/therapist-website-design",
     },
   },
   openGraph: {
-    title: en.meta.title,
-    description: en.meta.description,
+    title: ur.meta.title,
+    description: ur.meta.description,
     url: canonicalPath,
-    locale: "en_US",
+    locale: "ur",
     type: "website",
-    images: [{ url: "/logo/icon-512.png", width: 512, height: 512, alt: en.meta.ogAlt }],
+    images: [{ url: "/logo/icon-512.png", width: 512, height: 512, alt: ur.meta.ogAlt }],
   },
   twitter: {
     card: "summary_large_image",
-    title: en.meta.title,
-    description: en.meta.description,
+    title: ur.meta.title,
+    description: ur.meta.description,
     images: ["/logo/icon-512.png"],
   },
 };
 
-export default function TherapistWebsiteDesignPage() {
+export default function TherapistWebsiteDesignUrPage() {
   const url = `${site.url}${canonicalPath}`;
 
   const serviceJsonLd = {
     "@context": "https://schema.org",
     "@type": "Service",
-    name: "Therapist Website Design",
-    description: en.meta.description,
+    name: "معالجین کے لیے ویب سائٹ ڈیزائن",
+    description: ur.meta.description,
     url,
     provider: {
       "@type": "Organization",
       name: site.name,
       url: site.url,
     },
-    serviceType: "Website design for therapists, psychologists, and counselors",
+    serviceType: "ماہرینِ نفسیات، معالجین اور مشیروں کے لیے ویب سائٹ ڈیزائن",
     areaServed: "Worldwide",
+    inLanguage: "ur",
   };
 
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: site.url },
-      { "@type": "ListItem", position: 2, name: "Therapist Website Design", item: url },
+      { "@type": "ListItem", position: 1, name: "ہوم", item: site.url },
+      { "@type": "ListItem", position: 2, name: "معالجین کے لیے ویب سائٹ ڈیزائن", item: url },
     ],
   };
 
   const faqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: en.faq.items.map((item) => ({
+    mainEntity: ur.faq.items.map((item) => ({
       "@type": "Question",
       name: item.question,
       acceptedAnswer: { "@type": "Answer", text: item.answer },
@@ -75,7 +76,7 @@ export default function TherapistWebsiteDesignPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
-      <TherapistLanding content={en} />
+      <TherapistLanding content={ur} />
     </>
   );
 }

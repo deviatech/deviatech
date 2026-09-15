@@ -7,6 +7,7 @@ export default function LocaleSwitch({ content }: { content: TherapistLandingCon
   const locales: { id: TherapistLocale; label: string }[] = [
     { id: "en", label: content.localeSwitch.en },
     { id: "fa", label: content.localeSwitch.fa },
+    { id: "ur", label: content.localeSwitch.ur },
   ];
 
   return (

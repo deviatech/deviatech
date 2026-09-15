@@ -13,6 +13,7 @@ export const metadata: Metadata = {
     languages: {
       en: "/therapist-website-design",
       fa: canonicalPath,
+      ur: "/ur/therapist-website-design",
       "x-default": "/therapist-website-design",
     },
   },
