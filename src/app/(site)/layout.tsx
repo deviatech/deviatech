@@ -37,7 +37,11 @@ const jsonLd = {
 
 export default function SiteLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <>
+    // Explicit dir="ltr": DeviaTech's Header/Footer use physical layout
+    // utilities, not logical properties. The root <html> is always en/ltr
+    // for every (site) route already (middleware never sets fa/ur for
+    // these paths), so this is defense-in-depth, not the source of truth.
+    <div dir="ltr">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -49,6 +53,6 @@ export default function SiteLayout({ children }: Readonly<{ children: React.Reac
       <main>{children}</main>
       <Footer />
       <StickyWhatsApp />
-    </>
+    </div>
   );
 }

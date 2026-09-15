@@ -1,16 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
 import { DEMO_CANONICAL_HOSTNAME } from "@/features/therapist-demo/lib/seo";
-import { LOCALE_HEADER } from "@/lib/locale";
+import { LOCALE_HEADER, type Locale } from "@/lib/locales";
 
 /**
- * True if the given (already-resolved) pathname is a Persian route, on
- * either the therapist-landing feature or the therapist-demo feature.
- * This is the single place that maps a pathname to a document locale —
- * the root layout reads its result (via the header set below) to render
- * <html lang/dir>, so every fa route recognized here gets it right.
+ * Maps an already-resolved pathname (post-rewrite for the demo subdomain)
+ * to a document locale, for both the therapist-landing and therapist-demo
+ * features. This is the single place that does this mapping — the root
+ * layout reads the header set below (never the pathname itself) to render
+ * <html lang/dir>, so every locale recognized here gets it right.
  */
-function isPersianPathname(pathname: string): boolean {
-  return pathname.startsWith("/fa/therapist-website-design") || pathname.startsWith("/therapist-demo/fa");
+function resolvePathnameLocale(pathname: string): Locale {
+  if (pathname.startsWith("/fa/therapist-website-design") || pathname.startsWith("/therapist-demo/fa")) {
+    return "fa";
+  }
+  if (pathname.startsWith("/ur/therapist-website-design") || pathname.startsWith("/therapist-demo/ur")) {
+    return "ur";
+  }
+  return "en";
 }
 
 export function middleware(request: NextRequest) {
@@ -77,7 +83,7 @@ export function middleware(request: NextRequest) {
  */
 function withLocaleHeader(headers: Headers, pathname: string): Headers {
   const next = new Headers(headers);
-  next.set(LOCALE_HEADER, isPersianPathname(pathname) ? "fa" : "en");
+  next.set(LOCALE_HEADER, resolvePathnameLocale(pathname));
   return next;
 }
 

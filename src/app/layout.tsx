@@ -3,7 +3,7 @@ import { Space_Grotesk, Inter, IBM_Plex_Mono } from "next/font/google";
 import { headers } from "next/headers";
 import "./globals.css";
 import { site } from "@/content/site";
-import { LOCALE_HEADER } from "@/lib/locale";
+import { LOCALE_HEADER, LOCALE_META, isSupportedLocale } from "@/lib/locales";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -59,11 +59,12 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const requestHeaders = await headers();
-  const locale = requestHeaders.get(LOCALE_HEADER) === "fa" ? "fa" : "en";
-  const dir = locale === "fa" ? "rtl" : "ltr";
+  const headerValue = requestHeaders.get(LOCALE_HEADER);
+  const locale = headerValue && isSupportedLocale(headerValue) ? headerValue : "en";
+  const { lang, dir } = LOCALE_META[locale];
 
   return (
-    <html lang={locale} dir={dir}>
+    <html lang={lang} dir={dir}>
       <body
         className={`${spaceGrotesk.variable} ${inter.variable} ${ibmPlexMono.variable} font-body antialiased`}
         suppressHydrationWarning
