@@ -1,5 +1,5 @@
 import type { IconType } from "react-icons";
-import { LuPenTool, LuCode2, LuRocket } from "react-icons/lu";
+import { LuPenTool, LuCode, LuRocket } from "react-icons/lu";
 import type { TherapistLandingContent } from "../content/types";
 import { buildWhatsAppLink } from "@/lib/whatsapp";
 import { WhatsAppIcon } from "@/components/ui/SocialIcons";
@@ -19,7 +19,7 @@ export default function DeviaTechBrandSection({ content }: { content: TherapistL
             <p className="text-lg font-semibold text-[var(--tl-primary)]">DeviaTech</p>
             <ul className="flex flex-col gap-6">
               <BrandStep icon={LuPenTool} label={brand.steps.design} />
-              <BrandStep icon={LuCode2} label={brand.steps.development} />
+              <BrandStep icon={LuCode} label={brand.steps.development} />
               <BrandStep icon={LuRocket} label={brand.steps.launch} />
             </ul>
           </div>
