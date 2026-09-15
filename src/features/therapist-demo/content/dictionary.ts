@@ -1,9 +1,11 @@
-import type { LocaleDictionary } from "../types";
+import type { LocaleDictionary, DemoLocale } from "../types";
 import { demoRoutes } from "../lib/routes";
 
 export const en: LocaleDictionary = {
   locale: "en",
   dir: "ltr",
+  brandName: "Luma Therapy",
+  brandTagline: "Psychology & Relationship Therapy",
   meta: { titleSuffix: "Luma Therapy — DeviaTech Demo" },
   nav: {
     links: [
@@ -17,7 +19,7 @@ export const en: LocaleDictionary = {
     menuLabel: "Navigation menu",
     menuOpenLabel: "Open menu",
     menuCloseLabel: "Close menu",
-    localeSwitchLabel: "فارسی",
+    localeSwitchLabel: "Language",
   },
   footer: {
     brandBlurb:
@@ -46,6 +48,8 @@ export const en: LocaleDictionary = {
 export const fa: LocaleDictionary = {
   locale: "fa",
   dir: "rtl",
+  brandName: "لوما تراپی",
+  brandTagline: "روان‌شناسی و زوج‌درمانی",
   meta: { titleSuffix: "لوما تراپی — نمونه‌کار DeviaTech" },
   nav: {
     links: [
@@ -59,7 +63,7 @@ export const fa: LocaleDictionary = {
     menuLabel: "منوی ناوبری",
     menuOpenLabel: "باز کردن منو",
     menuCloseLabel: "بستن منو",
-    localeSwitchLabel: "English",
+    localeSwitchLabel: "زبان",
   },
   footer: {
     brandBlurb:
@@ -85,6 +89,51 @@ export const fa: LocaleDictionary = {
   breadcrumbHomeLabel: "خانه",
 };
 
-export function getDictionary(locale: "en" | "fa"): LocaleDictionary {
-  return locale === "fa" ? fa : en;
+export const ur: LocaleDictionary = {
+  locale: "ur",
+  dir: "rtl",
+  brandName: "لوما تھراپی",
+  brandTagline: "نفسیاتی اور تعلقاتی معالجت",
+  meta: { titleSuffix: "لوما تھراپی — DeviaTech نمونہ" },
+  nav: {
+    links: [
+      { label: "ہوم", href: demoRoutes.home.ur },
+      { label: "تعارف", href: demoRoutes.about.ur },
+      { label: "خدمات", href: demoRoutes.services.ur },
+      { label: "بلاگ", href: demoRoutes.blog.ur },
+      { label: "رابطہ", href: demoRoutes.contact.ur },
+    ],
+    cta: "مشاورے کی درخواست کریں",
+    menuLabel: "نیویگیشن مینو",
+    menuOpenLabel: "مینو کھولیں",
+    menuCloseLabel: "مینو بند کریں",
+    localeSwitchLabel: "زبان",
+  },
+  footer: {
+    brandBlurb:
+      "لوما تھراپی ایک تصوراتی نفسیاتی اور تعلقاتی معالجت کی پریکٹس ہے، جسے DeviaTech نے یہ دکھانے کے لیے بنایا ہے کہ ایک سوچی سمجھی معالج کی ویب سائٹ کیسی نظر آ سکتی ہے۔",
+    linksHeading: "دریافت کریں",
+    links: [
+      { label: "تعارف", href: demoRoutes.about.ur },
+      { label: "خدمات", href: demoRoutes.services.ur },
+      { label: "بلاگ", href: demoRoutes.blog.ur },
+      { label: "رابطہ", href: demoRoutes.contact.ur },
+      { label: "مشاورے کی درخواست کریں", href: demoRoutes.book.ur },
+    ],
+    contactHeading: "DeviaTech",
+    contactCta: "اپنی پریکٹس کے لیے ایسی ویب سائٹ چاہتے ہیں؟",
+    conceptNotice:
+      "DeviaTech کی جانب سے ایک تصوراتی ویب سائٹ۔ لوما تھراپی ایک فرضی پریکٹس ہے جو مظاہرے کے مقاصد کے لیے بنائی گئی ہے۔",
+    deviatechLinkLabel: "DeviaTech کی معالج ویب سائٹ ڈیزائن سروس دیکھیں",
+    deviatechLinkHref: "/ur/therapist-website-design",
+  },
+  conceptNotice:
+    "DeviaTech کی جانب سے ایک تصوراتی ویب سائٹ۔ لوما تھراپی ایک فرضی پریکٹس ہے جو مظاہرے کے مقاصد کے لیے بنائی گئی ہے۔",
+  skipLinkLabel: "مرکزی مواد پر جائیں",
+  breadcrumbHomeLabel: "ہوم",
+};
+
+export function getDictionary(locale: DemoLocale): LocaleDictionary {
+  const dictionaries: Record<DemoLocale, LocaleDictionary> = { en, fa, ur };
+  return dictionaries[locale];
 }

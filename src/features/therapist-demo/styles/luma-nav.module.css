@@ -75,6 +75,12 @@
   gap: 16px;
 }
 
+.localeSwitchGroup {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .localeSwitch {
   color: var(--luma-text-body, #667074);
   text-decoration: none;

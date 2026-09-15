@@ -7,9 +7,8 @@ import { demoPageMetadata } from "@/features/therapist-demo/lib/metadata";
 export const metadata: Metadata = demoPageMetadata({
   title: couplesTherapyEn.meta.title,
   description: couplesTherapyEn.meta.description,
-  enPath: demoRoutes.couplesTherapy.en,
-  faPath: demoRoutes.couplesTherapy.fa,
-  currentIsFa: false,
+  paths: demoRoutes.couplesTherapy,
+  locale: "en",
 });
 
 export default function CouplesTherapyPage() {

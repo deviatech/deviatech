@@ -2,24 +2,41 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import type { LocaleDictionary } from "../types";
+import type { DemoLocale, LocaleDictionary } from "../types";
 import { equivalentLocalePath } from "../lib/routes";
+import { SUPPORTED_LOCALES, LOCALE_META } from "@/lib/locales";
 import navStyles from "../styles/luma-nav.module.css";
 
 export default function LocaleSwitch({
   dictionary,
   className,
+  /**
+   * Explicit target paths per locale, for pages where the current
+   * article/entity has a different slug in each locale — pathname-based
+   * mapping can't know that. Falls back to equivalentLocalePath()
+   * otherwise.
+   */
+  overridePaths,
 }: {
   dictionary: LocaleDictionary;
   className?: string;
+  overridePaths?: Partial<Record<DemoLocale, string>>;
 }) {
   const pathname = usePathname();
-  const targetLocale = dictionary.locale === "fa" ? "en" : "fa";
-  const targetHref = equivalentLocalePath(pathname, targetLocale);
+  const otherLocales = SUPPORTED_LOCALES.filter((locale) => locale !== dictionary.locale);
 
   return (
-    <Link href={targetHref} className={`${navStyles.localeSwitch} ${className ?? ""}`} hrefLang={targetLocale}>
-      {dictionary.nav.localeSwitchLabel}
-    </Link>
+    <nav aria-label={dictionary.nav.localeSwitchLabel} className={`${navStyles.localeSwitchGroup} ${className ?? ""}`}>
+      {otherLocales.map((locale) => (
+        <Link
+          key={locale}
+          href={overridePaths?.[locale] ?? equivalentLocalePath(pathname, locale)}
+          className={navStyles.localeSwitch}
+          hrefLang={locale}
+        >
+          {LOCALE_META[locale].label}
+        </Link>
+      ))}
+    </nav>
   );
 }

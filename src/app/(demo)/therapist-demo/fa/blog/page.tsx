@@ -8,9 +8,8 @@ import type { ArticleCategory } from "@/features/therapist-demo/types";
 export const metadata: Metadata = demoPageMetadata({
   title: blogFa.meta.title,
   description: blogFa.meta.description,
-  enPath: demoRoutes.blog.en,
-  faPath: demoRoutes.blog.fa,
-  currentIsFa: true,
+  paths: demoRoutes.blog,
+  locale: "fa",
 });
 
 export default async function BlogFaPage({

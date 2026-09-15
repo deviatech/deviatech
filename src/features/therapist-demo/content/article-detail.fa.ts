@@ -10,6 +10,7 @@ export const articleDetailFa: ArticleDetailContent = {
   copyLinkLabel: "کپی لینک",
   copiedLabel: "لینک کپی شد",
   readingLabelSuffix: "دقیقه مطالعه",
+  languageSwitchLabel: "مطالعه به زبان دیگر",
   cta: {
     heading: "برای موضوعی مشابه این به حمایت نیاز دارید؟",
     body: "اولین گفتگو بدون فشار و بدون هیچ تعهدی برای ادامه است.",

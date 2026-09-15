@@ -1,4 +1,4 @@
-import { DM_Sans, Inter, Vazirmatn } from "next/font/google";
+import { DM_Sans, Inter, Vazirmatn, Noto_Sans_Arabic } from "next/font/google";
 import type { ReactNode } from "react";
 import type { DemoLocale } from "../types";
 import { getDictionary } from "../content/dictionary";
@@ -27,6 +27,13 @@ const vazirmatn = Vazirmatn({
   display: "swap",
 });
 
+const notoSansArabic = Noto_Sans_Arabic({
+  variable: "--font-luma-ur",
+  subsets: ["arabic"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
+
 export default function LumaSiteShell({
   locale,
   children,
@@ -42,7 +49,7 @@ export default function LumaSiteShell({
       data-locale={locale}
       lang={locale}
       dir={dictionary.dir}
-      className={`${styles.root} ${dmSans.variable} ${inter.variable} ${vazirmatn.variable}`}
+      className={`${styles.root} ${dmSans.variable} ${inter.variable} ${vazirmatn.variable} ${notoSansArabic.variable}`}
     >
       <a href="#luma-main-content" className={styles.skipLink}>
         {dictionary.skipLinkLabel}

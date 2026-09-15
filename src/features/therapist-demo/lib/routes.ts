@@ -1,22 +1,28 @@
 import type { DemoLocale } from "../types";
+import { SUPPORTED_LOCALES } from "@/lib/locales";
 
 export const DEMO_BASE = "/therapist-demo";
 
+/** en has no path prefix; fa/ur (and any future locale) use /<locale>. */
+function localePrefix(locale: DemoLocale): string {
+  return locale === "en" ? "" : `/${locale}`;
+}
+
+function localizedPaths(suffix: string): Record<DemoLocale, string> {
+  return Object.fromEntries(
+    SUPPORTED_LOCALES.map((locale) => [locale, `${DEMO_BASE}${localePrefix(locale)}${suffix}`]),
+  ) as Record<DemoLocale, string>;
+}
+
 export const demoRoutes = {
-  home: { en: `${DEMO_BASE}`, fa: `${DEMO_BASE}/fa` },
-  about: { en: `${DEMO_BASE}/about`, fa: `${DEMO_BASE}/fa/about` },
-  services: { en: `${DEMO_BASE}/services`, fa: `${DEMO_BASE}/fa/services` },
-  individualTherapy: {
-    en: `${DEMO_BASE}/services/individual-therapy`,
-    fa: `${DEMO_BASE}/fa/services/individual-therapy`,
-  },
-  couplesTherapy: {
-    en: `${DEMO_BASE}/services/couples-therapy`,
-    fa: `${DEMO_BASE}/fa/services/couples-therapy`,
-  },
-  blog: { en: `${DEMO_BASE}/blog`, fa: `${DEMO_BASE}/fa/blog` },
-  contact: { en: `${DEMO_BASE}/contact`, fa: `${DEMO_BASE}/fa/contact` },
-  book: { en: `${DEMO_BASE}/book`, fa: `${DEMO_BASE}/fa/book` },
+  home: localizedPaths(""),
+  about: localizedPaths("/about"),
+  services: localizedPaths("/services"),
+  individualTherapy: localizedPaths("/services/individual-therapy"),
+  couplesTherapy: localizedPaths("/services/couples-therapy"),
+  blog: localizedPaths("/blog"),
+  contact: localizedPaths("/contact"),
+  book: localizedPaths("/book"),
 } as const;
 
 export type DemoRouteKey = keyof typeof demoRoutes;
@@ -26,11 +32,13 @@ export function route(key: DemoRouteKey, locale: DemoLocale): string {
 }
 
 export function blogPostRoute(slug: string, locale: DemoLocale): string {
-  return locale === "en" ? `${DEMO_BASE}/blog/${slug}` : `${DEMO_BASE}/fa/blog/${slug}`;
+  return `${DEMO_BASE}${localePrefix(locale)}/blog/${slug}`;
 }
 
+const HOME_LABEL: Record<DemoLocale, string> = { en: "Home", fa: "خانه", ur: "ہوم" };
+
 export function homeBreadcrumb(locale: DemoLocale) {
-  return { label: locale === "fa" ? "خانه" : "Home", href: route("home", locale) };
+  return { label: HOME_LABEL[locale], href: route("home", locale) };
 }
 
 /**
@@ -41,21 +49,40 @@ export function homeBreadcrumb(locale: DemoLocale) {
  * Every internal link in this feature (including hrefs baked into static
  * content at module-load time) emits the apex /therapist-demo/... shape,
  * because content can't know the request host. This function does the
- * same, on purpose: middleware on demo.deviatech.com redirects that prefix
+ * same, on purpose: middleware on the demo host redirects that prefix
  * away, so an apex-style link resolves correctly on both hosts. Branching
  * here on window.location instead would make this the one place in the
  * app producing host-relative links while everything else stays apex-style
  * — a worse inconsistency than the extra redirect.
+ *
+ * Deliberately falls back to the blog LISTING page (never 404s) for any
+ * article detail path (/blog/<slug>): each locale's article has its own
+ * slug, and this function has no access to the article data needed to
+ * resolve the correct one (that data lives in content/articles.*.ts,
+ * which must not be pulled into this shared, client-bundled routing
+ * helper — see ArticleLocaleLinks.tsx, a Server Component rendered on
+ * the article page itself, for the actual per-article correct switch).
  */
 export function equivalentLocalePath(pathname: string, targetLocale: DemoLocale): string {
-  const withoutBase = pathname.startsWith(`${DEMO_BASE}/fa`)
-    ? pathname.slice(`${DEMO_BASE}/fa`.length)
-    : pathname.startsWith(DEMO_BASE)
-      ? pathname.slice(DEMO_BASE.length)
-      : pathname.startsWith("/fa")
-        ? pathname.slice(3)
-        : pathname;
+  let withoutBase = pathname;
+  if (pathname.startsWith(DEMO_BASE)) {
+    withoutBase = pathname.slice(DEMO_BASE.length);
+  }
+
+  // Strip whichever locale prefix (if any) leads the remaining path.
+  for (const locale of SUPPORTED_LOCALES) {
+    const prefix = localePrefix(locale);
+    if (prefix && (withoutBase === prefix || withoutBase.startsWith(`${prefix}/`))) {
+      withoutBase = withoutBase.slice(prefix.length);
+      break;
+    }
+  }
+
+  const isArticleDetail = /^\/blog\/.+/.test(withoutBase);
+  if (isArticleDetail) {
+    return route("blog", targetLocale);
+  }
 
   const suffix = withoutBase === "" || withoutBase === "/" ? "" : withoutBase;
-  return targetLocale === "fa" ? `${DEMO_BASE}/fa${suffix}` : `${DEMO_BASE}${suffix}`;
+  return `${DEMO_BASE}${localePrefix(targetLocale)}${suffix}`;
 }

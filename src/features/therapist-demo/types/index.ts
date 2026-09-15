@@ -1,5 +1,7 @@
-export type DemoLocale = "en" | "fa";
-export type Direction = "ltr" | "rtl";
+import type { Locale, Direction } from "@/lib/locales";
+
+export type DemoLocale = Locale;
+export type { Direction };
 
 export interface ImageDescriptor {
   src: string;
@@ -66,7 +68,6 @@ export interface Article {
   id: string;
   locale: DemoLocale;
   slug: string;
-  alternateSlug: string;
   title: string;
   excerpt: string;
   category: ArticleCategory;
@@ -230,6 +231,7 @@ export interface ArticleDetailContent {
   copyLinkLabel: string;
   copiedLabel: string;
   readingLabelSuffix: string;
+  languageSwitchLabel: string;
   cta: {
     heading: string;
     body: string;
@@ -314,6 +316,8 @@ export interface BookingPageContent {
 export interface LocaleDictionary {
   locale: DemoLocale;
   dir: Direction;
+  brandName: string;
+  brandTagline: string;
   meta: {
     titleSuffix: string;
   };

@@ -6,7 +6,6 @@ import LumaButton from "./LumaButton";
 import footerStyles from "../styles/luma-footer.module.css";
 
 export default function LumaFooter({ dictionary }: { dictionary: LocaleDictionary }) {
-  const brandName = dictionary.locale === "fa" ? "لوما تراپی" : "Luma Therapy";
   const bookHref = route("book", dictionary.locale);
 
   return (
@@ -15,7 +14,7 @@ export default function LumaFooter({ dictionary }: { dictionary: LocaleDictionar
         <div className={footerStyles.grid}>
           <div className={footerStyles.brandCol}>
             <p className={footerStyles.brandName} translate="no">
-              {brandName}
+              {dictionary.brandName}
             </p>
             <p className={footerStyles.brandBlurb}>{dictionary.footer.brandBlurb}</p>
           </div>

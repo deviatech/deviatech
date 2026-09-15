@@ -6,10 +6,11 @@ import Breadcrumbs from "./Breadcrumbs";
 import ServiceCard from "./ServiceCard";
 import ProcessSteps from "./ProcessSteps";
 import ConsultationCta from "./ConsultationCta";
+import { learnMoreLabel as getLearnMoreLabel } from "../lib/ui-strings";
 import styles from "../styles/luma-content.module.css";
 
 export default function ServicesPage({ locale, content }: { locale: DemoLocale; content: ServicesPageContent }) {
-  const learnMoreLabel = locale === "fa" ? "بیشتر بدانید" : "Learn more";
+  const learnMoreLabel = getLearnMoreLabel(locale);
 
   return (
     <>

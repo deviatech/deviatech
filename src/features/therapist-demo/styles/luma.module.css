@@ -40,14 +40,26 @@
   text-wrap: pretty;
 }
 
-.root[dir="rtl"] {
+.root[data-locale="fa"] {
   font-family: var(--font-luma-fa), sans-serif;
 }
 
-.root[dir="rtl"] :global(h1),
-.root[dir="rtl"] :global(h2),
-.root[dir="rtl"] :global(h3) {
+.root[data-locale="fa"] :global(h1),
+.root[data-locale="fa"] :global(h2),
+.root[data-locale="fa"] :global(h3) {
   font-family: var(--font-luma-fa), sans-serif;
+}
+
+.root[data-locale="ur"] {
+  font-family: var(--font-luma-ur), sans-serif;
+  line-height: 1.85;
+}
+
+.root[data-locale="ur"] :global(h1),
+.root[data-locale="ur"] :global(h2),
+.root[data-locale="ur"] :global(h3) {
+  font-family: var(--font-luma-ur), sans-serif;
+  line-height: 1.3;
 }
 
 .root :global(a:focus-visible),

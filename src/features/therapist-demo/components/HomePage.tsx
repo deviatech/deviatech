@@ -11,13 +11,13 @@ import InfoCard from "./InfoCard";
 import FaqAccordion from "./FaqAccordion";
 import ConsultationCta from "./ConsultationCta";
 import LumaButton from "./LumaButton";
+import { readingMinutesLabel, learnMoreLabel as getLearnMoreLabel } from "../lib/ui-strings";
 import styles from "../styles/luma-content.module.css";
 
 export default function HomePage({ locale, content }: { locale: DemoLocale; content: HomeContent }) {
   const articles = getArticles(locale).slice(0, 3);
-  const readingLabel = (minutes: number) =>
-    locale === "fa" ? `${minutes} دقیقه مطالعه` : `${minutes} min read`;
-  const learnMoreLabel = locale === "fa" ? "بیشتر بدانید" : "Learn more";
+  const readingLabel = (minutes: number) => readingMinutesLabel(minutes, locale);
+  const learnMoreLabelText = getLearnMoreLabel(locale);
 
   return (
     <>
@@ -70,7 +70,7 @@ export default function HomePage({ locale, content }: { locale: DemoLocale; cont
         <SectionHeading heading={content.services.heading} body={content.services.body} align="center" />
         <div className={styles.cardGrid3}>
           {content.services.items.map((service) => (
-            <ServiceCard key={service.id} service={service} locale={locale} learnMoreLabel={learnMoreLabel} />
+            <ServiceCard key={service.id} service={service} locale={locale} learnMoreLabel={learnMoreLabelText} />
           ))}
         </div>
       </Section>

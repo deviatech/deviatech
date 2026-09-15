@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { ArticleCategory, DemoLocale } from "../types";
 import { route } from "../lib/routes";
+import { filterCategoryAriaLabel } from "../lib/ui-strings";
 import styles from "../styles/luma-blog.module.css";
 
 export default function BlogFilter({
@@ -17,7 +18,7 @@ export default function BlogFilter({
   const base = route("blog", locale);
 
   return (
-    <nav aria-label={locale === "fa" ? "فیلتر دسته‌بندی مقالات" : "Filter articles by category"} className={styles.filterRow}>
+    <nav aria-label={filterCategoryAriaLabel(locale)} className={styles.filterRow}>
       <Link
         href={base}
         className={`${styles.filterChip} ${!activeCategory ? styles.filterChipActive : ""}`}

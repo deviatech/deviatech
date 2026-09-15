@@ -10,6 +10,7 @@ export const articleDetailEn: ArticleDetailContent = {
   copyLinkLabel: "Copy link",
   copiedLabel: "Link copied",
   readingLabelSuffix: "min read",
+  languageSwitchLabel: "Read in another language",
   cta: {
     heading: "Want support with something like this?",
     body: "A first conversation is low-pressure and carries no obligation to continue.",

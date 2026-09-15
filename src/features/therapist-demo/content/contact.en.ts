@@ -66,7 +66,7 @@ export const contactEn: ContactPageContent = {
   },
   cta: {
     heading: "Prefer to see a live example?",
-    body: "Browse the rest of this demo to see the full site in both English and Persian.",
+    body: "Browse the rest of this demo to see the full site in English, Persian, and Urdu.",
     buttonLabel: "Book a Consultation",
   },
 };

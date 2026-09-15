@@ -10,17 +10,14 @@ import navStyles from "../styles/luma-nav.module.css";
 export default function LumaHeader({ dictionary }: { dictionary: LocaleDictionary }) {
   const homeHref = route("home", dictionary.locale);
   const bookHref = route("book", dictionary.locale);
-  const brandName = dictionary.locale === "fa" ? "لوما تراپی" : "Luma Therapy";
-  const brandTagline =
-    dictionary.locale === "fa" ? "روان‌شناسی و زوج‌درمانی" : "Psychology & Relationship Therapy";
 
   return (
     <header className={navStyles.header}>
       <Container>
         <div className={navStyles.headerInner}>
           <Link href={homeHref} className={navStyles.brand} translate="no">
-            {brandName}
-            <span className={navStyles.brandTagline}>{brandTagline}</span>
+            {dictionary.brandName}
+            <span className={navStyles.brandTagline}>{dictionary.brandTagline}</span>
           </Link>
 
           <nav className={navStyles.desktopNav} aria-label="Primary">

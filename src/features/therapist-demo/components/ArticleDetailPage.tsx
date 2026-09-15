@@ -7,6 +7,7 @@ import PlaceholderImage from "./PlaceholderImage";
 import ArticleBody from "./ArticleBody";
 import ShareControls from "./ShareControls";
 import ArticleCard from "./ArticleCard";
+import ArticleLocaleLinks from "./ArticleLocaleLinks";
 import ConsultationCta from "./ConsultationCta";
 import contentStyles from "../styles/luma-content.module.css";
 import blogStyles from "../styles/luma-blog.module.css";
@@ -45,6 +46,7 @@ export default function ArticleDetailPage({
           <span aria-hidden="true">&middot;</span>
           <span>{readingLabel(article.readingMinutes)}</span>
         </div>
+        <ArticleLocaleLinks article={article} groupLabel={content.languageSwitchLabel} />
       </Section>
 
       <Section tone="cream" padding="compact" containerSize="article">
