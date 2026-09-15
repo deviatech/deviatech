@@ -1,12 +1,6 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, Inter, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import BlueprintGrid from "@/components/layout/BlueprintGrid";
-import StickyWhatsApp from "@/components/ui/StickyWhatsApp";
-import AnalyticsEvents from "@/components/analytics/AnalyticsEvents";
-import DeferredAnalytics from "@/components/analytics/DeferredAnalytics";
 import { site } from "@/content/site";
 
 const spaceGrotesk = Space_Grotesk({
@@ -57,32 +51,6 @@ export const metadata: Metadata = {
   },
 };
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  name: site.name,
-  description,
-  url: site.url,
-  email: site.email,
-  telephone: site.phone,
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: "Lahore",
-    addressCountry: "PK",
-  },
-  geo: {
-    "@type": "GeoCoordinates",
-    latitude: site.geo.lat,
-    longitude: site.geo.lng,
-  },
-  sameAs: [
-    site.socials.linkedin,
-    site.socials.github,
-    site.socials.facebook,
-    site.socials.instagram,
-  ],
-};
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -94,17 +62,7 @@ export default function RootLayout({
         className={`${spaceGrotesk.variable} ${inter.variable} ${ibmPlexMono.variable} font-body antialiased`}
         suppressHydrationWarning
       >
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-        <DeferredAnalytics />
-        <AnalyticsEvents />
-        <BlueprintGrid />
-        <Header />
-        <main>{children}</main>
-        <Footer />
-        <StickyWhatsApp />
+        {children}
       </body>
     </html>
   );
