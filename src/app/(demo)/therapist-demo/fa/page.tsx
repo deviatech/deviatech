@@ -2,21 +2,15 @@ import type { Metadata } from "next";
 import HomePage from "@/features/therapist-demo/components/HomePage";
 import { homeFa } from "@/features/therapist-demo/content/home.fa";
 import { demoRoutes } from "@/features/therapist-demo/lib/routes";
-import { DEMO_CANONICAL_HOST } from "@/features/therapist-demo/lib/seo";
+import { demoPageMetadata } from "@/features/therapist-demo/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = demoPageMetadata({
   title: homeFa.meta.title,
   description: homeFa.meta.description,
-  robots: { index: false, follow: true },
-  alternates: {
-    canonical: `${DEMO_CANONICAL_HOST}${demoRoutes.home.fa}`,
-    languages: {
-      en: `${DEMO_CANONICAL_HOST}${demoRoutes.home.en}`,
-      fa: `${DEMO_CANONICAL_HOST}${demoRoutes.home.fa}`,
-      "x-default": `${DEMO_CANONICAL_HOST}${demoRoutes.home.en}`,
-    },
-  },
-};
+  enPath: demoRoutes.home.en,
+  faPath: demoRoutes.home.fa,
+  currentIsFa: true,
+});
 
 export default function TherapistDemoHomeFaPage() {
   return <HomePage locale="fa" content={homeFa} />;

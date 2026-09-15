@@ -128,6 +128,189 @@ export interface HomeContent {
   };
 }
 
+export interface AboutContent {
+  meta: { title: string; description: string };
+  hero: {
+    eyebrow: string;
+    heading: string;
+    body: string;
+    image: ImageDescriptor;
+  };
+  story: {
+    heading: string;
+    paragraphs: string[];
+  };
+  howWeWork: {
+    heading: string;
+    items: InfoCardItem[];
+  };
+  principles: {
+    heading: string;
+    body: string;
+    items: ProcessStep[];
+  };
+  quote: string;
+  cta: {
+    heading: string;
+    body: string;
+    buttonLabel: string;
+  };
+}
+
+export interface ServicesPageContent {
+  meta: { title: string; description: string };
+  hero: {
+    eyebrow: string;
+    heading: string;
+    body: string;
+  };
+  services: ServiceSummary[];
+  process: {
+    heading: string;
+    body: string;
+    steps: ProcessStep[];
+  };
+  cta: {
+    heading: string;
+    body: string;
+    buttonLabel: string;
+  };
+}
+
+export interface TherapyDetailContent {
+  meta: { title: string; description: string };
+  breadcrumbLabel: string;
+  hero: {
+    eyebrow: string;
+    heading: string;
+    body: string;
+    image: ImageDescriptor;
+  };
+  concerns: {
+    heading: string;
+    items: string[];
+  };
+  outcomes: {
+    heading: string;
+    body: string;
+    items: string[];
+    imageA: ImageDescriptor;
+    imageB: ImageDescriptor;
+  };
+  sessionInfo: {
+    heading: string;
+    items: InfoCardItem[];
+  };
+  cta: {
+    heading: string;
+    body: string;
+    buttonLabel: string;
+  };
+}
+
+export interface BlogListingContent {
+  meta: { title: string; description: string };
+  hero: {
+    eyebrow: string;
+    heading: string;
+    body: string;
+  };
+  allCategoriesLabel: string;
+  viewMoreLabel: string;
+  emptyStateLabel: string;
+  readingLabelSuffix: string;
+}
+
+export interface ArticleDetailContent {
+  breadcrumbLabel: string;
+  editorialAttribution: string;
+  disclaimer: string;
+  relatedHeading: string;
+  shareLabel: string;
+  copyLinkLabel: string;
+  copiedLabel: string;
+  readingLabelSuffix: string;
+  cta: {
+    heading: string;
+    body: string;
+    buttonLabel: string;
+  };
+}
+
+export interface FormFieldLabels {
+  fullName: string;
+  fullNamePlaceholder: string;
+  email: string;
+  emailPlaceholder: string;
+  whatsapp: string;
+  whatsappPlaceholder: string;
+  subject: string;
+  subjectPlaceholder: string;
+  message: string;
+  messagePlaceholder: string;
+  serviceInterest: string;
+  serviceInterestOptions: { value: string; label: string }[];
+  sessionPreference: string;
+  sessionPreferenceOptions: { value: string; label: string }[];
+  preferredDateRange: string;
+  preferredDateRangePlaceholder: string;
+  preferredTimeOfDay: string;
+  preferredTimeOfDayOptions: { value: string; label: string }[];
+  note: string;
+  notePlaceholder: string;
+}
+
+export interface ContactPageContent {
+  meta: { title: string; description: string };
+  hero: {
+    eyebrow: string;
+    heading: string;
+    body: string;
+  };
+  channelsHeading: string;
+  channels: { label: string; description: string; href: string }[];
+  form: {
+    heading: string;
+    fields: Pick<FormFieldLabels, "fullName" | "fullNamePlaceholder" | "email" | "emailPlaceholder" | "subject" | "subjectPlaceholder" | "message" | "messagePlaceholder">;
+    submitLabel: string;
+    submittingLabel: string;
+    successTitle: string;
+    successBody: string;
+    errorTitle: string;
+    errorBody: string;
+    requiredLabel: string;
+    validation: { required: string; email: string };
+  };
+  faq: { heading: string; items: FaqItem[] };
+  cta: { heading: string; body: string; buttonLabel: string };
+}
+
+export interface BookingPageContent {
+  meta: { title: string; description: string };
+  hero: {
+    eyebrow: string;
+    heading: string;
+    body: string;
+    demoNotice: string;
+  };
+  reassurance: string[];
+  whatsappCta: string;
+  form: {
+    heading: string;
+    fields: FormFieldLabels;
+    submitLabel: string;
+    submittingLabel: string;
+    successTitle: string;
+    successBody: string;
+    errorTitle: string;
+    errorBody: string;
+    requiredLabel: string;
+    optionalLabel: string;
+    validation: { required: string; email: string };
+    formNotice: string;
+  };
+}
+
 export interface LocaleDictionary {
   locale: DemoLocale;
   dir: Direction;

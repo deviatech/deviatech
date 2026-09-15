@@ -29,6 +29,10 @@ export function blogPostRoute(slug: string, locale: DemoLocale): string {
   return locale === "en" ? `${DEMO_BASE}/blog/${slug}` : `${DEMO_BASE}/fa/blog/${slug}`;
 }
 
+export function homeBreadcrumb(locale: DemoLocale) {
+  return { label: locale === "fa" ? "خانه" : "Home", href: route("home", locale) };
+}
+
 /**
  * Maps a current demo pathname to its equivalent route in the other locale,
  * preserving the specific page (not just Home). Falls back to that locale's
