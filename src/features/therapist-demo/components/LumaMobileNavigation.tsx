@@ -86,11 +86,24 @@ export default function LumaMobileNavigation({
         ref={drawerRef}
         role="dialog"
         aria-modal="true"
-        aria-label={dictionary.nav.menuOpenLabel}
+        aria-label={dictionary.nav.menuLabel}
+        aria-hidden={!open}
+        inert={!open}
         className={`${navStyles.drawer} ${open ? navStyles.drawerOpen : ""}`}
         style={{ overscrollBehavior: "contain" }}
       >
-        <nav aria-label="Mobile">
+        <button
+          type="button"
+          className={navStyles.drawerClose}
+          aria-label={dictionary.nav.menuCloseLabel}
+          onClick={() => {
+            setOpen(false);
+            triggerRef.current?.focus();
+          }}
+        >
+          <span aria-hidden="true">✕</span>
+        </button>
+        <nav aria-label={dictionary.nav.menuLabel}>
           <ul className={navStyles.drawerList}>
             {dictionary.nav.links.map((link, index) => (
               <li key={link.href}>

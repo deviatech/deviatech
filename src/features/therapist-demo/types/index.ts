@@ -320,6 +320,7 @@ export interface LocaleDictionary {
   nav: {
     links: NavLink[];
     cta: string;
+    menuLabel: string;
     menuOpenLabel: string;
     menuCloseLabel: string;
     localeSwitchLabel: string;

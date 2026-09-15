@@ -37,11 +37,24 @@ export function homeBreadcrumb(locale: DemoLocale) {
  * Maps a current demo pathname to its equivalent route in the other locale,
  * preserving the specific page (not just Home). Falls back to that locale's
  * home when no structural match is found (e.g. unknown/removed slug).
+ *
+ * Every internal link in this feature (including hrefs baked into static
+ * content at module-load time) emits the apex /therapist-demo/... shape,
+ * because content can't know the request host. This function does the
+ * same, on purpose: middleware on demo.deviatech.com redirects that prefix
+ * away, so an apex-style link resolves correctly on both hosts. Branching
+ * here on window.location instead would make this the one place in the
+ * app producing host-relative links while everything else stays apex-style
+ * — a worse inconsistency than the extra redirect.
  */
 export function equivalentLocalePath(pathname: string, targetLocale: DemoLocale): string {
   const withoutBase = pathname.startsWith(`${DEMO_BASE}/fa`)
     ? pathname.slice(`${DEMO_BASE}/fa`.length)
-    : pathname.slice(DEMO_BASE.length);
+    : pathname.startsWith(DEMO_BASE)
+      ? pathname.slice(DEMO_BASE.length)
+      : pathname.startsWith("/fa")
+        ? pathname.slice(3)
+        : pathname;
 
   const suffix = withoutBase === "" || withoutBase === "/" ? "" : withoutBase;
   return targetLocale === "fa" ? `${DEMO_BASE}/fa${suffix}` : `${DEMO_BASE}${suffix}`;

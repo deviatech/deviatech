@@ -5,6 +5,19 @@ import { site } from "@/content/site";
 const MAX_LENGTH = 2000;
 const MAX_BODY_BYTES = 20_000;
 
+/**
+ * KNOWN LIMITATION: this rate limiter is process-local in-memory state.
+ * It does not coordinate across multiple Docker/Node replicas (each gets
+ * its own independent budget) and resets on every restart/deploy. It also
+ * trusts x-forwarded-for as-is — spoofable by the client unless the actual
+ * reverse proxy in front of this app overwrites that header (verify this
+ * for whatever's deployed; not something this codebase can confirm on its
+ * own). If this ever runs behind a load balancer with multiple replicas,
+ * or the trusted-proxy assumption doesn't hold, this needs a shared store
+ * (Redis/KV) and a validated client-IP strategy instead — a new
+ * dependency, so that's an explicit call for whoever owns the deployment,
+ * not something to add unilaterally here.
+ */
 const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
 const RATE_LIMIT_MAX_REQUESTS = 5;
 const rateLimitHits = new Map<string, number[]>();
@@ -209,7 +222,11 @@ export async function POST(req: NextRequest) {
     if (rawText.length > MAX_BODY_BYTES) {
       return NextResponse.json({ error: "Request too large" }, { status: 413 });
     }
-    body = JSON.parse(rawText);
+    const parsed = JSON.parse(rawText);
+    if (typeof parsed !== "object" || parsed === null || Array.isArray(parsed)) {
+      return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+    }
+    body = parsed;
   } catch {
     return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
   }
