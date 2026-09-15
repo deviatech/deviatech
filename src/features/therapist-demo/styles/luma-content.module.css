@@ -354,6 +354,48 @@
   margin: 0 auto 28px;
 }
 
+/* Process steps */
+.processGrid {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 640px) {
+  .processGrid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1024px) {
+  .processGrid { grid-template-columns: repeat(4, 1fr); }
+}
+.processStep {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.processStepNumber {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--luma-sage-soft, #edf1ee);
+  color: var(--luma-sage-hover, #758f83);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.9375rem;
+}
+.processStepTitle {
+  font-size: 1.0625rem;
+  font-weight: 650;
+  margin: 0;
+  color: var(--luma-text, #2d3436);
+}
+.processStepDescription {
+  color: var(--luma-text-body, #667074);
+  line-height: 1.6;
+  font-size: 0.9375rem;
+  margin: 0;
+}
+
 /* Concern grid */
 .concernGrid {
   display: grid;
