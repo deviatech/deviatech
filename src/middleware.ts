@@ -3,6 +3,17 @@ import { DEMO_CANONICAL_HOSTNAME } from "@/features/therapist-demo/lib/seo";
 import { LOCALE_HEADER, type Locale } from "@/lib/locales";
 
 /**
+ * robots.txt served on the demo subdomain only. Crawling stays allowed on
+ * purpose: the demo's pages carry `noindex, follow`, and a crawler has to
+ * be able to fetch a page to read that directive. Disallowing here would
+ * hide the noindex instead of enforcing it. No Sitemap line — this host
+ * publishes no sitemap, and the apex one describes apex URLs.
+ */
+const DEMO_ROBOTS_TXT = `User-agent: *
+Allow: /
+`;
+
+/**
  * Maps an already-resolved pathname (post-rewrite for the demo subdomain)
  * to a document locale, for both the therapist-landing and therapist-demo
  * features. This is the single place that does this mapping — the root
@@ -53,12 +64,28 @@ export function middleware(request: NextRequest) {
       return NextResponse.redirect(url, 307);
     }
 
+    // robots.txt and sitemap.xml are per-host documents. Falling through to
+    // the apex handlers (as the bypass list below used to do) made this
+    // subdomain serve deviatech.com's robots.txt and, byte-identically, its
+    // sitemap — advertising 30+ apex URLs from a host that serves none of
+    // them. Answer for this host instead: a robots.txt that still allows
+    // crawling, so the per-page `noindex, follow` remains readable, and no
+    // sitemap at all.
+    if (pathname === "/robots.txt") {
+      return new NextResponse(DEMO_ROBOTS_TXT, {
+        status: 200,
+        headers: { "content-type": "text/plain; charset=utf-8" },
+      });
+    }
+
+    if (pathname === "/sitemap.xml") {
+      return new NextResponse(null, { status: 404 });
+    }
+
     const isBypassed =
       pathname.startsWith("/api/") ||
       pathname.startsWith("/images/") ||
       pathname.startsWith("/logo/") ||
-      pathname === "/robots.txt" ||
-      pathname === "/sitemap.xml" ||
       pathname === "/manifest.webmanifest";
 
     if (!isBypassed) {
