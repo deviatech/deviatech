@@ -1,13 +1,7 @@
-import type { Metadata } from "next";
 import { Space_Grotesk, Inter, IBM_Plex_Mono } from "next/font/google";
+import { headers } from "next/headers";
 import "./globals.css";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import BlueprintGrid from "@/components/layout/BlueprintGrid";
-import StickyWhatsApp from "@/components/ui/StickyWhatsApp";
-import AnalyticsEvents from "@/components/analytics/AnalyticsEvents";
-import DeferredAnalytics from "@/components/analytics/DeferredAnalytics";
-import { site } from "@/content/site";
+import { LOCALE_HEADER, LOCALE_META, isSupportedLocale } from "@/lib/locales";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -27,84 +21,23 @@ const ibmPlexMono = IBM_Plex_Mono({
   weight: ["400", "500"],
 });
 
-const title = "Software Development Agency in Lahore | DeviaTech";
-const description =
-  "DeviaTech builds Shopify stores, MVPs and custom web applications for businesses and startups in Pakistan, with fixed scope, weekly updates and post-launch support.";
-
-export const metadata: Metadata = {
-  metadataBase: new URL(site.url),
-  title,
-  description,
-  alternates: {
-    canonical: "/",
-  },
-  openGraph: {
-    title,
-    description,
-    url: "/",
-    images: [{ url: "/logo/icon-512.png", width: 512, height: 512 }],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title,
-    description,
-    images: ["/logo/icon-512.png"],
-  },
-  other: {
-    "geo.region": site.geo.region,
-    "geo.placename": site.geo.placename,
-    "geo.position": `${site.geo.lat};${site.geo.lng}`,
-  },
-};
-
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  name: site.name,
-  description,
-  url: site.url,
-  email: site.email,
-  telephone: site.phone,
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: "Lahore",
-    addressCountry: "PK",
-  },
-  geo: {
-    "@type": "GeoCoordinates",
-    latitude: site.geo.lat,
-    longitude: site.geo.lng,
-  },
-  sameAs: [
-    site.socials.linkedin,
-    site.socials.github,
-    site.socials.facebook,
-    site.socials.instagram,
-  ],
-};
-
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const requestHeaders = await headers();
+  const headerValue = requestHeaders.get(LOCALE_HEADER);
+  const locale = headerValue && isSupportedLocale(headerValue) ? headerValue : "en";
+  const { lang, dir } = LOCALE_META[locale];
+
   return (
-    <html lang="en">
+    <html lang={lang} dir={dir}>
       <body
         className={`${spaceGrotesk.variable} ${inter.variable} ${ibmPlexMono.variable} font-body antialiased`}
         suppressHydrationWarning
       >
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-        <DeferredAnalytics />
-        <AnalyticsEvents />
-        <BlueprintGrid />
-        <Header />
-        <main>{children}</main>
-        <Footer />
-        <StickyWhatsApp />
+        {children}
       </body>
     </html>
   );

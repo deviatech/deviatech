@@ -1,34 +1,287 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import { site } from "@/content/site";
+import { SUPPORTED_LOCALES, type Locale } from "@/lib/locales";
+
+const MAX_LENGTH = 2000;
+const MAX_BODY_BYTES = 20_000;
+
+/**
+ * KNOWN LIMITATION: this rate limiter is process-local in-memory state.
+ * It does not coordinate across multiple Docker/Node replicas (each gets
+ * its own independent budget) and resets on every restart/deploy. It also
+ * trusts x-forwarded-for as-is — spoofable by the client unless the actual
+ * reverse proxy in front of this app overwrites that header (verify this
+ * for whatever's deployed; not something this codebase can confirm on its
+ * own). If this ever runs behind a load balancer with multiple replicas,
+ * or the trusted-proxy assumption doesn't hold, this needs a shared store
+ * (Redis/KV) and a validated client-IP strategy instead — a new
+ * dependency, so that's an explicit call for whoever owns the deployment,
+ * not something to add unilaterally here.
+ */
+const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
+const RATE_LIMIT_MAX_REQUESTS = 5;
+const rateLimitHits = new Map<string, number[]>();
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const windowStart = now - RATE_LIMIT_WINDOW_MS;
+  const hits = (rateLimitHits.get(ip) ?? []).filter((timestamp) => timestamp > windowStart);
+
+  if (hits.length >= RATE_LIMIT_MAX_REQUESTS) {
+    rateLimitHits.set(ip, hits);
+    return true;
+  }
+
+  hits.push(now);
+  rateLimitHits.set(ip, hits);
+
+  // Bound memory: drop stale IPs once the map grows large.
+  if (rateLimitHits.size > 5000) {
+    for (const [key, timestamps] of rateLimitHits) {
+      if (timestamps.every((timestamp) => timestamp <= windowStart)) {
+        rateLimitHits.delete(key);
+      }
+    }
+  }
+
+  return false;
+}
+
+function getClientIp(req: NextRequest): string {
+  const forwardedFor = req.headers.get("x-forwarded-for");
+  if (forwardedFor) return forwardedFor.split(",")[0].trim();
+  return req.headers.get("x-real-ip") ?? "unknown";
+}
+
+function clean(value: unknown, maxLength = MAX_LENGTH): string {
+  if (typeof value !== "string") return "";
+  return value.trim().slice(0, maxLength);
+}
+
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+async function sendMail(subject: string, text: string, replyTo: string) {
+  const { RESEND_API_KEY, CONTACT_TO_EMAIL, CONTACT_FROM_EMAIL } = process.env;
+
+  if (!RESEND_API_KEY) {
+    console.error("Contact form submission (RESEND_API_KEY not configured)");
+    return { ok: false as const, status: 500 as const, error: "Mail not configured" };
+  }
+
+  const resend = new Resend(RESEND_API_KEY);
+  const { error } = await resend.emails.send({
+    from: CONTACT_FROM_EMAIL || "DeviaTech <onboarding@resend.dev>",
+    to: CONTACT_TO_EMAIL || site.email,
+    replyTo,
+    subject,
+    text,
+  });
+
+  if (error) {
+    console.error("Resend error:", error);
+    return { ok: false as const, status: 500 as const, error: "Failed to send" };
+  }
+
+  return { ok: true as const };
+}
+
+const THERAPIST_SOURCES = new Set(
+  SUPPORTED_LOCALES.map((locale) => `therapist-website-design-${locale}`),
+);
+
+const DEMO_SOURCES = new Set([
+  ...SUPPORTED_LOCALES.map((locale) => `therapist-demo-contact-${locale}`),
+  ...SUPPORTED_LOCALES.map((locale) => `therapist-demo-booking-${locale}`),
+]);
+
+/**
+ * Extracts the locale from a source id's trailing -en/-fa/-ur suffix — the
+ * source string is the allowlisted, structurally-verified value, so this
+ * is authoritative. Used to validate that body.locale (client-supplied,
+ * not trusted on its own) actually agrees with it, so a payload can never
+ * silently coerce e.g. source=...-ur with locale="fa" into being handled
+ * as either locale inconsistently.
+ */
+function localeFromSource(source: string): Locale | null {
+  for (const locale of SUPPORTED_LOCALES) {
+    if (source.endsWith(`-${locale}`)) return locale;
+  }
+  return null;
+}
+
+async function handleDemoLead(body: Record<string, unknown>) {
+  // Honeypot: bots fill hidden fields; humans never see or fill this one.
+  if (clean(body.companyWebsite, 200)) {
+    return NextResponse.json({ ok: true });
+  }
+
+  const source = clean(body.source, 60);
+  const locale = localeFromSource(source);
+  if (!locale || (typeof body.locale === "string" && body.locale !== locale)) {
+    return NextResponse.json({ error: "Invalid source/locale" }, { status: 400 });
+  }
+  const isBooking = source.startsWith("therapist-demo-booking-");
+
+  const fullName = clean(body.fullName, 200);
+  const email = clean(body.email, 320);
+  const whatsapp = clean(body.whatsapp, 60);
+
+  if (!fullName || (!email && !whatsapp)) {
+    return NextResponse.json({ error: "Missing fields" }, { status: 400 });
+  }
+
+  if (email && !EMAIL_PATTERN.test(email)) {
+    return NextResponse.json({ error: "Invalid email" }, { status: 400 });
+  }
+
+  const lines = [`Source: ${source}`, `Locale: ${locale}`, `Name: ${fullName}`, `Email: ${email || "-"}`, `WhatsApp: ${whatsapp || "-"}`];
+
+  if (isBooking) {
+    const serviceInterest = clean(body.serviceInterest, 100);
+    const sessionPreference = clean(body.sessionPreference, 60);
+    const preferredDateRange = clean(body.preferredDateRange, 200);
+    const preferredTimeOfDay = clean(body.preferredTimeOfDay, 60);
+    const note = clean(body.note, MAX_LENGTH);
+
+    lines.push(
+      `Service interest: ${serviceInterest || "-"}`,
+      `Session preference: ${sessionPreference || "-"}`,
+      `Preferred date range: ${preferredDateRange || "-"}`,
+      `Preferred time of day: ${preferredTimeOfDay || "-"}`,
+      "",
+      note,
+    );
+  } else {
+    const subject = clean(body.subject, 200);
+    const message = clean(body.message, MAX_LENGTH);
+
+    if (!subject || !message) {
+      return NextResponse.json({ error: "Missing fields" }, { status: 400 });
+    }
+
+    lines.push(`Subject: ${subject}`, "", message);
+  }
+
+  const result = await sendMail(
+    `[Luma Therapy demo] New ${isBooking ? "booking" : "contact"} enquiry from ${fullName}`,
+    lines.join("\n"),
+    email || site.email,
+  );
+
+  if (!result.ok) {
+    return NextResponse.json({ error: result.error }, { status: result.status });
+  }
+
+  return NextResponse.json({ ok: true });
+}
+
+async function handleTherapistLead(body: Record<string, unknown>) {
+  // Honeypot: bots fill hidden fields; humans never see or fill this one.
+  if (clean(body.companyWebsite, 200)) {
+    return NextResponse.json({ ok: true });
+  }
+
+  const source = clean(body.source, 60);
+  const locale = localeFromSource(source);
+  if (!locale || (typeof body.locale === "string" && body.locale !== locale)) {
+    return NextResponse.json({ error: "Invalid source/locale" }, { status: 400 });
+  }
+  const fullName = clean(body.fullName, 200);
+  const role = clean(body.role, 200);
+  const country = clean(body.country, 200);
+  const website = clean(body.website, 300);
+  const email = clean(body.email, 320);
+  const whatsapp = clean(body.whatsapp, 60);
+  const note = clean(body.note, MAX_LENGTH);
+
+  if (!fullName || !role || !country || !email) {
+    return NextResponse.json({ error: "Missing fields" }, { status: 400 });
+  }
+
+  if (!EMAIL_PATTERN.test(email)) {
+    return NextResponse.json({ error: "Invalid email" }, { status: 400 });
+  }
+
+  const result = await sendMail(
+    `New therapist website preview request from ${fullName}`,
+    [
+      `Source: ${source}`,
+      `Locale: ${locale}`,
+      `Name: ${fullName}`,
+      `Role: ${role}`,
+      `Country: ${country}`,
+      `Website/Instagram: ${website || "-"}`,
+      `Email: ${email}`,
+      `WhatsApp: ${whatsapp || "-"}`,
+      "",
+      note,
+    ].join("\n"),
+    email,
+  );
+
+  if (!result.ok) {
+    return NextResponse.json({ error: result.error }, { status: result.status });
+  }
+
+  return NextResponse.json({ ok: true });
+}
 
 export async function POST(req: NextRequest) {
-  const { name, contact, projectType, budget, preferredContact, message } = await req.json();
+  const ip = getClientIp(req);
+  if (isRateLimited(ip)) {
+    return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+  }
+
+  const contentLength = Number(req.headers.get("content-length") ?? "0");
+  if (contentLength > MAX_BODY_BYTES) {
+    return NextResponse.json({ error: "Request too large" }, { status: 413 });
+  }
+
+  let body: Record<string, unknown>;
+  try {
+    const rawText = await req.text();
+    if (rawText.length > MAX_BODY_BYTES) {
+      return NextResponse.json({ error: "Request too large" }, { status: 413 });
+    }
+    const parsed = JSON.parse(rawText);
+    if (typeof parsed !== "object" || parsed === null || Array.isArray(parsed)) {
+      return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+    }
+    body = parsed;
+  } catch {
+    return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+  }
+
+  const source = typeof body.source === "string" ? body.source : "";
+
+  if (THERAPIST_SOURCES.has(source)) {
+    return handleTherapistLead(body);
+  }
+
+  if (DEMO_SOURCES.has(source)) {
+    return handleDemoLead(body);
+  }
+
+  const name = clean(body.name, 200);
+  const contact = clean(body.contact, 320);
+  const projectType = clean(body.projectType, 200);
+  const budget = clean(body.budget, 200);
+  const preferredContact = clean(body.preferredContact, 200);
+  const message = clean(body.message, MAX_LENGTH);
 
   if (!name || !contact || !projectType || !budget || !preferredContact || !message) {
     return NextResponse.json({ error: "Missing fields" }, { status: 400 });
   }
 
-  const { RESEND_API_KEY, CONTACT_TO_EMAIL, CONTACT_FROM_EMAIL } = process.env;
+  const result = await sendMail(
+    `New project inquiry from ${name}`,
+    `Name: ${name}\nContact: ${contact}\nProject type: ${projectType}\nApproximate budget: ${budget}\nPreferred contact: ${preferredContact}\n\n${message}`,
+    contact,
+  );
 
-  if (!RESEND_API_KEY) {
-    console.error("Contact form submission (RESEND_API_KEY not configured):", { name, contact, projectType, budget, preferredContact, message });
-    return NextResponse.json({ error: "Mail not configured" }, { status: 500 });
-  }
-
-  const resend = new Resend(RESEND_API_KEY);
-
-  const { error } = await resend.emails.send({
-    from: CONTACT_FROM_EMAIL || "DeviaTech <onboarding@resend.dev>",
-    to: CONTACT_TO_EMAIL || site.email,
-    replyTo: contact,
-    subject: `New project inquiry from ${name}`,
-    text: `Name: ${name}\nContact: ${contact}\nProject type: ${projectType}\nApproximate budget: ${budget}\nPreferred contact: ${preferredContact}\n\n${message}`,
-  });
-
-  if (error) {
-    console.error("Resend error:", error);
-    return NextResponse.json({ error: "Failed to send" }, { status: 500 });
+  if (!result.ok) {
+    return NextResponse.json({ error: result.error }, { status: result.status });
   }
 
   return NextResponse.json({ ok: true });
