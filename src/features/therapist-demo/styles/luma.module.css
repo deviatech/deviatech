@@ -200,18 +200,3 @@
   text-transform: uppercase;
   color: var(--luma-sage-hover);
 }
-
-/* Placeholder image block */
-.placeholderImage {
-  background: linear-gradient(135deg, var(--luma-sage-soft), var(--luma-surface-muted));
-  border: 1px dashed var(--luma-border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--luma-text-muted);
-  font-size: 0.8125rem;
-  text-align: center;
-  padding: 12px;
-  width: 100%;
-  height: 100%;
-}
