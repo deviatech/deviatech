@@ -7,7 +7,7 @@ export const ur: TherapistLandingContent = {
     title: "ماہرینِ نفسیات اور مشیروں کے لیے ویب سائٹ ڈیزائن | DeviaTech",
     description:
       "معالجین، ماہرینِ نفسیات، مشیروں اور نجی پریکٹسز کے لیے پیشہ ورانہ ویب سائٹ ڈیزائن۔ DeviaTech سے مفت ذاتی ہوم پیج پیش نظارہ حاصل کریں۔",
-    ogAlt: "DeviaTech کا لوگو",
+    ogAlt: "DeviaTech کا ڈیزائن کردہ ایک پُرسکون معالج ویب سائٹ تصور",
     serviceName: "معالجین کے لیے ویب سائٹ ڈیزائن",
     serviceType: "ماہرینِ نفسیات، معالجین اور مشیروں کے لیے ویب سائٹ ڈیزائن",
     breadcrumbHome: "ہوم",

@@ -2,7 +2,7 @@ import SheetFrame from "@/components/ui/SheetFrame";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import { buildWhatsAppLink } from "@/lib/whatsapp";
-import { tracks, sectionEyebrow } from "@/content/tracks";
+import { tracks, sectionEyebrow, therapistServiceLink } from "@/content/tracks";
 import Link from "next/link";
 
 const serviceLinks = [
@@ -39,6 +39,15 @@ export default function TwoTracks() {
           </Card>
         ))}
       </div>
+      <p className="mt-6 font-body text-sm text-ink-soft">
+        {therapistServiceLink.lead}{" "}
+        <Link
+          href={therapistServiceLink.href}
+          className="font-medium text-accent-rust underline decoration-accent-rust/40 underline-offset-4 hover:decoration-accent-rust"
+        >
+          {therapistServiceLink.label}
+        </Link>
+      </p>
     </SheetFrame>
   );
 }

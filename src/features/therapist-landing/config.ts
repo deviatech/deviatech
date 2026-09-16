@@ -4,14 +4,11 @@ export type TherapistLocale = Locale;
 
 export const therapistLandingConfig = {
   /**
-   * "View Live Concept" buttons (hero + concept showcase) link here once
-   * enabled. Keep `enabled: false` until the Luma demo's real images are
-   * finished and deployed — the buttons must not send visitors to a demo
-   * that still shows image placeholders (see TODO(licensed-images) in
-   * src/features/therapist-demo/content/images.ts).
+   * "View Live Concept" buttons (hero + concept showcase) open the
+   * fully populated Luma demo in the matching language.
    */
   liveDemo: {
-    enabled: false,
+    enabled: true,
     urls: {
       en: "https://preview.deviatech.com/",
       fa: "https://preview.deviatech.com/fa",

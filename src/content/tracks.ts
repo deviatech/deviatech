@@ -9,6 +9,12 @@ export interface Track {
 
 export const sectionEyebrow = "WHAT WE BUILD";
 
+export const therapistServiceLink = {
+  lead: "Running a therapy or counseling practice?",
+  label: "See our website design service for therapists, psychologists, and counselors.",
+  href: "/therapist-website-design",
+};
+
 export const tracks: Track[] = [
   {
     name: "Launch Track",

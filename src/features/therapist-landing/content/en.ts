@@ -7,7 +7,7 @@ export const en: TherapistLandingContent = {
     title: "Therapist Website Design for Psychologists & Counselors | DeviaTech",
     description:
       "Professional website design for therapists, psychologists, counselors, and private practices. Request a free personalized homepage preview from DeviaTech.",
-    ogAlt: "DeviaTech logo",
+    ogAlt: "A calm therapist website concept designed by DeviaTech",
     serviceName: "Therapist Website Design",
     serviceType: "Website design for therapists, psychologists, and counselors",
     breadcrumbHome: "Home",

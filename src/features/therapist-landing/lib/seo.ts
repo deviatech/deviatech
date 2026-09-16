@@ -4,7 +4,11 @@ import type { Locale } from "@/lib/locales";
 import type { TherapistLandingContent } from "../content/types";
 import { therapistLandingConfig } from "../config";
 
-const OG_IMAGE = { url: "/logo/icon-512.png", width: 512, height: 512 };
+const OG_IMAGE = {
+  url: "/images/therapist-website-design/og.jpg",
+  width: 1200,
+  height: 630,
+};
 
 /**
  * Open Graph locales must be language_TERRITORY. Urdu has no approved
