@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "seo:smoke": "bash scripts/seo-smoke.sh"
   },
   "dependencies": {
     "gray-matter": "^4.0.3",
