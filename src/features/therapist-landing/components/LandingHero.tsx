@@ -1,13 +1,13 @@
 import { LuLeaf } from "react-icons/lu";
 import type { TherapistLandingContent } from "../content/types";
-import { therapistLandingConfig } from "../config";
+import { getLiveDemoUrl } from "../config";
 import { TlLinkButton } from "./TlButton";
 import LocaleSwitch from "./LocaleSwitch";
 import styles from "../therapistLanding.module.css";
 
 export default function LandingHero({ content }: { content: TherapistLandingContent }) {
   const { hero } = content;
-  const { liveDemoUrl } = therapistLandingConfig;
+  const liveDemoUrl = getLiveDemoUrl(content.locale);
 
   return (
     <section className={`${styles.section} pt-8 md:pt-10`}>

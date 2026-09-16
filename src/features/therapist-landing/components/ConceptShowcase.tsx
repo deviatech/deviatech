@@ -3,7 +3,7 @@
 import { useEffect, useId, useState } from "react";
 import { LuCalendarCheck } from "react-icons/lu";
 import type { ConceptTabContent, TherapistLandingContent } from "../content/types";
-import { therapistLandingConfig } from "../config";
+import { getLiveDemoUrl } from "../config";
 import { TlLinkButton } from "./TlButton";
 import styles from "../therapistLanding.module.css";
 
@@ -19,7 +19,7 @@ export default function ConceptShowcase({ content }: { content: TherapistLanding
   const [device, setDevice] = useState<Device>("desktop");
   const [isVerticalLayout, setIsVerticalLayout] = useState(false);
   const baseId = useId();
-  const { liveDemoUrl } = therapistLandingConfig;
+  const liveDemoUrl = getLiveDemoUrl(content.locale);
 
   const activeIndex = tabs.findIndex((tab) => tab.id === activeId);
 

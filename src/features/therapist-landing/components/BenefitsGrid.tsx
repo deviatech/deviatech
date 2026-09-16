@@ -17,7 +17,7 @@ export default function BenefitsGrid({ content }: { content: TherapistLandingCon
             return (
               <div key={item.title} className="min-w-0 border-b border-[var(--tl-border)] pb-6 sm:border-none sm:pb-0">
                 <FeatureIcon icon={Icon} />
-                <p className="mt-4 text-base font-semibold text-[var(--tl-text)]">{item.title}</p>
+                <h3 className="mt-4 text-base font-semibold text-[var(--tl-text)]">{item.title}</h3>
                 <p className="mt-2 text-sm leading-6 text-[var(--tl-text-body)]">{item.description}</p>
               </div>
             );
