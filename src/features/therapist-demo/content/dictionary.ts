@@ -1,5 +1,6 @@
 import type { LocaleDictionary, DemoLocale } from "../types";
 import { demoRoutes } from "../lib/routes";
+import { site } from "@/content/site";
 
 export const en: LocaleDictionary = {
   locale: "en",
@@ -37,7 +38,7 @@ export const en: LocaleDictionary = {
     conceptNotice:
       "Concept website by DeviaTech. Luma Therapy is a fictional practice created for demonstration purposes.",
     deviatechLinkLabel: "See the DeviaTech therapist website design service",
-    deviatechLinkHref: "/therapist-website-design",
+    deviatechLinkHref: `${site.url}/therapist-website-design`,
   },
   conceptNotice:
     "Concept website by DeviaTech. Luma Therapy is a fictional practice created for demonstration purposes.",
@@ -81,7 +82,7 @@ export const fa: LocaleDictionary = {
     conceptNotice:
       "وب‌سایت مفهومی طراحی‌شده توسط DeviaTech؛ لوما تراپی یک مجموعه نمایشی است و فعالیت درمانی واقعی ندارد.",
     deviatechLinkLabel: "مشاهده خدمات طراحی سایت برای درمانگران در DeviaTech",
-    deviatechLinkHref: "/fa/therapist-website-design",
+    deviatechLinkHref: `${site.url}/fa/therapist-website-design`,
   },
   conceptNotice:
     "وب‌سایت مفهومی طراحی‌شده توسط DeviaTech؛ لوما تراپی یک مجموعه نمایشی است و فعالیت درمانی واقعی ندارد.",
@@ -125,7 +126,7 @@ export const ur: LocaleDictionary = {
     conceptNotice:
       "DeviaTech کی جانب سے ایک تصوراتی ویب سائٹ۔ لوما تھراپی ایک فرضی پریکٹس ہے جو مظاہرے کے مقاصد کے لیے بنائی گئی ہے۔",
     deviatechLinkLabel: "DeviaTech کی معالج ویب سائٹ ڈیزائن سروس دیکھیں",
-    deviatechLinkHref: "/ur/therapist-website-design",
+    deviatechLinkHref: `${site.url}/ur/therapist-website-design`,
   },
   conceptNotice:
     "DeviaTech کی جانب سے ایک تصوراتی ویب سائٹ۔ لوما تھراپی ایک فرضی پریکٹس ہے جو مظاہرے کے مقاصد کے لیے بنائی گئی ہے۔",

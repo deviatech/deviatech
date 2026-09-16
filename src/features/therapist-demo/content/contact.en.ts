@@ -1,4 +1,5 @@
 import type { ContactPageContent } from "../types";
+import { site } from "@/content/site";
 
 export const contactEn: ContactPageContent = {
   meta: {
@@ -15,7 +16,7 @@ export const contactEn: ContactPageContent = {
     {
       label: "See the DeviaTech therapist website service",
       description: "Learn how DeviaTech builds websites like this one for real practices.",
-      href: "/therapist-website-design",
+      href: `${site.url}/therapist-website-design`,
     },
     {
       label: "WhatsApp DeviaTech",
