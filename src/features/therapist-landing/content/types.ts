@@ -47,8 +47,12 @@ export interface TherapistLandingContent {
     title: string;
     description: string;
     ogAlt: string;
+    serviceName: string;
+    serviceType: string;
+    breadcrumbHome: string;
   };
   localeSwitch: {
+    ariaLabel: string;
     en: string;
     fa: string;
     ur: string;
