@@ -6,7 +6,7 @@ import SectionHeading from "./SectionHeading";
 import Breadcrumbs from "./Breadcrumbs";
 import BlogFilter from "./BlogFilter";
 import ArticleCard from "./ArticleCard";
-import PlaceholderImage from "./PlaceholderImage";
+import DemoImage from "./DemoImage";
 import Link from "next/link";
 import { blogPostRoute } from "../lib/routes";
 import contentStyles from "../styles/luma-content.module.css";
@@ -49,7 +49,12 @@ export default function BlogListingPage({
             {featured && (
               <Link href={blogPostRoute(featured.slug, locale)} className={blogStyles.featuredCard}>
                 <div className={blogStyles.featuredMedia}>
-                  <PlaceholderImage image={featured.image} locale={locale} />
+                  <DemoImage
+                    image={featured.image}
+                    locale={locale}
+                    priority
+                    sizes="(min-width: 1024px) 55vw, 100vw"
+                  />
                 </div>
                 <div className={blogStyles.featuredBody}>
                   <p className={blogStyles.featuredCategory}>{featured.categoryLabel}</p>

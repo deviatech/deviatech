@@ -3,7 +3,7 @@ import { getRelatedArticles } from "../lib/blog";
 import { homeBreadcrumb, route } from "../lib/routes";
 import Section from "./Section";
 import Breadcrumbs from "./Breadcrumbs";
-import PlaceholderImage from "./PlaceholderImage";
+import DemoImage from "./DemoImage";
 import ArticleBody from "./ArticleBody";
 import ShareControls from "./ShareControls";
 import ArticleCard from "./ArticleCard";
@@ -51,7 +51,7 @@ export default function ArticleDetailPage({
 
       <Section tone="cream" padding="compact" containerSize="article">
         <div className={blogStyles.articleHeroMedia}>
-          <PlaceholderImage image={article.image} locale={locale} />
+          <DemoImage image={article.image} locale={locale} priority sizes="(min-width: 1024px) 800px, 100vw" />
         </div>
 
         <ArticleBody sections={article.body} />
