@@ -75,11 +75,7 @@ const jsonLd = {
 
 export default function SiteLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    // Explicit dir="ltr": DeviaTech's Header/Footer use physical layout
-    // utilities, not logical properties. The root <html> is always en/ltr
-    // for every (site) route already (middleware never sets fa/ur for
-    // these paths), so this is defense-in-depth, not the source of truth.
-    <div dir="ltr">
+    <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -87,10 +83,24 @@ export default function SiteLayout({ children }: Readonly<{ children: React.Reac
       <DeferredAnalytics />
       <AnalyticsEvents />
       <BlueprintGrid />
-      <Header />
+      {/*
+        Explicit dir="ltr" scoped to only Header/Footer (physical layout
+        utilities, not logical properties — they'd visually mirror under
+        an RTL ancestor). Deliberately does NOT wrap <main>: the fa/ur
+        therapist-landing routes render inside this same (site) group
+        (they reuse this real DeviaTech chrome by original design) and
+        must stay free to set their own dir="rtl" without an LTR
+        ancestor above them — TherapistLanding.tsx already does this on
+        its own root element.
+      */}
+      <div data-site-shell dir="ltr">
+        <Header />
+      </div>
       <main>{children}</main>
-      <Footer />
+      <div data-site-shell dir="ltr">
+        <Footer />
+      </div>
       <StickyWhatsApp />
-    </div>
+    </>
   );
 }

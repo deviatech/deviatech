@@ -10,7 +10,6 @@ const quickLinks = [
   { label: "Blog", href: "/blog" },
   { label: "Case studies", href: "/case-studies" },
   { label: "Contact", href: "/contact" },
-  { label: "Therapist Website Design", href: "/therapist-website-design" },
 ];
 
 const socialLinks = [
