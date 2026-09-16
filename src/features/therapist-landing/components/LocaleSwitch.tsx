@@ -11,13 +11,15 @@ export default function LocaleSwitch({ content }: { content: TherapistLandingCon
   ];
 
   return (
-    <nav aria-label="Language" className="flex items-center gap-1 text-sm">
+    <nav aria-label={content.localeSwitch.ariaLabel} className="flex items-center gap-1 text-sm">
       {locales.map((locale) => {
         const isCurrent = locale.id === content.locale;
         return (
           <Link
             key={locale.id}
             href={therapistLandingConfig.routes[locale.id]}
+            hrefLang={locale.id}
+            lang={locale.id}
             aria-current={isCurrent ? "page" : undefined}
             data-ga-event="language_switch_click"
             data-ga-label={locale.id}

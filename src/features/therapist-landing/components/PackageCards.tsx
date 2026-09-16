@@ -26,7 +26,7 @@ export default function PackageCards({ content }: { content: TherapistLandingCon
                   {packages.recommendedLabel}
                 </span>
               )}
-              <p className="text-lg font-semibold text-[var(--tl-text)]">{pkg.name}</p>
+              <h3 className="text-lg font-semibold text-[var(--tl-text)]">{pkg.name}</h3>
               <p className="mt-1 text-sm font-medium text-[var(--tl-primary)]">{pkg.timeline}</p>
               <p className="mt-3 text-sm leading-6 text-[var(--tl-text-body)]">{pkg.description}</p>
 

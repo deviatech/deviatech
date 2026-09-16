@@ -38,13 +38,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${site.url}/therapist-website-design`,
-      lastModified: new Date("2026-09-15"),
+      lastModified: new Date("2026-09-16"),
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
       url: `${site.url}/fa/therapist-website-design`,
-      lastModified: new Date("2026-09-15"),
+      lastModified: new Date("2026-09-16"),
       changeFrequency: "monthly",
       priority: 0.8,
     },

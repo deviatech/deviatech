@@ -1,7 +1,20 @@
 import type { Metadata } from "next";
 import { DEMO_CANONICAL_HOST } from "./seo";
+import { DEMO_BASE } from "./routes";
 import type { DemoLocale } from "../types";
 import { SUPPORTED_LOCALES } from "@/lib/locales";
+
+/**
+ * Converts an apex-style demo path (/therapist-demo/fa/about) into its
+ * public URL on the demo host (https://preview.deviatech.com/fa/about).
+ * Middleware on that host redirects any /therapist-demo/... path away, so
+ * canonical and hreflang URLs must never keep the prefix — otherwise they
+ * point at a redirect instead of resolving directly with a 200.
+ */
+export function demoCanonicalUrl(path: string): string {
+  const withoutBase = path.startsWith(DEMO_BASE) ? path.slice(DEMO_BASE.length) : path;
+  return `${DEMO_CANONICAL_HOST}${withoutBase || "/"}`;
+}
 
 /**
  * Builds noindex/follow metadata with reciprocal en/fa/ur canonical +
@@ -26,7 +39,7 @@ export function demoPageMetadata({
   locale: DemoLocale;
 }): Metadata {
   const languages = Object.fromEntries(
-    SUPPORTED_LOCALES.map((loc) => [loc, `${DEMO_CANONICAL_HOST}${paths[loc]}`]),
+    SUPPORTED_LOCALES.map((loc) => [loc, demoCanonicalUrl(paths[loc])]),
   );
 
   return {
@@ -34,16 +47,16 @@ export function demoPageMetadata({
     description,
     robots: { index: false, follow: true },
     alternates: {
-      canonical: `${DEMO_CANONICAL_HOST}${paths[locale]}`,
+      canonical: demoCanonicalUrl(paths[locale]),
       languages: {
         ...languages,
-        "x-default": `${DEMO_CANONICAL_HOST}${paths.en}`,
+        "x-default": demoCanonicalUrl(paths.en),
       },
     },
     openGraph: {
       title,
       description,
-      url: `${DEMO_CANONICAL_HOST}${paths[locale]}`,
+      url: demoCanonicalUrl(paths[locale]),
       siteName: "Luma Therapy",
       type: "website",
     },

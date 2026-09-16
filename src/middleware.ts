@@ -55,6 +55,8 @@ export function middleware(request: NextRequest) {
 
     const isBypassed =
       pathname.startsWith("/api/") ||
+      pathname.startsWith("/images/") ||
+      pathname.startsWith("/logo/") ||
       pathname === "/robots.txt" ||
       pathname === "/sitemap.xml" ||
       pathname === "/manifest.webmanifest";

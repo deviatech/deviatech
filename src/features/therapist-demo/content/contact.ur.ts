@@ -1,4 +1,5 @@
 import type { ContactPageContent } from "../types";
+import { site } from "@/content/site";
 
 export const contactUr: ContactPageContent = {
   meta: {
@@ -15,7 +16,7 @@ export const contactUr: ContactPageContent = {
     {
       label: "DeviaTech کی معالج ویب سائٹ سروس دیکھیں",
       description: "جانیں کہ DeviaTech حقیقی پریکٹسز کے لیے اس جیسی ویب سائٹس کیسے بناتا ہے۔",
-      href: "/ur/therapist-website-design",
+      href: `${site.url}/ur/therapist-website-design`,
     },
     {
       label: "DeviaTech کو واٹس ایپ کریں",

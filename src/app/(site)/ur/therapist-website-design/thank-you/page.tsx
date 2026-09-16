@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ur } from "@/features/therapist-landing/content/ur";
+import { therapistThankYouMetadata } from "@/features/therapist-landing/lib/seo";
 
-export const metadata: Metadata = {
-  title: `${ur.form.successTitle} | DeviaTech`,
-  robots: { index: false, follow: true },
-};
+export const metadata: Metadata = therapistThankYouMetadata(ur);
 
 export default function TherapistThankYouUrPage() {
   return (

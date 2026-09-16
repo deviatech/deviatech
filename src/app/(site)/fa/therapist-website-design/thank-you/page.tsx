@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { fa } from "@/features/therapist-landing/content/fa";
+import { therapistThankYouMetadata } from "@/features/therapist-landing/lib/seo";
 
-export const metadata: Metadata = {
-  title: `${fa.form.successTitle} | دویاتک`,
-  robots: { index: false, follow: true },
-};
+export const metadata: Metadata = therapistThankYouMetadata(fa);
 
 export default function TherapistThankYouFaPage() {
   return (

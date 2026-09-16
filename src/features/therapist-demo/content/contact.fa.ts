@@ -1,4 +1,5 @@
 import type { ContactPageContent } from "../types";
+import { site } from "@/content/site";
 
 export const contactFa: ContactPageContent = {
   meta: {
@@ -15,7 +16,7 @@ export const contactFa: ContactPageContent = {
     {
       label: "مشاهده خدمات طراحی سایت برای درمانگران در DeviaTech",
       description: "بدانید DeviaTech چگونه وب‌سایت‌هایی مانند این را برای مجموعه‌های واقعی می‌سازد.",
-      href: "/fa/therapist-website-design",
+      href: `${site.url}/fa/therapist-website-design`,
     },
     {
       label: "تماس واتس‌اپ با DeviaTech",
