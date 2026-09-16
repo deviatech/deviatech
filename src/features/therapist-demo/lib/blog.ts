@@ -14,7 +14,18 @@ export function getArticles(locale: DemoLocale): Article[] {
 }
 
 export function getArticleBySlug(locale: DemoLocale, slug: string): Article | undefined {
-  return getArticles(locale).find((article) => article.slug === slug);
+  // Next.js can pass a percent-encoded dynamic segment in production for
+  // non-ASCII paths. Decode it before comparing with the Unicode slugs in
+  // the content registry; malformed input simply remains unmatched.
+  let normalizedSlug = slug;
+  try {
+    normalizedSlug = decodeURIComponent(slug);
+  } catch {
+    return undefined;
+  }
+
+  normalizedSlug = normalizedSlug.normalize("NFC");
+  return getArticles(locale).find((article) => article.slug.normalize("NFC") === normalizedSlug);
 }
 
 /**
