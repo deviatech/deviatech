@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import type { DemoLocale, ImageDescriptor } from "../types";
-import PlaceholderImage from "./PlaceholderImage";
+import DemoImage from "./DemoImage";
 import styles from "../styles/luma-content.module.css";
 
 export default function SplitEditorialSection({
@@ -35,13 +35,13 @@ export default function SplitEditorialSection({
       <div className={styles.splitMedia}>
         {secondaryImage ? (
           <div style={{ display: "grid", gridTemplateColumns: "1.1fr 0.9fr", gap: 16 }}>
-            <PlaceholderImage image={image} locale={locale} />
+            <DemoImage image={image} locale={locale} sizes="(min-width: 1024px) 28vw, 55vw" />
             <div style={{ alignSelf: "end" }}>
-              <PlaceholderImage image={secondaryImage} locale={locale} />
+              <DemoImage image={secondaryImage} locale={locale} sizes="(min-width: 1024px) 23vw, 45vw" />
             </div>
           </div>
         ) : (
-          <PlaceholderImage image={image} locale={locale} />
+          <DemoImage image={image} locale={locale} sizes="(min-width: 1024px) 50vw, 100vw" />
         )}
       </div>
     </div>

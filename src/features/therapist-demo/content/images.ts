@@ -1,212 +1,175 @@
 import type { ImageDescriptor } from "../types";
 
 /**
- * Centralized image descriptors for the Luma Therapy demo. Every entry is
- * currently a tracked placeholder (placeholder: true) — no licensed
- * photography has been supplied yet. Swap `src`/`placeholder` here once real
- * assets land in public/images/therapist-demo/; no layout code needs to
- * change since every consumer reads from this registry.
+ * Centralized image descriptors for the Luma Therapy demo. Every entry
+ * points at an optimized WebP in public/images/therapist-demo/. No layout
+ * code needs to change when swapping `src` here since every consumer reads
+ * from this registry via DemoImage.
  *
- * TODO(licensed-images): source or commission photography matching each
- * description below (sunlit rooms, calm editorial tone, no gradients).
+ * homeHero and aboutHero share one source file (practice-portrait.webp) —
+ * do not add a second copy for cropping; use focalPoint per placement.
  */
 export const demoImages = {
   homeHero: {
-    src: "/images/therapist-demo/home-hero-practice.jpg",
+    src: "/images/therapist-demo/practice-portrait.webp",
     width: 4,
     height: 5,
+    focalPoint: "50% 20%",
     alt: {
-      en: "A sunlit, softly furnished therapy room with two chairs and a small plant.",
-      fa: "اتاقی آفتاب‌گیر و آرام با دو صندلی و یک گیاه کوچک.",
-      ur: "دو کرسیوں اور ایک چھوٹے پودے کے ساتھ ایک دھوپ سے بھرا، نرم انداز میں سجا ہوا معالجاتی کمرہ۔",
+      en: "A professional woman seated in a softly lit office.",
+      fa: "زنی با پوشش حرفه‌ای در دفتری با نور ملایم نشسته است.",
+      ur: "پیشہ ورانہ لباس میں ایک خاتون نرم روشنی والے دفتر میں بیٹھی ہیں۔",
     },
-    placeholder: true,
   },
   homeListening: {
-    src: "/images/therapist-demo/home-listening-room.jpg",
+    src: "/images/therapist-demo/home-listening-room.webp",
     width: 5,
     height: 6,
     alt: {
-      en: "An empty armchair beside a window, warm natural light.",
-      fa: "صندلی راحتی کنار پنجره با نور طبیعی گرم.",
-      ur: "کھڑکی کے پاس ایک خالی آرام دہ کرسی، گرم قدرتی روشنی۔",
+      en: "A cozy therapy room with a comfortable chair, soft lighting, and a green plant.",
+      fa: "اتاقی دنج برای درمان با صندلی راحت، نور ملایم و یک گیاه سبز.",
+      ur: "ایک آرام دہ کرسی، نرم روشنی اور ایک سبز پودے کے ساتھ ایک آرام دہ تھراپی کمرہ۔",
     },
-    placeholder: true,
   },
   homeApproachA: {
-    src: "/images/therapist-demo/home-approach-a.jpg",
+    src: "/images/therapist-demo/home-approach-a.webp",
     width: 4,
     height: 5,
     alt: {
-      en: "Linen textured cushions on a reading chair.",
-      fa: "بالش‌های پارچه‌ای روی یک صندلی مطالعه.",
-      ur: "مطالعے کی کرسی پر لینن کے بنے ہوئے کشن۔",
+      en: "Close-up of green leaves with morning dew.",
+      fa: "نمای نزدیک از برگ‌های سبز با شبنم صبحگاهی.",
+      ur: "صبح کی شبنم کے ساتھ سبز پتوں کا قریبی منظر۔",
     },
-    placeholder: true,
   },
   homeApproachB: {
-    src: "/images/therapist-demo/home-approach-b.jpg",
+    src: "/images/therapist-demo/home-approach-b.webp",
     width: 4,
     height: 3,
     alt: {
-      en: "A cup of tea resting on a wooden side table.",
-      fa: "یک فنجان چای روی میز چوبی کوچک.",
-      ur: "لکڑی کی چھوٹی میز پر چائے کا ایک کپ۔",
+      en: "Hands holding a warm cup of tea.",
+      fa: "دست‌هایی در حال نگه داشتن یک فنجان چای گرم.",
+      ur: "چائے کا گرم کپ تھامے ہوئے ہاتھ۔",
     },
-    placeholder: true,
   },
   serviceIndividual: {
-    src: "/images/therapist-demo/service-individual.jpg",
+    src: "/images/therapist-demo/service-individual.webp",
     width: 4,
     height: 3,
     alt: {
-      en: "A single calm chair facing a bright window.",
-      fa: "یک صندلی آرام رو به پنجره‌ای روشن.",
-      ur: "ایک روشن کھڑکی کے سامنے ایک پرسکون کرسی۔",
+      en: "A woman seated comfortably in a warm, softly lit office during a one-to-one session.",
+      fa: "زنی در دفتری گرم و با نور ملایم در حال نشستن راحت طی یک جلسه فردی.",
+      ur: "ایک انفرادی سیشن کے دوران گرم، نرم روشنی والے دفتر میں آرام سے بیٹھی ایک خاتون۔",
     },
-    placeholder: true,
   },
   serviceCouples: {
-    src: "/images/therapist-demo/service-couples.jpg",
+    src: "/images/therapist-demo/service-couples.webp",
     width: 4,
     height: 3,
     alt: {
-      en: "Two chairs angled toward each other in a quiet room.",
-      fa: "دو صندلی رو به هم در فضایی آرام.",
-      ur: "ایک پرسکون کمرے میں ایک دوسرے کی طرف رخ کیے دو کرسیاں۔",
+      en: "Two adults sitting together on a sofa in a bright, calm room.",
+      fa: "دو بزرگسال کنار هم روی مبل در اتاقی روشن و آرام نشسته‌اند.",
+      ur: "دو بالغ افراد ایک روشن، پرسکون کمرے میں صوفے پر ایک ساتھ بیٹھے ہیں۔",
     },
-    placeholder: true,
   },
   serviceOnline: {
-    src: "/images/therapist-demo/service-online.jpg",
+    src: "/images/therapist-demo/service-online.webp",
     width: 4,
     height: 3,
     alt: {
-      en: "A laptop open on a desk beside a small plant.",
-      fa: "لپ‌تاپ باز روی میز کنار یک گیاه کوچک.",
-      ur: "ایک چھوٹے پودے کے ساتھ میز پر کھلا ہوا لیپ ٹاپ۔",
+      en: "A woman having an online video session on a laptop in a cozy home setting.",
+      fa: "زنی در حال جلسه ویدیویی آنلاین با لپ‌تاپ در فضایی خانگی و دنج.",
+      ur: "ایک خاتون آرام دہ گھریلو ماحول میں لیپ ٹاپ پر آن لائن ویڈیو سیشن کر رہی ہیں۔",
     },
-    placeholder: true,
   },
   serviceGroup: {
-    src: "/images/therapist-demo/service-group.jpg",
+    src: "/images/therapist-demo/service-group.webp",
     width: 4,
     height: 3,
     alt: {
-      en: "A circle of chairs arranged in a bright room.",
-      fa: "چیدمان دایره‌ای صندلی‌ها در اتاقی روشن.",
-      ur: "ایک روشن کمرے میں دائرے کی شکل میں ترتیب دی گئی کرسیاں۔",
+      en: "A small group sitting in a circle in a warm, minimalist room.",
+      fa: "گروهی کوچک در چیدمانی دایره‌ای در اتاقی گرم و مینیمال نشسته‌اند.",
+      ur: "ایک گرم، سادہ کمرے میں دائرے کی شکل میں بیٹھا ایک چھوٹا گروہ۔",
     },
-    placeholder: true,
   },
   aboutHero: {
-    src: "/images/therapist-demo/about-hero.jpg",
+    src: "/images/therapist-demo/practice-portrait.webp",
     width: 4,
     height: 5,
+    focalPoint: "50% 10%",
     alt: {
-      en: "A calm consulting room with soft daylight.",
-      fa: "اتاق مشاوره‌ای آرام با نور روز ملایم.",
-      ur: "نرم دن کی روشنی کے ساتھ ایک پرسکون مشاورتی کمرہ۔",
+      en: "A professional woman seated in a softly lit office.",
+      fa: "زنی با پوشش حرفه‌ای در دفتری با نور ملایم نشسته است.",
+      ur: "پیشہ ورانہ لباس میں ایک خاتون نرم روشنی والے دفتر میں بیٹھی ہیں۔",
     },
-    placeholder: true,
   },
   individualHero: {
-    src: "/images/therapist-demo/individual-hero.jpg",
+    src: "/images/therapist-demo/individual-hero.webp",
     width: 4,
     height: 5,
     alt: {
-      en: "A sunlit room prepared for a one-to-one session.",
-      fa: "اتاقی آفتاب‌گیر آماده برای جلسه فردی.",
-      ur: "انفرادی سیشن کے لیے تیار ایک دھوپ سے بھرا کمرہ۔",
+      en: "A person seated in a calm, softly lit consultation room.",
+      fa: "فردی در اتاق مشاوره‌ای آرام با نور ملایم نشسته است.",
+      ur: "ایک شخص نرم روشنی والے پُرسکون مشاورتی کمرے میں بیٹھا ہے۔",
     },
-    placeholder: true,
   },
   individualOutcomeA: {
-    src: "/images/therapist-demo/individual-outcome-a.jpg",
+    src: "/images/therapist-demo/individual-outcome-a.webp",
     width: 4,
     height: 5,
     alt: {
-      en: "Notebook and pen resting on a linen chair.",
-      fa: "دفترچه و خودکار روی صندلی پارچه‌ای.",
-      ur: "لینن کرسی پر رکھی نوٹ بک اور قلم۔",
+      en: "Notebook and pen resting beside a cup of tea.",
+      fa: "دفترچه و خودکار کنار یک فنجان چای.",
+      ur: "چائے کے کپ کے ساتھ رکھی نوٹ بک اور قلم۔",
     },
-    placeholder: true,
   },
   individualOutcomeB: {
-    src: "/images/therapist-demo/individual-outcome-b.jpg",
+    src: "/images/therapist-demo/individual-outcome-b.webp",
     width: 4,
     height: 3,
     alt: {
-      en: "Soft daylight through a linen curtain.",
-      fa: "نور ملایم روز از پشت پرده‌ای کتانی.",
-      ur: "لینن کے پردے سے چھنتی نرم دن کی روشنی۔",
+      en: "Two chairs facing each other in a warm, minimalist room.",
+      fa: "دو صندلی رو به هم در اتاقی گرم و مینیمال.",
+      ur: "ایک گرم، سادہ کمرے میں ایک دوسرے کے سامنے دو کرسیاں۔",
     },
-    placeholder: true,
   },
   couplesHero: {
-    src: "/images/therapist-demo/couples-hero.jpg",
+    src: "/images/therapist-demo/couples-hero.webp",
     width: 4,
     height: 5,
     alt: {
-      en: "Two chairs facing each other in a warm-lit room.",
-      fa: "دو صندلی رو به هم در اتاقی با نور گرم.",
-      ur: "گرم روشنی والے کمرے میں ایک دوسرے کے سامنے دو کرسیاں۔",
+      en: "Two adults sitting together on a sofa, warm and relaxed.",
+      fa: "دو بزرگسال کنار هم روی مبل، گرم و آرام.",
+      ur: "دو بالغ افراد صوفے پر ایک ساتھ، پرسکون اور آرام دہ انداز میں بیٹھے ہیں۔",
     },
-    placeholder: true,
   },
   couplesOutcomeA: {
-    src: "/images/therapist-demo/couples-outcome-a.jpg",
+    src: "/images/therapist-demo/couples-outcome-a.webp",
     width: 4,
     height: 5,
     alt: {
-      en: "Two cups of tea on a shared table.",
-      fa: "دو فنجان چای روی میزی مشترک.",
-      ur: "مشترکہ میز پر چائے کے دو کپ۔",
+      en: "Two people's hands gently touching on a table.",
+      fa: "دست‌های دو نفر که به آرامی روی میز به هم می‌رسند.",
+      ur: "میز پر آہستگی سے چھوتے ہوئے دو افراد کے ہاتھ۔",
     },
-    placeholder: true,
   },
   couplesOutcomeB: {
-    src: "/images/therapist-demo/couples-outcome-b.jpg",
+    src: "/images/therapist-demo/couples-outcome-b.webp",
     width: 4,
     height: 3,
     alt: {
-      en: "A quiet corner with two seats and soft light.",
-      fa: "گوشه‌ای آرام با دو صندلی و نور ملایم.",
-      ur: "دو نشستوں اور نرم روشنی کے ساتھ ایک پرسکون کونا۔",
+      en: "Two chairs facing each other in a warm, minimalist room.",
+      fa: "دو صندلی رو به هم در اتاقی گرم و مینیمال.",
+      ur: "ایک گرم، سادہ کمرے میں ایک دوسرے کے سامنے دو کرسیاں۔",
     },
-    placeholder: true,
   },
   blogHero: {
-    src: "/images/therapist-demo/blog-featured.jpg",
+    src: "/images/therapist-demo/blog-featured.webp",
     width: 16,
     height: 9,
     alt: {
-      en: "An open notebook beside a warm cup of tea.",
-      fa: "دفترچه‌ای باز کنار فنجان چای گرم.",
-      ur: "چائے کے گرم کپ کے ساتھ ایک کھلی نوٹ بک۔",
+      en: "Calm ocean waves at sunset, peaceful horizon.",
+      fa: "امواج آرام دریا در غروب، افقی آرامش‌بخش.",
+      ur: "غروب آفتاب کے وقت پرسکون سمندری لہریں، پرامن افق۔",
     },
-    placeholder: true,
-  },
-  contactHero: {
-    src: "/images/therapist-demo/contact-room.jpg",
-    width: 4,
-    height: 3,
-    alt: {
-      en: "A welcoming waiting area with natural light.",
-      fa: "فضای انتظاری دلنشین با نور طبیعی.",
-      ur: "قدرتی روشنی کے ساتھ ایک خوش آئند انتظار گاہ۔",
-    },
-    placeholder: true,
-  },
-  bookingHero: {
-    src: "/images/therapist-demo/booking-room.jpg",
-    width: 4,
-    height: 5,
-    alt: {
-      en: "A calm room prepared for a first conversation.",
-      fa: "اتاقی آرام آماده برای اولین گفتگو.",
-      ur: "پہلی گفتگو کے لیے تیار ایک پرسکون کمرہ۔",
-    },
-    placeholder: true,
   },
 } as const satisfies Record<string, ImageDescriptor>;

@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import type { DemoLocale, ImageDescriptor } from "../types";
-import PlaceholderImage from "./PlaceholderImage";
+import DemoImage from "./DemoImage";
 import styles from "../styles/luma-content.module.css";
 
 export default function SplitHero({
@@ -37,7 +37,12 @@ export default function SplitHero({
         {reassurance && <p className={styles.heroReassurance}>{reassurance}</p>}
       </div>
       <div className={styles.heroMedia}>
-        <PlaceholderImage image={image} locale={locale} />
+        <DemoImage
+          image={image}
+          locale={locale}
+          priority={headingLevel === "h1"}
+          sizes="(min-width: 1024px) 50vw, 100vw"
+        />
       </div>
     </div>
   );

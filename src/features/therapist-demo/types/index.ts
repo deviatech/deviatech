@@ -10,7 +10,6 @@ export interface ImageDescriptor {
   alt: Record<DemoLocale, string>;
   focalPoint?: `${number}% ${number}%`;
   decorative?: boolean;
-  placeholder?: boolean;
 }
 
 export type ServiceId = "individual-therapy" | "couples-therapy" | "online-sessions" | "group-sessions";
