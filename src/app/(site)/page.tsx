@@ -1,4 +1,5 @@
 import Hero from "@/components/sections/Hero";
+import DobaTalkRail from "@/components/sections/DobaTalkRail";
 import TwoTracks from "@/components/sections/TwoTracks";
 import HowItWorks from "@/components/sections/HowItWorks";
 import Work from "@/components/sections/Work";
@@ -17,6 +18,7 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <DobaTalkRail />
       <TwoTracks />
       <HowItWorks />
       <Work />
