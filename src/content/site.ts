@@ -20,3 +20,6 @@ export const site = {
   },
   whatsappDefaultMessage: "Hi DeviaTech, I want to talk about a project.",
 };
+
+// TODO: replace with the live DobaTalk domain once it is available.
+export const DOBATALK_URL = "https://dobatalk.com";
