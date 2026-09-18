@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useId, useState } from "react";
-import { LuCalendarCheck } from "react-icons/lu";
+import Image from "next/image";
 import type { ConceptTabContent, TherapistLandingContent } from "../content/types";
+import { conceptPreviews, getDemoTabRoute } from "../content/conceptPreviews";
 import { getLiveDemoUrl } from "../config";
+import { DEMO_CANONICAL_HOSTNAME } from "@/features/therapist-demo/lib/seo";
 import { TlLinkButton } from "./TlButton";
 import styles from "../therapistLanding.module.css";
 
@@ -19,7 +21,7 @@ export default function ConceptShowcase({ content }: { content: TherapistLanding
   const [device, setDevice] = useState<Device>("desktop");
   const [isVerticalLayout, setIsVerticalLayout] = useState(false);
   const baseId = useId();
-  const liveDemoUrl = getLiveDemoUrl(content.locale);
+  const liveDemoUrl = getLiveDemoUrl(content.locale, activeId);
 
   const activeIndex = tabs.findIndex((tab) => tab.id === activeId);
 
@@ -162,6 +164,9 @@ export default function ConceptShowcase({ content }: { content: TherapistLanding
 }
 
 function ConceptPreview({ tab, device }: { tab: ConceptTabContent; device: Device }) {
+  const preview = conceptPreviews[tab.id];
+  const demoPath = getDemoTabRoute(tab.id, "en");
+
   return (
     <div
       className="overflow-hidden rounded-[16px] border border-[var(--tl-border)] bg-[var(--tl-surface)]"
@@ -172,29 +177,34 @@ function ConceptPreview({ tab, device }: { tab: ConceptTabContent; device: Devic
         <span aria-hidden="true" className="h-2.5 w-2.5 rounded-full bg-[var(--tl-border-strong)]" />
         <span aria-hidden="true" className="h-2.5 w-2.5 rounded-full bg-[var(--tl-border-strong)]" />
         <span className="mx-auto text-xs text-[var(--tl-text-muted)]" dir="ltr">
-          practice-website.com/{tab.id}
+          {DEMO_CANONICAL_HOSTNAME}
+          {demoPath}
         </span>
       </div>
-      <div className={`flex justify-center bg-[var(--tl-bg)] p-6 sm:p-10 ${device === "desktop" ? "aspect-[16/10]" : "min-h-[420px]"}`}>
-        <div className={device === "desktop" ? "w-full max-w-lg" : "aspect-[9/16] w-full max-w-[220px] rounded-[20px] border border-[var(--tl-border)] bg-[var(--tl-surface)] p-4"}>
-          <p className="text-xs font-semibold uppercase tracking-wide text-[var(--tl-primary)] rtl:normal-case rtl:tracking-normal">
-            {tab.eyebrow}
-          </p>
-          <p className={`${device === "desktop" ? "text-2xl" : "text-base"} mt-2 font-medium leading-tight text-[var(--tl-text)]`}>
-            {tab.heading}
-          </p>
-          <p className={`${device === "desktop" ? "text-sm" : "text-[11px]"} mt-3 leading-relaxed text-[var(--tl-text-body)]`}>
-            {tab.body}
-          </p>
-          <span
-            className={`mt-4 inline-flex items-center gap-1.5 rounded-[8px] bg-[var(--tl-primary)] font-semibold text-white ${
-              device === "desktop" ? "px-4 py-2 text-xs" : "px-3 py-1.5 text-[10px]"
-            }`}
-          >
-            <LuCalendarCheck aria-hidden="true" className={device === "desktop" ? "h-3.5 w-3.5" : "h-3 w-3"} />
-            {tab.cta}
-          </span>
-        </div>
+      <div
+        className={`flex justify-center bg-[var(--tl-bg)] ${device === "desktop" ? "aspect-[16/10]" : "min-h-[420px] py-6 sm:py-10"}`}
+      >
+        {device === "desktop" ? (
+          <div className="relative h-full w-full">
+            <Image
+              src={preview.desktopImage}
+              alt={preview.alt}
+              fill
+              sizes="(min-width: 1024px) 620px, 100vw"
+              style={{ objectFit: "cover", objectPosition: "top" }}
+            />
+          </div>
+        ) : (
+          <div className="relative aspect-[9/16] w-full max-w-[220px] overflow-hidden rounded-[20px] border border-[var(--tl-border)] bg-[var(--tl-surface)]">
+            <Image
+              src={preview.mobileImage}
+              alt={preview.alt}
+              fill
+              sizes="220px"
+              style={{ objectFit: "cover", objectPosition: "top" }}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

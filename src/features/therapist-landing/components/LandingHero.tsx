@@ -1,5 +1,7 @@
+import Image from "next/image";
 import { LuLeaf } from "react-icons/lu";
 import type { TherapistLandingContent } from "../content/types";
+import { conceptPreviews } from "../content/conceptPreviews";
 import { getLiveDemoUrl } from "../config";
 import { TlLinkButton } from "./TlButton";
 import LocaleSwitch from "./LocaleSwitch";
@@ -67,6 +69,7 @@ export default function LandingHero({ content }: { content: TherapistLandingCont
 
 function HeroMockup({ content }: { content: TherapistLandingContent }) {
   const { mockup } = content.hero;
+  const preview = conceptPreviews.home;
 
   return (
     <div className="relative">
@@ -82,27 +85,15 @@ function HeroMockup({ content }: { content: TherapistLandingContent }) {
             {mockup.browserLabel}
           </span>
         </div>
-        <div className="aspect-[16/10] bg-[var(--tl-primary-soft)] p-6 sm:p-8">
-          <div className="flex items-center justify-between border-b border-[var(--tl-primary)]/15 pb-4">
-            <div>
-              <p className="text-sm font-semibold text-[var(--tl-text)]">{mockup.practiceName}</p>
-              <p className="text-xs text-[var(--tl-text-muted)]">{mockup.practiceTagline}</p>
-            </div>
-            <div className="hidden gap-3 text-xs text-[var(--tl-text-muted)] sm:flex">
-              {mockup.navItems.slice(0, 4).map((item) => (
-                <span key={item}>{item}</span>
-              ))}
-            </div>
-          </div>
-          <div className="mt-6 max-w-[85%]">
-            <p className={`${styles.balance} text-xl font-medium leading-tight text-[var(--tl-text)] sm:text-2xl`}>
-              {mockup.heroTitle}
-            </p>
-            <p className="mt-3 text-sm leading-6 text-[var(--tl-text-body)]">{mockup.heroBody}</p>
-            <span className="mt-5 inline-flex items-center rounded-[8px] bg-[var(--tl-primary)] px-4 py-2 text-xs font-semibold text-white">
-              {mockup.ctaLabel}
-            </span>
-          </div>
+        <div className="relative aspect-[16/10] bg-[var(--tl-primary-soft)]">
+          <Image
+            src={preview.desktopImage}
+            alt={preview.alt}
+            fill
+            sizes="(min-width: 1024px) 600px, 100vw"
+            style={{ objectFit: "cover", objectPosition: "top" }}
+            priority
+          />
         </div>
       </div>
 
@@ -113,11 +104,8 @@ function HeroMockup({ content }: { content: TherapistLandingContent }) {
         <div className="border-b border-[var(--tl-border)] px-2 py-1.5">
           <p className="truncate text-[8px] font-semibold text-[var(--tl-text)]">{mockup.practiceName}</p>
         </div>
-        <div className="flex h-[150px] flex-col overflow-hidden bg-[var(--tl-primary-soft)] p-2">
-          <p className="line-clamp-3 text-[9px] font-medium leading-snug text-[var(--tl-text)]">{mockup.heroTitle}</p>
-          <span className="mt-auto block w-full rounded-[6px] bg-[var(--tl-primary)] px-1.5 py-1 text-center text-[7px] font-semibold text-white">
-            {mockup.phoneLabel}
-          </span>
+        <div className="relative h-[150px] overflow-hidden bg-[var(--tl-primary-soft)]">
+          <Image src={preview.mobileImage} alt="" fill sizes="104px" style={{ objectFit: "cover", objectPosition: "top" }} />
         </div>
       </div>
     </div>

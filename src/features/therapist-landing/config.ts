@@ -1,19 +1,17 @@
 import type { Locale } from "@/lib/locales";
+import { getLiveDemoTabUrl } from "./content/conceptPreviews";
+import type { ConceptTabId } from "./content/types";
 
 export type TherapistLocale = Locale;
 
 export const therapistLandingConfig = {
   /**
    * "View Live Concept" buttons (hero + concept showcase) open the
-   * fully populated Luma demo in the matching language.
+   * fully populated Luma demo in the matching language, on the page
+   * that corresponds to the active concept tab.
    */
   liveDemo: {
     enabled: true,
-    urls: {
-      en: "https://preview.deviatech.com/",
-      fa: "https://preview.deviatech.com/fa",
-      ur: "https://preview.deviatech.com/ur",
-    },
   },
   routes: {
     en: "/therapist-website-design",
@@ -31,8 +29,11 @@ export function getLocalizedRoute(locale: TherapistLocale): string {
   return therapistLandingConfig.routes[locale];
 }
 
-/** The live demo URL for this locale, or null while the demo link is disabled. */
-export function getLiveDemoUrl(locale: TherapistLocale): string | null {
+/**
+ * The live demo URL for this locale and concept tab (defaults to the
+ * home page), or null while the demo link is disabled.
+ */
+export function getLiveDemoUrl(locale: TherapistLocale, tabId?: ConceptTabId): string | null {
   const { liveDemo } = therapistLandingConfig;
-  return liveDemo.enabled ? liveDemo.urls[locale] : null;
+  return liveDemo.enabled ? getLiveDemoTabUrl(locale, tabId) : null;
 }

@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "seo:smoke": "bash scripts/seo-smoke.sh"
+    "seo:smoke": "bash scripts/seo-smoke.sh",
+    "capture:therapist-previews": "node scripts/capture-therapist-previews.mjs"
   },
   "dependencies": {
     "gray-matter": "^4.0.3",
@@ -26,6 +27,8 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.5.20",
+    "playwright-core": "^1.51.1",
+    "sharp": "^0.34.3",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
