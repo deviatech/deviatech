@@ -50,8 +50,6 @@ export default function DobaTalkRail() {
             <div className="mt-6">
               <Button
                 href={DOBATALK_URL}
-                target="_blank"
-                rel="noopener noreferrer"
                 className="group motion-reduce:hover:translate-y-0"
                 data-ga-event="dobatalk_click"
                 data-ga-label="home_rail"
@@ -65,7 +63,7 @@ export default function DobaTalkRail() {
                 </span>
               </Button>
               <p className="mt-2 font-body text-sm text-ink-soft">
-                Opens the DobaTalk website.
+                Explore our therapist website design service.
               </p>
             </div>
           </div>
