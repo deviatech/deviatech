@@ -25,6 +25,7 @@ import { chromium } from "playwright-core";
 import sharp from "sharp";
 import { spawn } from "node:child_process";
 import { mkdir } from "node:fs/promises";
+import { existsSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -104,8 +105,21 @@ async function preflightCheck() {
   }
 }
 
+// Some environments (this repo's CI/dev containers) pre-install a Chromium
+// build outside Playwright's usual cache and expose it via
+// PLAYWRIGHT_BROWSERS_PATH; use it when present instead of requiring a
+// version-matched `playwright install` download. Falls back to Playwright's
+// normal browser resolution (e.g. after a plain `npx playwright install
+// chromium`) everywhere else.
+function resolveExecutablePath() {
+  const browsersPath = process.env.PLAYWRIGHT_BROWSERS_PATH;
+  if (!browsersPath) return undefined;
+  const candidate = path.join(browsersPath, "chromium");
+  return existsSync(candidate) ? candidate : undefined;
+}
+
 async function captureAll() {
-  const browser = await chromium.launch();
+  const browser = await chromium.launch({ executablePath: resolveExecutablePath() });
   const results = [];
   try {
     for (const tab of TABS) {
