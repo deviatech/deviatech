@@ -35,6 +35,16 @@ These findings are based on source inspection at `42eb55c3f9e2fe6134df620f3cbd99
 - `src/lib/whatsapp.ts`
 - `.github/workflows/deploy.yml`
 
+## Meta requirements checked separately
+
+Meta's official [Platform Terms](https://developers.facebook.com/terms/), section 4, were read on 8 November 2026; the page shows an update date of 3 February 2026. This checklist belongs in the review notes, not in the customer-facing policy's explanation of its purpose.
+
+- The policy must have a working public URL that users and Meta's crawlers can reach, without geographic blocking. The URL must be entered in the app dashboard's privacy field.
+- It must explain the actual data processed, processing methods, purposes, and how all users who can access the app can request deletion.
+- Actual processing must match the policy and applicable rules. The policy cannot override Meta's applicable terms.
+
+The draft does not yet meet those operational requirements: the page is held unavailable, the final data handling and retention/deletion procedures are unresolved, and no dashboard URL has been submitted. A general customer policy can still describe relevant WhatsApp processing once verified; it does not need to announce that it was prepared for Meta. No wording can guarantee acceptance or cure separate app/account restrictions.
+
 ## Release and validation
 
 Pushes to `main` trigger the existing build-and-deploy workflow. This draft PR must remain unmerged until the content and release are approved.
