@@ -43,7 +43,7 @@ Meta's official [Platform Terms](https://developers.facebook.com/terms/), sectio
 - It must explain the actual data processed, processing methods, purposes, and how all users who can access the app can request deletion.
 - Actual processing must match the policy and applicable rules. The policy cannot override Meta's applicable terms.
 
-The draft does not yet meet those operational requirements: the page is held unavailable, the final data handling and retention/deletion procedures are unresolved, and no dashboard URL has been submitted. A general customer policy can still describe relevant WhatsApp processing once verified; it does not need to announce that it was prepared for Meta. No wording can guarantee acceptance or cure separate app/account restrictions.
+The draft does not yet meet those operational requirements: the page is held unavailable, the final data handling and retention/deletion procedures are unresolved, and entering a URL alone does not make the policy available. The planned URL `https://deviatech.com/privacy-policy` is already saved in the app dashboard's Privacy policy URL field, verified read-only in a freshly opened settings page on 8 November 2026. The User data deletion instructions field was blank at that check. A general customer policy can still describe relevant WhatsApp processing once verified; it does not need to announce that it was prepared for Meta. No wording can guarantee acceptance or cure separate app/account restrictions.
 
 ## Release and validation
 
@@ -51,6 +51,6 @@ Pushes to `main` trigger the existing build-and-deploy workflow. This draft PR m
 
 After review, replace unresolved sections with supported wording, remove review notes, set the approved date/status, and add a footer link and sitemap entry. Run lint, TypeScript, a production build, and desktop/mobile checks. Verify the legal page does not load the marketing analytics components.
 
-After an authorized deployment, verify the deployed commit, public HTTPS response, approved content, canonical URL, no login/geo-block, and crawler access. Only then put the verified URL in Meta.
+After an authorized deployment, verify the deployed commit, public HTTPS response, approved content, canonical URL, no login/geo-block, and crawler access. Then recheck that Meta's saved Privacy policy URL points to that verified public page; update it only if the approved destination changes. Saving the planned URL before deployment is not proof that the page exists or that Meta accepts the policy.
 
 Validation so far: static source review only. Full repository lint, TypeScript, production build, browser rendering, and public deployment checks have not been run. This PR does not establish a working public Privacy Policy URL.
