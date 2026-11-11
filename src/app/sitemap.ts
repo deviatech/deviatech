@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { templates } from "@/features/templates/catalog";
 import { site } from "@/content/site";
 import { getAllPosts } from "@/lib/blog";
 import { commercialPages } from "@/content/commercial-pages";
@@ -58,6 +59,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     ...staticRoutes,
+    { url: `${site.url}/templates` },
+    ...templates.map((template) => ({ url: `${site.url}/templates/${template.slug}` })),
     ...commercialPages.map((page) => ({
       url: `${site.url}/${page.slug}`,
       lastModified: new Date("2026-08-13"),
