@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Fraunces, Inter, Vazirmatn, Noto_Sans_Arabic } from "next/font/google";
 import type { TherapistLandingContent } from "../content/types";
 import LandingHero from "./LandingHero";
@@ -51,6 +52,11 @@ export default function TherapistLanding({ content }: { content: TherapistLandin
       <LandingHero content={content} />
       <TrustBar content={content} />
       <ConceptShowcase content={content} />
+      <div className="mx-auto max-w-6xl px-6 py-8">
+        <Link href="/templates" className="underline underline-offset-4">
+          {content.locale === "fa" ? "مشاهدهٔ قالب‌های Morrow و Luma" : content.locale === "ur" ? "Morrow اور Luma کے ڈیزائن دیکھیں" : "Explore Morrow and Luma website templates"}
+        </Link>
+      </div>
       <BenefitsGrid content={content} />
       <DeviaTechBrandSection content={content} />
       <ProcessSteps content={content} />

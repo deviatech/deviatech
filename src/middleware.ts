@@ -44,6 +44,21 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(url, 301);
   }
 
+  if (process.env.SHOWCASE_DEMOS_READY === "true") {
+    const pathname = request.nextUrl.pathname;
+    const legacyPrefix = "/therapist-demo";
+    const isLegacyDemo = pathname === legacyPrefix || pathname.startsWith(`${legacyPrefix}/`);
+    const isLegacyPreview = host === DEMO_CANONICAL_HOSTNAME &&
+      (pathname === "/" || /^\/(about|services|blog|contact|book|fa|ur)(\/|$)/.test(pathname));
+    if (isLegacyDemo || isLegacyPreview) {
+      const suffix = isLegacyDemo ? pathname.slice(legacyPrefix.length) : pathname;
+      const target = new URL(`/luma${suffix || "/"}`, "https://preview.deviatech.com");
+      if (!target.pathname.endsWith("/")) target.pathname += "/";
+      target.search = request.nextUrl.search;
+      return NextResponse.redirect(target, 301);
+    }
+  }
+
   // The pathname Next.js will actually route on: the request's own
   // pathname normally, or the rewritten /therapist-demo/... target once
   // the demo-subdomain branch below decides to rewrite. Computed once so

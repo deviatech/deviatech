@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import SheetFrame from "@/components/ui/SheetFrame";
+import { getTemplate } from "@/features/templates/catalog";
 import Contact from "@/components/sections/Contact";
 import { buildWhatsAppLink } from "@/lib/whatsapp";
 import { site } from "@/content/site";
@@ -17,7 +18,12 @@ export const metadata: Metadata = {
   },
 };
 
-export default function ContactPage() {
+export default async function ContactPage({ searchParams }: { searchParams: Promise<{ template?: string; variant?: string }> }) {
+  const query = await searchParams;
+  const template = typeof query.template === "string" ? getTemplate(query.template) : undefined;
+  const variant = template?.variants.find((item) => item.slug === query.variant);
+  const enquiryLabel = template && variant ? `${template.name} — ${variant.name}` : "";
+  const initialMessage = enquiryLabel ? `I am interested in ${enquiryLabel}. Please help me with pricing and personalisation.` : "";
   return (
     <>
       <SheetFrame number="C1" label="CONTACT">
@@ -29,7 +35,7 @@ export default function ContactPage() {
           Share the business problem, product idea, or website you need help with. We will suggest the most useful next step, even if that means a smaller scope.
         </p>
         <Link
-          href={buildWhatsAppLink(site.whatsappDefaultMessage)}
+          href={buildWhatsAppLink(initialMessage || site.whatsappDefaultMessage)}
           target="_blank"
           rel="noopener noreferrer"
           data-ga-event="whatsapp_click"
@@ -39,7 +45,7 @@ export default function ContactPage() {
           Chat on WhatsApp
         </Link>
       </SheetFrame>
-      <Contact />
+      <Contact key={enquiryLabel} initialMessage={initialMessage} enquiryLabel={enquiryLabel} />
     </>
   );
 }

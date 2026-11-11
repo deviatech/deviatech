@@ -3,6 +3,7 @@ import { site } from "@/content/site";
 import { LinkedInIcon, FacebookIcon, InstagramIcon } from "@/components/ui/SocialIcons";
 
 const quickLinks = [
+  { label: "Templates", href: "/templates" },
   { label: "Work", href: "/#work" },
   { label: "Services", href: "/shopify-development-lahore" },
   { label: "About", href: "/about" },
