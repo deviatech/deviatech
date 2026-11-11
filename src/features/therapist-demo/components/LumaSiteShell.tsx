@@ -7,28 +7,28 @@ import LumaFooter from "./LumaFooter";
 import styles from "../styles/luma.module.css";
 
 const dmSans = localFont({
-  src: "../fonts/dmsans.ttf",
+  src: "../../../fonts/dmsans.woff2",
   variable: "--font-luma-display",
   weight: "100 900",
   display: "swap",
 });
 
 const inter = localFont({
-  src: "../fonts/inter.ttf",
+  src: "../../../fonts/inter.woff2",
   variable: "--font-luma-body",
   weight: "100 900",
   display: "swap",
 });
 
 const vazirmatn = localFont({
-  src: "../fonts/vazirmatn.ttf",
+  src: "../../../fonts/vazirmatn.woff2",
   variable: "--font-luma-fa",
   weight: "100 900",
   display: "swap",
 });
 
 const notoSansArabic = localFont({
-  src: "../fonts/notosansarabic.ttf",
+  src: "../../../fonts/notosansarabic.woff2",
   variable: "--font-luma-ur",
   weight: "100 900",
   display: "swap",
