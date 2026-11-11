@@ -1,0 +1,1 @@
+Variable fonts sourced from https://github.com/google/fonts/tree/main/ofl (dmsans, inter, vazirmatn, notosansarabic). Original font names and OFL licenses are preserved. Self-hosted to avoid build-time Google Fonts response changes.
