@@ -16,6 +16,7 @@ export type WebsiteTemplate = {
   summary: string;
   description: string;
   audience: string;
+  previewLayout?: "mobile";
   features: string[];
   variants: TemplateVariant[];
 };
@@ -23,6 +24,7 @@ export type WebsiteTemplate = {
 export const templates: WebsiteTemplate[] = [
   {
     slug: "morrow",
+    previewLayout: "mobile",
     name: "Morrow",
     summary: "A personal introduction to your therapy practice.",
     description:
@@ -83,6 +85,31 @@ export const templates: WebsiteTemplate[] = [
           "A multi-page design with practice photography, service pages and an article library.",
         image: "/images/templates/luma/original.webp",
         demoUrl: `${showcaseBaseUrl}/luma/`,
+        featured: true,
+      },
+    ],
+  },
+  {
+    slug: "alder",
+    name: "Alder",
+    previewLayout: "mobile",
+    summary: "Help people find a therapist they feel at ease with.",
+    description:
+      "A mobile design for a therapy centre. Explore the team, compare individual and couples sessions, and see what getting started looks like.",
+    audience: "Therapy centres and group practices",
+    features: [
+      "Therapist profiles",
+      "Individual and couples therapy",
+      "Session fees and FAQs",
+      "Demonstration request preview",
+    ],
+    variants: [
+      {
+        slug: "refined",
+        name: "Alder Refined",
+        description: "A mobile homepage with therapist portraits, session details and a guide for new visitors.",
+        image: "/images/templates/alder/refined.webp",
+        demoUrl: `${showcaseBaseUrl}/alder/`,
         featured: true,
       },
     ],

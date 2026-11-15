@@ -9,7 +9,7 @@ import { site } from "@/content/site";
 export const metadata: Metadata = {
   title: "Website Templates & Live Demos | DeviaTech",
   description:
-    "Explore Morrow and Luma website designs for therapists. Try live demos, compare layouts and discuss a website tailored to your practice.",
+    "Explore Morrow, Luma and Alder website designs for therapists. Try live demos, compare layouts and discuss a website tailored to your practice.",
   alternates: { canonical: `${site.url}/templates` },
   openGraph: {
     title: "Website templates by DeviaTech",
@@ -43,7 +43,7 @@ export default function TemplatesPage() {
               <TemplatePreview
                 image={template.variants[0].image}
                 name={template.name}
-                mobile={template.slug === "morrow"}
+                mobile={template.previewLayout === "mobile"}
                 priority={index === 0}
               />
             </Link>

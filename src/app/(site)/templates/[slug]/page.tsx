@@ -91,7 +91,7 @@ export default async function TemplatePage({
         <TemplatePreview
           image={template.variants[0].image}
           name={template.name}
-          mobile={slug === "morrow"}
+          mobile={template.previewLayout === "mobile"}
           priority
         />
       </header>
@@ -109,7 +109,7 @@ export default async function TemplatePage({
               <TemplatePreview
                 image={variant.image}
                 name={`${template.name} ${variant.name}`}
-                mobile={slug === "morrow"}
+                mobile={template.previewLayout === "mobile"}
               />
               <div className={styles.cardContent}>
                 <h3>{variant.name}</h3>
