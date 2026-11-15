@@ -54,7 +54,7 @@ export default function TherapistLanding({ content }: { content: TherapistLandin
       <ConceptShowcase content={content} />
       <div className="mx-auto max-w-6xl px-6 py-8">
         <Link href="/templates" className="underline underline-offset-4">
-          {content.locale === "fa" ? "مشاهدهٔ قالب‌های Morrow و Luma" : content.locale === "ur" ? "Morrow اور Luma کے ڈیزائن دیکھیں" : "Explore Morrow and Luma website templates"}
+          {content.locale === "fa" ? "مشاهدهٔ قالب‌های Morrow، Luma و Alder" : content.locale === "ur" ? "Morrow، Luma اور Alder کے ڈیزائن دیکھیں" : "Compare Morrow, Luma and Alder therapist website templates"}
         </Link>
       </div>
       <BenefitsGrid content={content} />

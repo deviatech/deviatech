@@ -13,11 +13,14 @@ export type TemplateVariant = {
 export type WebsiteTemplate = {
   slug: string;
   name: string;
+  seoTitle: string;
   summary: string;
   description: string;
   audience: string;
   previewLayout?: "mobile";
   features: string[];
+  demoJourney: string;
+  fit: string;
   variants: TemplateVariant[];
 };
 
@@ -26,10 +29,13 @@ export const templates: WebsiteTemplate[] = [
     slug: "morrow",
     previewLayout: "mobile",
     name: "Morrow",
+    seoTitle: "Morrow Website Template for Solo Therapists",
     summary: "A personal introduction to your therapy practice.",
     description:
       "Help visitors get to know you, explore your approach and understand how to take the first step. Compare three mobile website designs for an individual therapist.",
     audience: "Independent therapists",
+    fit: "For a solo therapist who wants a personal, mobile-first introduction and a straightforward enquiry page.",
+    demoJourney: "Compare three homepage designs, open the approach tabs, and try a sample enquiry. Each version introduces a single fictional therapist.",
     features: [
       "Therapist introduction",
       "Interactive approach tabs",
@@ -67,10 +73,13 @@ export const templates: WebsiteTemplate[] = [
   {
     slug: "luma",
     name: "Luma",
+    seoTitle: "Luma Multilingual Therapist Website Template",
     summary: "Room for your practice, services and writing.",
     description:
       "A multi-page therapy website with dedicated spaces for your practice, services, articles and contact details. Explore the demonstration in English, Persian and Urdu.",
     audience: "Therapists and therapy practices",
+    fit: "For a practice that needs separate service pages, an article library, or a website in multiple languages.",
+    demoJourney: "Switch between English, Persian and Urdu, browse therapy service pages and articles, and try the sample contact or booking form.",
     features: [
       "Home, about and service pages",
       "Articles and topic browsing",
@@ -92,16 +101,19 @@ export const templates: WebsiteTemplate[] = [
   {
     slug: "alder",
     name: "Alder",
+    seoTitle: "Alder Website Template for Therapy Centres",
     previewLayout: "mobile",
     summary: "Help people find a therapist they feel at ease with.",
     description:
-      "A mobile design for a therapy centre. Explore the team, compare individual and couples sessions, and see what getting started looks like.",
+      "A mobile-first website template for therapy centres and group practices, with therapist profiles, individual and couples sessions, sample fees and a guided request preview.",
     audience: "Therapy centres and group practices",
+    fit: "For a therapy centre with several practitioners, where visitors need to compare session types and choose who they would like to meet.",
+    demoJourney: "Compare individual and couples sessions, explore fictional therapist profiles, and preview a request by choosing a session, a therapist and an online or in-person meeting. The demo shows a summary with sample fees.",
     features: [
       "Therapist profiles",
       "Individual and couples therapy",
       "Session fees and FAQs",
-      "Demonstration request preview",
+      "Guided request preview with editable choices and a summary",
     ],
     variants: [
       {

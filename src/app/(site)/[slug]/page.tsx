@@ -6,6 +6,7 @@ import Button from "@/components/ui/Button";
 import { commercialPages, getCommercialPageBySlug } from "@/content/commercial-pages";
 import { getCaseStudyBySlug } from "@/content/case-studies";
 import { buildWhatsAppLink } from "@/lib/whatsapp";
+import { organizationId } from "@/lib/site-entities";
 import { site } from "@/content/site";
 
 export function generateStaticParams() {
@@ -53,6 +54,7 @@ export default async function CommercialPage({
     url: `${site.url}/${page.slug}`,
     provider: {
       "@type": "LocalBusiness",
+      "@id": organizationId,
       name: site.name,
       url: site.url,
       areaServed: ["Lahore, Pakistan", "Pakistan"],

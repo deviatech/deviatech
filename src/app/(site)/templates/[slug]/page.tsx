@@ -9,7 +9,8 @@ import {
 } from "@/features/templates/catalog";
 import TemplatePreview from "@/features/templates/TemplatePreview";
 import styles from "@/features/templates/templates.module.css";
-import { site } from "@/content/site";
+import JsonLd from "@/components/JsonLd";
+import { templateJsonLd, templateMetadata, templatePath } from "@/features/templates/seo";
 
 export function generateStaticParams() {
   return templates.map(({ slug }) => ({ slug }));
@@ -23,18 +24,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const template = getTemplate(slug);
   if (!template) notFound();
-  const title = `${template.name} Therapist Website Template | DeviaTech`;
-  return {
-    title,
-    description: template.description,
-    alternates: { canonical: `${site.url}/templates/${slug}` },
-    openGraph: {
-      title,
-      description: template.description,
-      url: `${site.url}/templates/${slug}`,
-      images: [template.variants[0].image],
-    },
-  };
+  return templateMetadata(template);
 }
 
 export default async function TemplatePage({
@@ -45,32 +35,9 @@ export default async function TemplatePage({
   const { slug } = await params;
   const template = getTemplate(slug);
   if (!template) notFound();
-  const breadcrumb = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Templates",
-        item: `${site.url}/templates`,
-      },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: template.name,
-        item: `${site.url}/templates/${slug}`,
-      },
-    ],
-  };
   return (
     <div className={styles.page}>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(breadcrumb).replace(/</g, "\\u003c"),
-        }}
-      />
+      <JsonLd data={templateJsonLd(template)} />
       <nav aria-label="Breadcrumb" className={styles.breadcrumb}>
         <Link href="/templates">Templates</Link>
         <span aria-hidden="true">/</span>
@@ -79,7 +46,7 @@ export default async function TemplatePage({
       <header className={styles.productHero}>
         <div>
           <p className={styles.eyebrow}>{template.audience}</p>
-          <h1>{template.name}</h1>
+          <h1>{template.seoTitle}</h1>
           <h2>{template.summary}</h2>
           <p>{template.description}</p>
           <Button href="#designs">
@@ -98,9 +65,10 @@ export default async function TemplatePage({
       <section id="designs" className={styles.designSection}>
         <h2>
           {template.variants.length > 1
-            ? "Find your version of Morrow."
-            : "Explore Luma in detail."}
+            ? `Compare the ${template.name} designs`
+            : `Explore the ${template.name} demo`}
         </h2>
+        <p className={styles.demoJourney}>{template.demoJourney}</p>
         <div
           className={`${styles.variants} ${template.variants.length === 1 ? styles.singleVariant : ""}`}
         >
@@ -108,7 +76,7 @@ export default async function TemplatePage({
             <article className={styles.variant} key={variant.slug}>
               <TemplatePreview
                 image={variant.image}
-                name={`${template.name} ${variant.name}`}
+                name={variant.name.startsWith(template.name) ? variant.name : `${template.name} ${variant.name}`}
                 mobile={template.previewLayout === "mobile"}
               />
               <div className={styles.cardContent}>
@@ -124,7 +92,7 @@ export default async function TemplatePage({
                     rel="noopener noreferrer"
                   >
                     Open live demo <span aria-hidden="true">↗</span>
-                    <span className="sr-only"> (opens a new tab)</span>
+                    <span className="sr-only"> for {variant.name} (opens a new tab)</span>
                   </Button>
                   <Button
                     href={templateEnquiryUrl(template, variant)}
@@ -162,6 +130,17 @@ export default async function TemplatePage({
             Explore our therapist website service →
           </Link>
         </div>
+      </section>
+      <section className={styles.serviceLink} aria-labelledby="related-templates">
+        <h2 id="related-templates">Compare other therapist website templates</h2>
+        <ul className={styles.comparison}>
+          {templates.filter((other) => other.slug !== slug).map((other) => (
+            <li key={other.slug}>
+              <Link href={templatePath(other)}>{other.name}</Link>
+              <p>{other.fit}</p>
+            </li>
+          ))}
+        </ul>
       </section>
       <section className={styles.closing}>
         <h2>

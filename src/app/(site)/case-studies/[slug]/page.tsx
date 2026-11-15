@@ -30,6 +30,7 @@ export async function generateMetadata({
       description: caseStudy.summary,
       url: `/case-studies/${caseStudy.slug}`,
       type: "article",
+      images: [site.shareImage],
     },
   };
 }

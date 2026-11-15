@@ -3,6 +3,7 @@ export const site = {
   tagline: "From idea to launched: stores and startup products, built in Lahore.",
   url: "https://deviatech.com",
   domain: "deviatech.com",
+  shareImage: { url: "/logo/icon-512.png", width: 512, height: 512, alt: "DeviaTech" },
   email: "hello@deviatech.com",
   phone: "+92 314 7091422",
   location: "Lahore, Pakistan",
