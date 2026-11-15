@@ -1,43 +1,27 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import Button from "@/components/ui/Button";
 import { templates } from "@/features/templates/catalog";
 import TemplatePreview from "@/features/templates/TemplatePreview";
 import styles from "@/features/templates/templates.module.css";
-import { site } from "@/content/site";
+import JsonLd from "@/components/JsonLd";
+import { catalogDescription, catalogJsonLd, catalogTitle, templateMetadata, templatePath } from "@/features/templates/seo";
 
-export const metadata: Metadata = {
-  title: "Website Templates & Live Demos | DeviaTech",
-  description:
-    "Explore Morrow, Luma and Alder website designs for therapists. Try live demos, compare layouts and discuss a website tailored to your practice.",
-  alternates: { canonical: `${site.url}/templates` },
-  openGraph: {
-    title: "Website templates by DeviaTech",
-    url: `${site.url}/templates`,
-    images: ["/images/templates/luma/original.webp"],
-  },
-};
+export const metadata = templateMetadata();
 
 export default function TemplatesPage() {
   return (
     <div className={styles.page}>
+      <JsonLd data={catalogJsonLd()} />
       <header className={styles.intro}>
-        <p className={styles.eyebrow}>Website templates</p>
-        <h1>
-          A starting point
-          <br />
-          for your next website.
-        </h1>
-        <p>
-          Explore the designs. Try the details. Choose a direction we can adapt
-          to your practice.
-        </p>
+        <p className={styles.eyebrow}>DeviaTech design collection</p>
+        <h1>{catalogTitle}</h1>
+        <p>{catalogDescription}</p>
       </header>
       <div className={styles.catalog}>
         {templates.map((template, index) => (
           <article className={styles.catalogCard} key={template.slug}>
             <Link
-              href={`/templates/${template.slug}`}
+              href={templatePath(template)}
               aria-label={`Explore ${template.name}`}
             >
               <TemplatePreview
@@ -57,13 +41,25 @@ export default function TemplatesPage() {
                 </span>
               </div>
               <p>{template.summary}</p>
-              <Button href={`/templates/${template.slug}`}>
+              <Button href={templatePath(template)}>
                 Explore {template.name} <span aria-hidden="true">↗</span>
               </Button>
             </div>
           </article>
         ))}
       </div>
+      <section className={styles.serviceLink} aria-labelledby="compare-templates">
+        <h2 id="compare-templates">Which template fits your practice?</h2>
+        <ul className={styles.comparison}>
+          {templates.map((template) => (
+            <li key={template.slug}>
+              <Link href={templatePath(template)}>{template.name}</Link>
+              <p>{template.fit}</p>
+            </li>
+          ))}
+        </ul>
+        <p>Each demo shows a fictional practice. Request previews and sample forms do not send information or make bookings.</p>
+      </section>
       <aside className={styles.serviceLink}>
         <h2>Building a therapy practice online?</h2>
         <p>

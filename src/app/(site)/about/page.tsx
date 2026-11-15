@@ -12,7 +12,8 @@ export const metadata: Metadata = {
     title: "About DeviaTech",
     description: "Meet the Lahore software development agency behind DeviaTech.",
     url: `${site.url}/about`,
-    type: "profile",
+    type: "website",
+    images: [site.shareImage],
   },
 };
 

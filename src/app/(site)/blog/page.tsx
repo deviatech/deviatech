@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     description: "Practical notes on Shopify stores, MVP development, pricing, and launching software in Lahore.",
     url: "/blog",
     type: "website",
+    images: [site.shareImage],
   },
 };
 

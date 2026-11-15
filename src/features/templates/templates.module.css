@@ -135,7 +135,8 @@
   padding-bottom: 64px;
 }
 .productHero h1 {
-  font-size: clamp(64px, 8vw, 108px);
+  font-size: clamp(36px, 5vw, 62px);
+  text-wrap: balance;
 }
 .productHero h2 {
   font-size: 28px;
@@ -299,4 +300,24 @@
   .variant .cardContent {
     flex: 1;
   }
+}
+
+.demoJourney {
+  max-width: 68ch;
+  margin: 12px 0 24px;
+  line-height: 1.7;
+}
+
+.comparison {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr));
+  gap: 18px;
+  margin: 16px 0 24px;
+  padding: 0;
+  list-style: none;
+}
+
+.comparison li {
+  padding-top: 12px;
+  border-top: 1px solid var(--line-grid);
 }

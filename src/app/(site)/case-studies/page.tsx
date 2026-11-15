@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { site } from "@/content/site";
 import Link from "next/link";
 import Card from "@/components/ui/Card";
 import SheetFrame from "@/components/ui/SheetFrame";
@@ -13,6 +14,7 @@ export const metadata: Metadata = {
     description: "Selected ecommerce, web product, and software projects built by DeviaTech.",
     url: "/case-studies",
     type: "website",
+    images: [site.shareImage],
   },
 };
 

@@ -15,6 +15,7 @@ export const metadata: Metadata = {
     description: "Start a software, ecommerce, or web project with DeviaTech in Lahore.",
     url: `${site.url}/contact`,
     type: "website",
+    images: [site.shareImage],
   },
 };
 
