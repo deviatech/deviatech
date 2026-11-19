@@ -126,6 +126,36 @@ export const templates: WebsiteTemplate[] = [
       },
     ],
   },
+  {
+    slug: "little-fieldnotes",
+    name: "Little Fieldnotes",
+    seoTitle: "Little Fieldnotes Website Template for Child Psychologists",
+    previewLayout: "mobile",
+    summary: "One ordinary morning, seen from two perspectives.",
+    description:
+      "An illustrated, mobile-first landing page for an independent child psychologist. A small moment with a ladybug introduces the practitioner and gives caregivers a feel for a first conversation.",
+    audience: "Independent child psychologists",
+    fit: "For a solo child psychologist who wants to introduce their approach to caregivers through a short, interactive story.",
+    demoJourney:
+      "Switch between the adult’s and child’s perspectives, look through three illustrated details, and open a fictional first conversation.",
+    features: [
+      "Interactive perspective switch",
+      "Illustrated observation cards",
+      "Practitioner introduction and first-chat FAQs",
+      "Sample conversation preview",
+    ],
+    variants: [
+      {
+        slug: "original",
+        name: "Little Fieldnotes",
+        description:
+          "An illustrated story that follows a caregiver and child through the same moment.",
+        image: "/images/templates/little-fieldnotes/original.webp",
+        demoUrl: `${showcaseBaseUrl}/little-fieldnotes/`,
+        featured: true,
+      },
+    ],
+  },
 ];
 
 export function getTemplate(slug: string) {
