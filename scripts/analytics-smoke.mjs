@@ -17,30 +17,55 @@ async function withBrowser({ width, ready }, fn) {
   });
   const context = await browser.newContext({ viewport: { width, height: 850 }, serviceWorkers: "block" });
   const requests = { tag: 0, gate: 0, external: [] };
+  let draining = false;
+  const pendingRoutes = new Set();
+  const failedRoutes = [];
+  const intercept = async (route) => {
+    const url = new URL(route.request().url());
+    if (url.href === tag) {
+      requests.tag++;
+      return route.fulfill({ contentType: "application/javascript", body: "window.localGaTagMockLoaded = true;" });
+    }
+    if (url.origin !== production && url.origin !== preview) {
+      requests.external.push(url.origin);
+      return route.abort();
+    }
+    if (url.pathname === "/api/analytics-readiness") {
+      requests.gate++;
+      return route.fulfill({ json: { enabled: ready } });
+    }
+    const response = await route.fetch({ url: local + url.pathname + url.search, maxRedirects: 0 });
+    return route.fulfill({ response });
+  };
   try {
     await context.route("**/*", async (route) => {
-      const url = new URL(route.request().url());
-      if (url.href === tag) {
-        requests.tag++;
-        return route.fulfill({ contentType: "application/javascript", body: "window.localGaTagMockLoaded = true;" });
+      // Keep intercepting through teardown: don't briefly reopen real network access.
+      if (draining) {
+        await route.abort().catch(() => {}); // The browser can already be closing.
+        return;
       }
-      if (url.origin !== production && url.origin !== preview) {
-        requests.external.push(url.origin);
-        return route.abort();
+      const action = intercept(route);
+      pendingRoutes.add(action);
+      try {
+        await action;
+      } catch (error) {
+        failedRoutes.push(error);
+        await route.abort().catch(() => {});
+      } finally {
+        pendingRoutes.delete(action);
       }
-      if (url.pathname === "/api/analytics-readiness") {
-        requests.gate++;
-        return route.fulfill({ json: { enabled: ready } });
-      }
-      const response = await route.fetch({ url: local + url.pathname + url.search, maxRedirects: 0 });
-      return route.fulfill({ response });
     });
     const page = await context.newPage();
     await fn({ page, context, requests });
-    assert.deepEqual(requests.external, [], "unexpected external request attempted");
   } finally {
+    draining = true;
+    // Images and the Next router's prefetches can still be running after the
+    // last assertion. Wait before disposing the browser's request context.
+    await Promise.allSettled(pendingRoutes);
     await browser.close();
   }
+  assert.deepEqual(requests.external, [], "unexpected external request attempted");
+  if (failedRoutes.length) throw new AggregateError(failedRoutes, "intercepted browser requests failed");
 }
 
 async function commands(page) {
@@ -175,6 +200,7 @@ test("preview production exclusion and release gate fail closed", async () => {
   await withBrowser({ width: 390, ready: false }, async ({ page, context, requests }) => {
     await context.addInitScript((key) => localStorage.setItem(key, "accepted"), consentKey);
     await page.goto(preview + path);
+    await page.waitForLoadState("networkidle");
     assert.equal(await page.getByRole("button", { name: "Analytics preferences" }).count(), 0);
     assert.deepEqual(await commands(page), []);
     assert.equal(requests.gate, 0);
@@ -186,6 +212,7 @@ test("preview production exclusion and release gate fail closed", async () => {
     assert.deepEqual(await commands(page), []);
     assert.equal(requests.tag, 0);
     await page.goto(production + "/therapist-demo");
+    await page.waitForLoadState("networkidle");
     assert.equal(await page.getByRole("button", { name: "Analytics preferences" }).count(), 0);
     assert.equal(requests.gate, 1);
     assert.equal(requests.tag, 0);
