@@ -98,8 +98,12 @@ test("desktop: opt-in, fresh article, Next navigation, exact-once, sanitized pay
     await page.goto(production + path + "?" + query + "#private-fragment", {
       referer: "https://private-origin.example.test/path?name=private-external",
     });
-    const allow = page.getByRole("button", { name: "Allow analytics" });
+    const allow = page.getByRole("button", { name: "Accept optional cookies" });
     await allow.waitFor();
+    const consent = page.getByRole("region", { name: "Optional cookies" });
+    const desktopBox = await consent.boundingBox();
+    assert(desktopBox && desktopBox.height <= 132 && desktopBox.y + desktopBox.height > 800);
+    assert.equal(await consent.locator('svg[aria-hidden="true"]').count(), 1);
     await page.mouse.wheel(0, 300);
     await page.keyboard.press("Tab");
     assert.deepEqual(await commands(page), []);
@@ -153,8 +157,8 @@ test("desktop: opt-in, fresh article, Next navigation, exact-once, sanitized pay
     assert.equal(requests.tag, 1);
 
     await page.evaluate(() => { document.cookie = "_ga=fixture; Path=/; Secure"; });
-    await page.getByRole("button", { name: "Analytics preferences" }).click();
-    await page.getByRole("button", { name: "Decline analytics" }).click();
+    await page.getByRole("button", { name: "Cookie settings" }).click();
+    await page.getByRole("button", { name: "Reject optional cookies" }).click();
     assert.equal(await page.evaluate(() => localStorage.getItem("deviatech.analytics-consent.v1")), "declined");
     assert.equal(await page.evaluate(() => window["ga-disable-G-15GFH194BP"]), true);
     assert.doesNotMatch(await page.evaluate(() => document.cookie), /(?:^|;\s*)_ga=/);
@@ -162,7 +166,7 @@ test("desktop: opt-in, fresh article, Next navigation, exact-once, sanitized pay
     await page.waitForURL(production + "/blog");
     await pageviews(page, 4);
     await page.reload();
-    await page.getByRole("button", { name: "Analytics preferences" }).waitFor();
+    await page.getByRole("button", { name: "Cookie settings" }).waitFor();
     assert.deepEqual(await commands(page), []);
     assert.equal(requests.tag, 1);
   });
@@ -171,21 +175,34 @@ test("desktop: opt-in, fresh article, Next navigation, exact-once, sanitized pay
 test("mobile: equal visible controls, decline, reload without banner, and re-grant", async () => {
   await withBrowser({ width: 390, ready: true }, async ({ page, context, requests }) => {
     await page.goto(production + path);
-    const allow = page.getByRole("button", { name: "Allow analytics" });
-    const decline = page.getByRole("button", { name: "Decline analytics" });
+    const allow = page.getByRole("button", { name: "Accept optional cookies" });
+    const decline = page.getByRole("button", { name: "Reject optional cookies" });
     await allow.waitFor();
     const buttons = await Promise.all([allow.boundingBox(), decline.boundingBox()]);
     assert.equal(buttons[0].width, buttons[1].width);
     for (const button of buttons) assert(button.height >= 44 && button.x >= 0 && button.x + button.width <= 390);
+    const consent = page.getByRole("region", { name: "Optional cookies" });
+    const consentBox = await consent.boundingBox();
+    const whatsApp = page.locator('[data-ga-label="sticky"]');
+    const whatsAppBox = await whatsApp.boundingBox();
+    assert(consentBox && whatsAppBox && consentBox.y + consentBox.height <= whatsAppBox.y);
+    assert.match(await whatsApp.getAttribute("href"), /^https:\/\/wa\.me\//);
+    await whatsApp.click({ trial: true }); // no popup or external navigation
     await decline.click();
+    assert.equal(await consent.count(), 0);
     await page.reload();
-    const settings = page.getByRole("button", { name: "Analytics preferences" });
+    const settings = page.getByRole("button", { name: "Cookie settings" });
     await settings.waitFor();
     assert.equal(await allow.count(), 0);
     assert.equal(requests.tag, 0);
     await settings.click();
     await allow.click();
     await pageviews(page, 1);
+    // The site navigation and real contact form remain actionable; never submit it.
+    await page.locator("footer").getByRole("link", { name: "Contact", exact: true }).click();
+    await page.waitForURL(production + "/contact");
+    await page.getByRole("textbox", { name: "Name", exact: true }).fill("local fixture");
+    assert.equal(await page.getByRole("textbox", { name: "Name", exact: true }).inputValue(), "local fixture");
     const second = await context.newPage();
     await second.goto(production + "/blog");
     await pageviews(second, 1); // saved opt-in initializes without visitor interaction
@@ -200,7 +217,7 @@ test("preview production exclusion and release gate fail closed", async () => {
   await withBrowser({ width: 390, ready: false }, async ({ page, requests }) => {
     await page.goto(preview + path);
     await page.waitForLoadState("networkidle");
-    assert.equal(await page.getByRole("button", { name: "Analytics preferences" }).count(), 0);
+    assert.equal(await page.getByRole("button", { name: "Cookie settings" }).count(), 0);
     assert.deepEqual(await commands(page), []);
     assert.equal(requests.gate, 0);
     const gateResponse = page.waitForResponse((response) => response.url().endsWith("/api/analytics-readiness"));
@@ -209,8 +226,8 @@ test("preview production exclusion and release gate fail closed", async () => {
     const headers = await gate.request().allHeaders();
     assert.equal(headers.referer, undefined);
     await page.waitForLoadState("networkidle");
-    const settings = page.getByRole("button", { name: "Analytics preferences" });
-    const allow = page.getByRole("button", { name: "Allow analytics" });
+    const settings = page.getByRole("button", { name: "Cookie settings" });
+    const allow = page.getByRole("button", { name: "Accept optional cookies" });
     assert.equal(await settings.count(), 0);
     assert.equal(await allow.count(), 0);
     assert.equal(requests.gate, 1);
@@ -222,7 +239,7 @@ test("preview production exclusion and release gate fail closed", async () => {
     await page.reload();
     await settings.click();
     assert.equal(await allow.count(), 0);
-    await page.getByRole("button", { name: "Decline analytics" }).click();
+    await page.getByRole("button", { name: "Reject optional cookies" }).click();
     assert.equal(await page.evaluate((key) => localStorage.getItem(key), consentKey), "declined");
     assert.deepEqual(await commands(page), []);
     assert.equal(requests.gate, 2);
@@ -234,3 +251,23 @@ test("preview production exclusion and release gate fail closed", async () => {
     assert.equal(requests.tag, 0);
   });
 });
+
+for (const [locale, title, allowText, declineText] of [
+  ["fa", "کوکی‌های اختیاری", "پذیرش کوکی‌های اختیاری", "رد کوکی‌های اختیاری"],
+  ["ur", "اختیاری کوکیاں", "اختیاری کوکیاں قبول کریں", "اختیاری کوکیاں مسترد کریں"],
+]) {
+  test(`${locale}: localized RTL choices at 320px`, async () => {
+    await withBrowser({ width: 320, ready: true }, async ({ page, requests }) => {
+      await page.goto(production + `/${locale}/therapist-website-design`);
+      const panel = page.getByRole("region", { name: title });
+      await panel.waitFor();
+      assert.equal(await panel.evaluate((node) => getComputedStyle(node).direction), "rtl");
+      const buttons = await Promise.all([allowText, declineText].map((name) => page.getByRole("button", { name }).boundingBox()));
+      assert(buttons[0] && buttons[1]);
+      assert.equal(buttons[0].width, buttons[1].width);
+      for (const button of buttons) assert(button.height >= 44 && button.x >= 0 && button.x + button.width <= 320);
+      await page.getByRole("button", { name: declineText }).click();
+      assert.equal(requests.tag, 0);
+    });
+  });
+}
