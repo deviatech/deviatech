@@ -42,7 +42,7 @@ export const privacyPolicy: PrivacyPolicy = {
       "id": "cookies-and-analytics",
       "title": "Cookies and analytics",
       "paragraphs": [
-        "Google Analytics is currently off on this website. If we enable optional analytics, we will explain what it measures and ask before loading it. You will be able to reject optional cookies or change your choice in Cookie settings. Rejecting optional cookies will not prevent you from using the website or contacting us."
+        "Google Analytics is optional. When it is enabled and you select Accept optional cookies, it uses cookies to help us understand how people use this site. You can reject optional cookies or change your choice at any time in Cookie settings. Your choice will not prevent you from using the website or contacting us."
       ]
     },
     {
