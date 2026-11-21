@@ -114,7 +114,9 @@ function reportPageView() {
 }
 
 export function updateAnalyticsPath(path: string | null) {
-  currentPath = path && safePaths.has(path) ? path : null;
+  const nextPath = path && safePaths.has(path) ? path : null;
+  if (!active && nextPath !== currentPath) lastPath = null;
+  currentPath = nextPath;
   if (!currentPath) {
     pauseAnalytics();
     return;
@@ -164,9 +166,9 @@ async function activateIfReady() {
   }
 }
 
-function pauseAnalytics() {
+function pauseAnalytics(retainCurrentView = false) {
   active = false;
-  lastPath = null;
+  if (!retainCurrentView) lastPath = null;
   referrer = "";
   window["ga-disable-G-15GFH194BP"] = true;
 }
@@ -179,7 +181,8 @@ export async function setAnalyticsPreference(
   preference = value;
   if (persist) storePreference(value);
   if (value !== "accepted") {
-    pauseAnalytics();
+    // A preference change on the current page is not a navigation.
+    pauseAnalytics(true);
     window.gtag?.("consent", "update", { ...ADS_DENIED, analytics_storage: "denied" });
     clearAnalyticsCookies();
     return;

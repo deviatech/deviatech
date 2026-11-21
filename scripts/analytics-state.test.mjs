@@ -107,6 +107,19 @@ test("revocation stops events, clears only Analytics cookies, and can be reverse
   assert.equal(f.requests.length, 2, "one readiness request and one tag");
 });
 
+test("re-granting on the same pathname is not a second page view", async () => {
+  const f = fixture();
+  f.api.updateAnalyticsPath(blog);
+  await f.api.setAnalyticsPreference("accepted");
+  await f.api.setAnalyticsPreference("declined");
+  f.api.updateAnalyticsPath(blog);
+  await f.api.setAnalyticsPreference("accepted");
+  assert.equal(f.events().length, 1);
+  assert.equal(f.requests.length, 2);
+  f.api.updateAnalyticsPath(contact);
+  assert.equal(f.events().length, 2);
+});
+
 test("unknown routes do not boot tag; leaving allowed route pauses, Back re-enables once", async () => {
   const f = fixture();
   f.api.updateAnalyticsPath(unknown);
