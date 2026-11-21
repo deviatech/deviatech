@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { canPublishPrivacyPolicy, privacyPolicy } from "@/content/privacy-policy";
 import { site } from "@/content/site";
 import { LinkedInIcon, FacebookIcon, InstagramIcon } from "@/components/ui/SocialIcons";
 
@@ -83,6 +84,11 @@ export default function Footer({ analyticsControls }: { analyticsControls: React
 
         <div className="mt-12 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-white/10 pt-6 font-mono text-xs text-footer-text/70">
           <span>&copy; {new Date().getFullYear()} DeviaTech. All rights reserved.</span>
+          {canPublishPrivacyPolicy(privacyPolicy) && (
+            <Link href="/privacy-policy" className={`${linkClass} underline underline-offset-4`}>
+              Privacy notice
+            </Link>
+          )}
           {analyticsControls}
         </div>
       </div>

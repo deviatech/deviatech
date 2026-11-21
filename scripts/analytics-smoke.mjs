@@ -271,3 +271,40 @@ for (const [locale, title, allowText, declineText] of [
     });
   });
 }
+
+test("published privacy notice is discoverable and GA-free with a stored opt-in", async () => {
+  await withBrowser({ width: 390, ready: true }, async ({ page, context, requests }) => {
+    await context.addInitScript((key) => localStorage.setItem(key, "accepted"), consentKey);
+    const response = await page.goto(production + "/privacy-policy");
+    assert.equal(response.status(), 200);
+    await page.waitForLoadState("networkidle");
+    assert.equal(await page.title(), "DeviaTech Website Privacy Notice");
+    assert.equal(await page.getByRole("heading", { level: 1 }).textContent(), "DeviaTech Website Privacy Notice");
+    assert.equal(await page.locator('link[rel="canonical"]').getAttribute("href"), production + "/privacy-policy");
+    assert.equal(await page.locator("time").getAttribute("datetime"), "2026-11-21");
+    assert.deepEqual(await page.getByRole("heading", { level: 2 }).allTextContents(), [
+      "Who is responsible", "What we collect and why", "Services we use",
+      "Cookies and analytics", "How long we keep enquiries", "Your privacy requests",
+    ]);
+    assert.equal(await page.locator('a[href="mailto:hello@deviatech.com"]').count(), 1);
+    assert.equal(await page.getByRole("button", { name: "Cookie settings" }).count(), 0);
+    assert.equal(await page.locator('script[src*="googletagmanager"]').count(), 0);
+    assert.deepEqual(await commands(page), []);
+    assert.equal(requests.tag, 0);
+    assert.equal(requests.gate, 0);
+  });
+
+  await withBrowser({ width: 1280, ready: false }, async ({ page, requests }) => {
+    await page.goto(production + "/");
+    const link = page.locator("footer").getByRole("link", { name: "Privacy notice" });
+    assert.equal(await link.getAttribute("href"), "/privacy-policy");
+    await link.click();
+    await page.waitForURL(production + "/privacy-policy");
+    await page.getByRole("heading", { name: "DeviaTech Website Privacy Notice", level: 1 }).waitFor();
+    assert.equal(requests.tag, 0);
+  });
+
+  const sitemap = await fetch(local + "/sitemap.xml");
+  assert.equal(sitemap.status, 200);
+  assert.match(await sitemap.text(), /<loc>https:\/\/deviatech\.com\/privacy-policy<\/loc>/);
+});

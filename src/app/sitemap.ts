@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { canPublishPrivacyPolicy, privacyPolicy } from "@/content/privacy-policy";
 import { templates } from "@/features/templates/catalog";
 import { site } from "@/content/site";
 import { getAllPosts } from "@/lib/blog";
@@ -59,6 +60,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     ...staticRoutes,
+    ...(canPublishPrivacyPolicy(privacyPolicy) && privacyPolicy.effectiveDate
+      ? [{ url: `${site.url}/privacy-policy`, lastModified: privacyPolicy.effectiveDate }]
+      : []),
     { url: `${site.url}/templates` },
     ...templates.map((template) => ({ url: `${site.url}/templates/${template.slug}` })),
     ...commercialPages.map((page) => ({
