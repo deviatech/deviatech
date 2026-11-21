@@ -104,7 +104,7 @@ test("desktop: opt-in, fresh article, Next navigation, exact-once, sanitized pay
     await page.keyboard.press("Tab");
     assert.deepEqual(await commands(page), []);
     assert.equal(requests.tag, 0);
-    assert.equal(requests.gate, 0);
+    assert.equal(requests.gate, 1); // first-party eligibility only; no Google traffic
     await allow.click();
     await page.waitForFunction(() => window.localGaTagMockLoaded);
     const [initial] = await pageviews(page, 1);
@@ -197,8 +197,7 @@ test("mobile: equal visible controls, decline, reload without banner, and re-gra
 });
 
 test("preview production exclusion and release gate fail closed", async () => {
-  await withBrowser({ width: 390, ready: false }, async ({ page, context, requests }) => {
-    await context.addInitScript((key) => localStorage.setItem(key, "accepted"), consentKey);
+  await withBrowser({ width: 390, ready: false }, async ({ page, requests }) => {
     await page.goto(preview + path);
     await page.waitForLoadState("networkidle");
     assert.equal(await page.getByRole("button", { name: "Analytics preferences" }).count(), 0);
@@ -206,15 +205,32 @@ test("preview production exclusion and release gate fail closed", async () => {
     assert.equal(requests.gate, 0);
     const gateResponse = page.waitForResponse((response) => response.url().endsWith("/api/analytics-readiness"));
     await page.goto(production + path);
-    await page.getByRole("button", { name: "Analytics preferences" }).waitFor();
-    await gateResponse;
+    const gate = await gateResponse;
+    const headers = await gate.request().allHeaders();
+    assert.equal(headers.referer, undefined);
+    await page.waitForLoadState("networkidle");
+    const settings = page.getByRole("button", { name: "Analytics preferences" });
+    const allow = page.getByRole("button", { name: "Allow analytics" });
+    assert.equal(await settings.count(), 0);
+    assert.equal(await allow.count(), 0);
     assert.equal(requests.gate, 1);
     assert.deepEqual(await commands(page), []);
     assert.equal(requests.tag, 0);
+
+    // A stored opt-in remains revocable even when the release gate is off.
+    await page.evaluate((key) => localStorage.setItem(key, "accepted"), consentKey);
+    await page.reload();
+    await settings.click();
+    assert.equal(await allow.count(), 0);
+    await page.getByRole("button", { name: "Decline analytics" }).click();
+    assert.equal(await page.evaluate((key) => localStorage.getItem(key), consentKey), "declined");
+    assert.deepEqual(await commands(page), []);
+    assert.equal(requests.gate, 2);
+
     await page.goto(production + "/therapist-demo");
     await page.waitForLoadState("networkidle");
-    assert.equal(await page.getByRole("button", { name: "Analytics preferences" }).count(), 0);
-    assert.equal(requests.gate, 1);
+    assert.equal(await settings.count(), 0);
+    assert.equal(requests.gate, 2);
     assert.equal(requests.tag, 0);
   });
 });

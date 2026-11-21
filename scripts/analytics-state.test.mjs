@@ -63,6 +63,17 @@ test("nothing is requested without consent, even when there are events and known
   assert.equal(f.storage.get(consentKey), "declined");
 });
 
+test("a readiness probe is first-party, credential-free, and does not opt in", async () => {
+  const f = fixture();
+  f.api.updateAnalyticsPath(blog);
+  assert.equal(await f.api.readAnalyticsReadiness(), true);
+  assert.deepEqual(f.requests, [{ url: "/api/analytics-readiness", cache: "no-store", credentials: "omit", referrerPolicy: "no-referrer" }]);
+  assert.deepEqual(f.snapshot(), []);
+  await f.api.setAnalyticsPreference("accepted");
+  assert.equal(f.requests.length, 2, "reuses the first-party readiness result");
+  assert.equal(f.events().length, 1);
+});
+
 test("opt-in on a known route, sanitize context and allow only known event parameters", async () => {
   const f = fixture();
   f.api.updateAnalyticsPath(blog);

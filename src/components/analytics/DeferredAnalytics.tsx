@@ -8,6 +8,7 @@ import {
   isAnalyticsPreferenceChange,
   pauseAnalyticsOutsideSite,
   readAnalyticsPreference,
+  readAnalyticsReadiness,
   setAnalyticsPreference,
   updateAnalyticsPath,
   type AnalyticsPreference,
@@ -19,18 +20,21 @@ const copy = {
     message: "With your permission, Google Analytics helps us understand which pages people use. It is optional and never used for advertising.",
     accept: "Allow analytics", decline: "Decline analytics", close: "Close preferences",
     active: "Analytics allowed", inactive: "Analytics declined",
+    unavailable: "Analytics is currently off for this site. You can still change a saved permission.",
   },
   fa: {
     settings: "تنظیمات آمار بازدید",
     message: "با اجازهٔ شما، از گوگل آنالیتیکس برای شناخت صفحه‌های پربازدید استفاده می‌کنیم. این گزینه اختیاری است و برای تبلیغات استفاده نمی‌شود.",
     accept: "اجازه به آمار بازدید", decline: "رد آمار بازدید", close: "بستن تنظیمات",
     active: "آمار بازدید مجاز است", inactive: "آمار بازدید رد شده است",
+    unavailable: "آمار بازدید در این سایت فعلاً خاموش است. همچنان می‌توانید اجازهٔ ذخیره‌شده را تغییر دهید.",
   },
   ur: {
     settings: "تجزیاتی ترجیحات",
     message: "آپ کی اجازت سے گوگل اینالیٹکس یہ سمجھنے میں مدد دیتا ہے کہ کون سے صفحات دیکھے جاتے ہیں۔ یہ اختیاری ہے اور اشتہارات کے لیے استعمال نہیں ہوتا۔",
     accept: "تجزیات کی اجازت دیں", decline: "تجزیات مسترد کریں", close: "ترجیحات بند کریں",
     active: "تجزیات کی اجازت ہے", inactive: "تجزیات مسترد ہیں",
+    unavailable: "اس وقت اس ویب سائٹ کے تجزیات بند ہیں۔ آپ محفوظ اجازت اب بھی بدل سکتے ہیں۔",
   },
 };
 
@@ -43,6 +47,8 @@ export default function DeferredAnalytics({
 }) {
   const pathname = usePathname();
   const [available, setAvailable] = useState(false);
+  const [ready, setReady] = useState(false);
+  const onKnownPath = pathname !== null && paths.includes(pathname);
   const [preference, setPreference] = useState<AnalyticsPreference>(null);
   const [editing, setEditing] = useState(false);
   const toggleRef = useRef<HTMLButtonElement>(null);
@@ -55,6 +61,15 @@ export default function DeferredAnalytics({
     configureAnalytics(paths, labels);
     updateAnalyticsPath(pathname);
   }, [paths, labels, pathname]);
+
+  useEffect(() => {
+    if (!onKnownPath || !isAnalyticsHost()) return;
+    let observing = true;
+    void readAnalyticsReadiness().then((enabled) => {
+      if (observing) setReady(enabled);
+    });
+    return () => { observing = false; };
+  }, [onKnownPath]);
 
   useEffect(() => {
     if (!isAnalyticsHost()) return;
@@ -81,15 +96,17 @@ export default function DeferredAnalytics({
     if (editing) headingRef.current?.focus();
   }, [editing]);
 
-  if (!available) return null;
+  const canGrant = ready && onKnownPath;
+  if (!available || (!canGrant && preference === null)) return null;
 
-  const visible = editing || preference === null;
+  const visible = editing || (canGrant && preference === null);
   const closeEditor = () => {
     setEditing(false);
     toggleRef.current?.focus();
   };
 
   const choose = (value: AnalyticsPreference, keyboard: boolean) => {
+    if (value === "accepted" && !canGrant) return;
     void setAnalyticsPreference(value, { persist: true });
     setPreference(value);
     if (editing) closeEditor();
@@ -125,10 +142,14 @@ export default function DeferredAnalytics({
           <h2 ref={headingRef} tabIndex={-1} id="analytics-preferences-title" className="font-display text-base font-semibold">
             {text.settings}
           </h2>
-          <p className="mt-1 font-body text-sm leading-5">{text.message}</p>
+          <p className="mt-1 font-body text-sm leading-5">{canGrant ? text.message : text.unavailable}</p>
           <div className="mt-3 flex flex-wrap gap-2">
-            <button className={buttonClass} type="button" onClick={(event) => choose("accepted", event.detail === 0)}>{text.accept}</button>
-            <button className={buttonClass} type="button" onClick={(event) => choose("declined", event.detail === 0)}>{text.decline}</button>
+            {canGrant && (
+              <button className={buttonClass} type="button" onClick={(event) => choose("accepted", event.detail === 0)}>{text.accept}</button>
+            )}
+            {(canGrant || preference === "accepted") && (
+              <button className={buttonClass} type="button" onClick={(event) => choose("declined", event.detail === 0)}>{text.decline}</button>
+            )}
             {editing && preference !== null && (
               <button className={buttonClass} type="button" onClick={closeEditor}>{text.close}</button>
             )}

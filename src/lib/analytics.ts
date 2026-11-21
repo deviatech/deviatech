@@ -156,12 +156,20 @@ function initializeAnalytics(path: string) {
   reportPageView();
 }
 
-async function activateIfReady() {
-  if (!currentPath || !inSite || active || preference !== "accepted") return;
-  readinessRequest ??= fetch("/api/analytics-readiness", { cache: "no-store", referrerPolicy: "no-referrer" })
+export function readAnalyticsReadiness() {
+  if (!isAnalyticsHost()) return Promise.resolve(false);
+  // This first-party capability check sends no credentials, referrer, or GA data.
+  readinessRequest ??= fetch("/api/analytics-readiness", {
+    cache: "no-store", credentials: "omit", referrerPolicy: "no-referrer",
+  })
     .then(async (response) => response.ok && (await response.json())?.enabled === true)
     .catch(() => false);
-  if (await readinessRequest && currentPath && inSite && preference === "accepted" && !active) {
+  return readinessRequest;
+}
+
+async function activateIfReady() {
+  if (!currentPath || !inSite || active || preference !== "accepted") return;
+  if (await readAnalyticsReadiness() && currentPath && inSite && preference === "accepted" && !active) {
     initializeAnalytics(currentPath);
   }
 }
