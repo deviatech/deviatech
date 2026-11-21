@@ -73,4 +73,4 @@ Send your existing website if you have one, a list of services and practitioners
 
 ## Planning a website for a psychology or therapy practice?
 
-[Request a free homepage preview from DeviaTech](https://deviatech.com/therapist-website-design#preview-request-form). Tell us whether you run a solo or group practice, where you see clients and how you handle enquiries now. The preview is a homepage concept for your practice, not a completed site or a booking system.
+[Request a free homepage preview for your practice](https://deviatech.com/therapist-website-design#preview-request-form). Tell us whether you run a solo or group practice, where you see clients and how you handle enquiries now. The preview is a homepage concept for your practice, not a completed site or a booking system.
