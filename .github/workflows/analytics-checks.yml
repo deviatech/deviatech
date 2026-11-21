@@ -1,0 +1,53 @@
+name: Analytics regression checks
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/analytics-checks.yml"
+      - ".env.example"
+      - "package*.json"
+      - "scripts/analytics-*.mjs"
+      - "src/app/**"
+      - "src/components/analytics/**"
+      - "src/components/layout/Footer.tsx"
+      - "src/lib/analytics*.ts"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: "20"
+          cache: npm
+      - run: npm ci
+      - run: npm run lint -- --quiet
+      - run: npm run analytics:test
+      - run: npm run build
+      - name: Run offline desktop and mobile analytics smoke tests
+        shell: bash
+        env:
+          GA4_MANUAL_MEASUREMENT_READY: "false"
+          NEXT_TELEMETRY_DISABLED: "1"
+        run: |
+          set -euo pipefail
+          export CHROMIUM_PATH="$(command -v google-chrome || command -v chromium)"
+          cp -R public .next/standalone/public
+          cp -R .next/static .next/standalone/.next/static
+          (cd .next/standalone && PORT=3017 HOSTNAME=127.0.0.1 node server.js) > /tmp/analytics-server.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:3017/api/analytics-readiness >/dev/null; then break; fi
+            sleep 1
+          done
+          curl -fsS http://127.0.0.1:3017/api/analytics-readiness >/dev/null
+          npm run analytics:smoke
