@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
 # SEO smoke test — read-only regression checks for the therapist service
-# pages, the Luma demo subdomain, and the apex robots/sitemap pair.
+# pages, the template catalog, demo indexability, and robots/sitemap.
 #
 # It only ever issues GET requests. It never submits a form, requests
 # indexing, or mutates anything external.
@@ -10,7 +10,7 @@
 # explicit Host header, which is how Cloudflare presents them to the app:
 #
 #   deviatech.com          — indexable DeviaTech site + therapist landings
-#   preview.deviatech.com  — noindex Luma demo
+#   preview.deviatech.com  — noindex demo host
 #
 # Usage:
 #   npm run seo:smoke                         # against a local prod build
@@ -84,7 +84,7 @@ echo
 echo "=== apex robots.txt and sitemap.xml (must stay as they are) ==="
 report "apex /robots.txt is 200" "200" "$(status_of "$APEX_HOST" /robots.txt)"
 apex_robots="$(fetch "$APEX_HOST" /robots.txt)"
-report "apex robots.txt allows crawling" "1" "$(count '^Allow: /' "$apex_robots")"
+report "apex robots.txt allows crawling" "yes" "$(if [[ "$apex_robots" =~ (^|$'\n')Allow:\ /($|$'\n') ]]; then echo yes; fi)"
 report "apex robots.txt declares the apex sitemap" "1" \
   "$(count "^Sitemap: https://deviatech.com/sitemap.xml" "$apex_robots")"
 
@@ -106,8 +106,8 @@ echo
 echo "=== demo host robots.txt and sitemap.xml ==="
 report "demo /robots.txt is 200" "200" "$(status_of "$DEMO_HOST" /robots.txt)"
 demo_robots="$(fetch "$DEMO_HOST" /robots.txt)"
-report "demo robots.txt allows crawling (so noindex stays readable)" "1" \
-  "$(count '^Allow: /' "$demo_robots")"
+report "demo robots.txt allows crawling (so noindex stays readable)" "yes" \
+  "$(if [[ "$demo_robots" =~ (^|$'\n')Allow:\ /($|$'\n') ]]; then echo yes; fi)"
 report "demo robots.txt declares no sitemap" "0" "$(count_i 'sitemap' "$demo_robots")"
 report "demo /sitemap.xml is 404" "404" "$(status_of "$DEMO_HOST" /sitemap.xml)"
 
@@ -152,25 +152,30 @@ for path in \
 done
 
 echo
-echo "=== Luma demo stays noindex and canonicalized to the preview host ==="
-check_demo() { # path lang dir canonical
-  local path="$1" lang="$2" dir="$3" canonical="$4" html
-  report "demo $path is 200" "200" "$(status_of "$DEMO_HOST" "$path")"
-  html="$(fetch "$DEMO_HOST" "$path")"
-  report "demo $path is noindex, follow" "1" \
-    "$(count 'name="robots" content="noindex, follow"' "$html")"
-  report "demo $path canonical is $canonical" "1" \
-    "$(count "rel=\"canonical\" href=\"$canonical\"" "$html")"
-  report "demo $path is <html lang=\"$lang\" dir=\"$dir\">" "1" \
-    "$(count "<html lang=\"$lang\" dir=\"$dir\">" "$html")"
-  report "demo $path emits no JSON-LD" "0" \
-    "$(count 'application/ld+json' "$html")"
-}
+echo "=== template catalog and details stay indexable ==="
+for path in /templates /templates/alder /templates/luma /templates/morrow; do
+  canonical="https://$APEX_HOST$path"
+  report "$path is 200" "200" "$(status_of "$APEX_HOST" "$path")"
+  html="$(fetch "$APEX_HOST" "$path")"
+  report "$path is in the sitemap" "1" "$(count "<loc>$canonical</loc>" "$apex_sitemap")"
+  report "$path has a self-canonical" "1" "$(count "rel=\"canonical\" href=\"$canonical\"" "$html")"
+  report "$path does not use noindex" "0" "$(count_i 'name="robots" content="noindex' "$html")"
+done
 
-check_demo / en ltr "https://preview.deviatech.com/"
-check_demo /fa fa rtl "https://preview.deviatech.com/fa"
-check_demo /ur ur rtl "https://preview.deviatech.com/ur"
-check_demo /about en ltr "https://preview.deviatech.com/about"
+echo
+echo "=== published demos stay noindex ==="
+case "$ORIGIN" in
+  http://127.0.0.1*|http://localhost*)
+    echo "  SKIP published demo checks (standalone previews are served by production Nginx)"
+    ;;
+  *)
+    for path in /alder/ /luma/ /luma/fa/ /luma/ur/ /morrow/first-conversation/; do
+      report "demo $path is 200" "200" "$(status_of "$DEMO_HOST" "$path")"
+      demo_headers="$(fetch "$DEMO_HOST" "$path" -D - -o /dev/null)"
+      report "demo $path sends noindex" "1" "$(count_i '^x-robots-tag:.*noindex' "$demo_headers")"
+    done
+    ;;
+esac
 
 echo
 echo "=== control routes: unrelated site and store behaviour unchanged ==="

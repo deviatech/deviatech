@@ -5,25 +5,30 @@ import { canPublishPrivacyPolicy, privacyPolicy } from "@/content/privacy-policy
 import { site } from "@/content/site";
 
 // A separate route group avoids inheriting the marketing site's analytics.
-// This local draft intentionally does not create an accessible policy page.
+const isPublishable = canPublishPrivacyPolicy(privacyPolicy);
 export const metadata: Metadata = {
-  title: "Privacy Policy | DeviaTech",
+  title: privacyPolicy.title,
   description: "DeviaTech privacy policy and privacy contact information.",
   alternates: { canonical: `${site.url}/privacy-policy` },
-  robots: { index: true, follow: true },
+  robots: { index: isPublishable, follow: isPublishable },
 };
 
 export default function PrivacyPolicyPage() {
-  if (!canPublishPrivacyPolicy(privacyPolicy)) notFound();
+  if (!isPublishable || !privacyPolicy.effectiveDate) notFound();
+
+  const effectiveDateLabel = new Intl.DateTimeFormat("en-GB", {
+    dateStyle: "long",
+    timeZone: "UTC",
+  }).format(new Date(privacyPolicy.effectiveDate));
 
   return (
     <main className="mx-auto min-h-screen max-w-3xl px-6 py-12 text-ink sm:py-20">
       <Link href="/" className="font-display text-xl font-semibold underline-offset-4 hover:underline">
         DeviaTech
       </Link>
-      <h1 className="mt-10 font-display text-4xl font-semibold">Privacy Policy</h1>
+      <h1 className="mt-10 font-display text-4xl font-semibold">{privacyPolicy.title}</h1>
       <p className="mt-4 font-body text-sm text-ink-soft">
-        Effective date: <time dateTime={privacyPolicy.effectiveDate ?? undefined}>{privacyPolicy.effectiveDate}</time>
+        Effective date: <time dateTime={privacyPolicy.effectiveDate}>{effectiveDateLabel}</time>
       </p>
       <nav aria-label="Privacy policy sections" className="my-10 border-y border-line-grid py-6">
         <ul className="grid gap-3 sm:grid-cols-2">

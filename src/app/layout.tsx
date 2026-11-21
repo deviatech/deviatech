@@ -1,24 +1,26 @@
-import { Space_Grotesk, Inter, IBM_Plex_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import { headers } from "next/headers";
 import "./globals.css";
 import { LOCALE_HEADER, LOCALE_META, isSupportedLocale } from "@/lib/locales";
 
-const spaceGrotesk = Space_Grotesk({
+const spaceGrotesk = localFont({
+  src: "../fonts/spacegrotesk.woff2",
+  weight: "300 700",
   variable: "--font-space-grotesk",
-  subsets: ["latin"],
-  weight: ["500", "600", "700"],
 });
 
-const inter = Inter({
+const inter = localFont({
+  src: "../fonts/inter.woff2",
+  weight: "100 900",
   variable: "--font-inter",
-  subsets: ["latin"],
-  weight: ["400", "500"],
 });
 
-const ibmPlexMono = IBM_Plex_Mono({
+const ibmPlexMono = localFont({
+  src: [
+    { path: "../fonts/IBMPlexMono-Regular.woff2", weight: "400", style: "normal" },
+    { path: "../fonts/IBMPlexMono-Medium.woff2", weight: "500", style: "normal" },
+  ],
   variable: "--font-ibm-plex-mono",
-  subsets: ["latin"],
-  weight: ["400", "500"],
 });
 
 export default async function RootLayout({

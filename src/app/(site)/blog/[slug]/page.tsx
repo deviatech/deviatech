@@ -163,26 +163,29 @@ export default async function BlogPostPage({
           </div>
         </section>
       )}
-      <aside className="mt-12 border-t border-line-grid pt-8">
-        <p className="font-mono text-xs tracking-wide text-ink-soft">NEXT STEP</p>
-        <h2 className="mt-2 font-display text-xl font-semibold text-ink">
-          Have a store or product to launch?
-        </h2>
-        <p className="mt-2 max-w-xl font-body text-ink-soft">
-          See how DeviaTech can help with a Shopify store or a focused MVP in Lahore.
-        </p>
-        <div className="mt-4 flex flex-wrap gap-4 font-body text-sm">
-          <Link className="text-accent-rust underline" href="/shopify-development-lahore">
-            Shopify development
-          </Link>
-          <Link className="text-accent-rust underline" href="/mvp-development">
-            MVP development
-          </Link>
-          <Link className="text-accent-rust underline" href="/contact">
-            Start a conversation
-          </Link>
-        </div>
-      </aside>
+      {/* The clinic checklist has its own relevant preview CTA in the article. */}
+      {post.slug !== "clinic-website-checklist-private-practice" && (
+        <aside className="mt-12 border-t border-line-grid pt-8">
+          <p className="font-mono text-xs tracking-wide text-ink-soft">NEXT STEP</p>
+          <h2 className="mt-2 font-display text-xl font-semibold text-ink">
+            Have a store or product to launch?
+          </h2>
+          <p className="mt-2 max-w-xl font-body text-ink-soft">
+            See how DeviaTech can help with a Shopify store or a focused MVP in Lahore.
+          </p>
+          <div className="mt-4 flex flex-wrap gap-4 font-body text-sm">
+            <Link className="text-accent-rust underline" href="/shopify-development-lahore">
+              Shopify development
+            </Link>
+            <Link className="text-accent-rust underline" href="/mvp-development">
+              MVP development
+            </Link>
+            <Link className="text-accent-rust underline" href="/contact">
+              Start a conversation
+            </Link>
+          </div>
+        </aside>
+      )}
     </SheetFrame>
   );
 }

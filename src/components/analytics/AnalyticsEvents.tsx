@@ -13,7 +13,6 @@ export default function AnalyticsEvents() {
 
       trackEvent(element.dataset.gaEvent ?? "", {
         label: element.dataset.gaLabel,
-        location: window.location.pathname,
       });
     }
 

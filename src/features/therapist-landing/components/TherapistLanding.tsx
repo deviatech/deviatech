@@ -1,4 +1,5 @@
-import { Fraunces, Inter, Vazirmatn, Noto_Sans_Arabic } from "next/font/google";
+import Link from "next/link";
+import localFont from "next/font/local";
 import type { TherapistLandingContent } from "../content/types";
 import LandingHero from "./LandingHero";
 import TrustBar from "./TrustBar";
@@ -11,31 +12,31 @@ import LandingFaq from "./LandingFaq";
 import PreviewRequestForm from "./PreviewRequestForm";
 import styles from "../therapistLanding.module.css";
 
-const fraunces = Fraunces({
+const fraunces = localFont({
+  src: "../../../fonts/fraunces.woff2",
+  weight: "100 900",
   variable: "--font-tl-display",
-  subsets: ["latin"],
-  weight: ["500", "600"],
   display: "swap",
 });
 
-const inter = Inter({
+const inter = localFont({
+  src: "../../../fonts/inter.woff2",
+  weight: "100 900",
   variable: "--font-tl-body",
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
   display: "swap",
 });
 
-const vazirmatn = Vazirmatn({
+const vazirmatn = localFont({
+  src: "../../../fonts/vazirmatn.woff2",
+  weight: "100 900",
   variable: "--font-tl-persian",
-  subsets: ["arabic"],
-  weight: ["400", "500", "600"],
   display: "swap",
 });
 
-const notoSansArabic = Noto_Sans_Arabic({
+const notoSansArabic = localFont({
+  src: "../../../fonts/notosansarabic.woff2",
+  weight: "100 900",
   variable: "--font-tl-urdu",
-  subsets: ["arabic"],
-  weight: ["400", "500", "600"],
   display: "swap",
 });
 
@@ -51,6 +52,11 @@ export default function TherapistLanding({ content }: { content: TherapistLandin
       <LandingHero content={content} />
       <TrustBar content={content} />
       <ConceptShowcase content={content} />
+      <div className="mx-auto max-w-6xl px-6 py-8">
+        <Link href="/templates" className="underline underline-offset-4">
+          {content.locale === "fa" ? "مشاهدهٔ قالب‌های Morrow، Luma و Alder" : content.locale === "ur" ? "Morrow، Luma اور Alder کے ڈیزائن دیکھیں" : "Compare Morrow, Luma and Alder therapist website templates"}
+        </Link>
+      </div>
       <BenefitsGrid content={content} />
       <DeviaTechBrandSection content={content} />
       <ProcessSteps content={content} />

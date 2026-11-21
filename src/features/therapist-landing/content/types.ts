@@ -118,6 +118,7 @@ export interface TherapistLandingContent {
   faq: {
     heading: string;
     items: FaqItem[];
+    guide?: { before: string; label: string; after: string; href: string };
   };
   form: {
     heading: string;

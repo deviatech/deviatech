@@ -17,6 +17,7 @@ import { site } from "@/content/site";
 import { WhatsAppIcon } from "@/components/ui/SocialIcons";
 
 const navLinks = [
+  { label: "Templates", href: "/templates", icon: LuLayers },
   { label: "Work", href: "/#work", icon: LuBriefcase },
   { label: "Services", href: "/shopify-development-lahore", icon: LuLayers },
   { label: "Stack", href: "/#stack", icon: LuBoxes },

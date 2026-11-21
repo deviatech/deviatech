@@ -1,85 +1,75 @@
-/**
- * LOCAL REVIEW DRAFT. Not approved for publication or use in Meta settings.
- * Every reviewNote must be resolved, and the effective date approved, before
- * status changes to "approved". Do not infer practices from planned OTP code.
- */
+/** Approved English DeviaTech website privacy notice. */
 export type PrivacySection = {
   id: string;
   title: string;
   paragraphs: string[];
-  reviewNote?: string;
 };
 
 export type PrivacyPolicy = {
+  title: string;
   status: "draft" | "approved";
   effectiveDate: string | null;
   sections: PrivacySection[];
 };
 
 export const privacyPolicy: PrivacyPolicy = {
-  status: "draft",
-  effectiveDate: null,
+  title: "DeviaTech Website Privacy Notice",
+  status: "approved",
+  effectiveDate: "2026-11-21",
   sections: [
     {
-      id: "scope",
-      title: "About this notice",
-      paragraphs: [
-        "DeviaTech is a software development business based in Lahore, Pakistan. This notice explains how information is handled when you visit our website or contact us about our services.",
-      ],
-      reviewNote: "Confirm the legal operator and address, and approve the exact services covered. This is a general customer-facing policy, not a statement about why a platform requires the page.",
+      "id": "responsible",
+      "title": "Who is responsible",
+      "paragraphs": [
+        "DeviaTech is an independent software development team based in Lahore, Pakistan. Syed Mohammad Hussain Naqvi is responsible for the personal information covered by this notice. Contact us at hello@deviatech.com."
+      ]
     },
     {
-      id: "information",
-      title: "Information provided through the website",
-      paragraphs: [
-        "The website's project enquiry form asks for your name, contact details, project type, approximate budget, preferred contact method, and message.",
-        "The therapist website preview form asks for your name, professional role, country, and email. You can also provide a website or social profile, WhatsApp number, and note. The demo enquiry forms can collect contact details and the enquiry or booking-preference fields you choose to submit.",
-      ],
-      reviewNote: "Confirm these routes are active, the actual purposes and recipients of submissions, and whether other collection methods need to be covered. Form fields alone do not establish every business use.",
+      "id": "collection",
+      "title": "What we collect and why",
+      "paragraphs": [
+        "When you send an enquiry or request a website preview, we receive the details you choose to provide, such as your name, contact details, and information about your request. Depending on the form, this can include your business role, country, project type, or approximate budget. We use these details to answer your enquiry, prepare the preview or proposal you asked for, and follow up on that request. Our form service uses IP address information to limit repeated submissions and protect the site from abuse. Please do not send patient records or other sensitive information through these forms."
+      ]
     },
     {
-      id: "website-services",
-      title: "Website services and technical information",
-      paragraphs: [
-        "The website's contact service is configured to send submitted enquiries by email through Resend. It also reads a client IP address to limit repeated submissions.",
-        "The main website includes Google Analytics, which loads after an interaction such as scrolling, typing, or a pointer action. The implementation records website interactions, including selected link clicks and form events.",
-        "The website also provides links to contact DeviaTech through WhatsApp.",
-      ],
-      reviewNote: "Verify the live Resend/mailbox and hosting configuration, actual processing locations and recipients, GA settings/cookies/consent, and any additional processors. The proposed legal route does not inherit the site's analytics components.",
+      "id": "services",
+      "title": "Services we use",
+      "paragraphs": [
+        "Our website, email and hosting providers help us operate the site and receive enquiries. We use Resend to deliver form enquiries by email. If you choose to contact us through WhatsApp, your use of WhatsApp is also subject to its own privacy policy. We may disclose information where required by law."
+      ]
     },
     {
-      id: "sharing",
-      title: "How information is shared",
-      paragraphs: [
-        "We do not publish the contact information or message content you submit. Service providers that support the website or deliver your enquiry may process that information as part of their services. This does not prevent disclosures required by applicable law.",
-      ],
-      reviewNote: "Confirm this wording, the actual recipients, and all uses of customer information. It must not become a claim that data is never shared. There is no DeviaTech OTP backend yet. If OTP is introduced, add only verified processing and provider details; confirm whether any current manual testing already requires disclosure.",
+      "id": "cookies-and-analytics",
+      "title": "Cookies and analytics",
+      "paragraphs": [
+        "Google Analytics is currently off on this website. If we enable optional analytics, we will explain what it measures and ask before loading it. You will be able to reject optional cookies or change your choice in Cookie settings. Rejecting optional cookies will not prevent you from using the website or contacting us."
+      ]
     },
     {
-      id: "retention",
-      title: "Retention and deletion",
-      paragraphs: [],
-      reviewNote: "Supply actual retention periods or criteria and deletion procedures for website enquiries, email copies, analytics, logs/backups, and any manual Meta test data. No period has been verified. A code's expiry or a rate-limit interval is not a retention policy.",
+      "id": "retention",
+      "title": "How long we keep enquiries",
+      "paragraphs": [
+        "If an enquiry does not lead to a project, we keep the form details and related correspondence for up to 12 months after our last contact about that enquiry, unless we need to retain specific information for a legal obligation or dispute. We keep project and financial records separately for as long as needed to deliver and administer the work, meet applicable obligations, or handle disputes."
+      ]
     },
     {
-      id: "contact",
-      title: "Privacy questions and requests",
-      paragraphs: [
-        "DeviaTech's public business contact email is hello@deviatech.com.",
-      ],
-      reviewNote: "Approve whether this mailbox will receive privacy, correction, and deletion requests; identify the owner and real handling process. Add rights, verification, exception, and timing language only when applicable and supportable.",
-    },
+      "id": "privacy-requests",
+      "title": "Your privacy requests",
+      "paragraphs": [
+        "Email hello@deviatech.com to ask about the information we hold, request a correction, or ask us to delete it. We may ask for enough information to verify that the request is yours. We will tell you the outcome and explain if we need to keep any information."
+      ]
+    }
   ],
 };
 
 export function canPublishPrivacyPolicy(policy: PrivacyPolicy): boolean {
+  if (policy.status !== "approved" || !policy.effectiveDate || !/^\d{4}-\d{2}-\d{2}$/.test(policy.effectiveDate)) return false;
+  const date = new Date(policy.effectiveDate + "T00:00:00.000Z");
   return (
-    policy.status === "approved" &&
-    policy.effectiveDate !== null &&
-    /^\d{4}-\d{2}-\d{2}$/.test(policy.effectiveDate) &&
-    policy.sections.length > 0 &&
-    policy.sections.every(
-      (section) => !section.reviewNote && section.paragraphs.length > 0,
-    )
+    !Number.isNaN(date.getTime()) &&
+    date.toISOString().slice(0, 10) === policy.effectiveDate &&
+    policy.sections.length === 6 &&
+    policy.sections.every((section) => section.title.trim() && section.paragraphs.length > 0 &&
+      section.paragraphs.every((paragraph) => paragraph.trim()))
   );
 }

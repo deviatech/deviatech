@@ -1,4 +1,4 @@
-import { DM_Sans, Inter, Vazirmatn, Noto_Sans_Arabic } from "next/font/google";
+import localFont from "next/font/local";
 import type { ReactNode } from "react";
 import type { DemoLocale } from "../types";
 import { getDictionary } from "../content/dictionary";
@@ -6,31 +6,31 @@ import LumaHeader from "./LumaHeader";
 import LumaFooter from "./LumaFooter";
 import styles from "../styles/luma.module.css";
 
-const dmSans = DM_Sans({
+const dmSans = localFont({
+  src: "../../../fonts/dmsans.woff2",
   variable: "--font-luma-display",
-  subsets: ["latin"],
-  weight: ["500", "600", "700"],
+  weight: "100 900",
   display: "swap",
 });
 
-const inter = Inter({
+const inter = localFont({
+  src: "../../../fonts/inter.woff2",
   variable: "--font-luma-body",
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: "100 900",
   display: "swap",
 });
 
-const vazirmatn = Vazirmatn({
+const vazirmatn = localFont({
+  src: "../../../fonts/vazirmatn.woff2",
   variable: "--font-luma-fa",
-  subsets: ["arabic"],
-  weight: ["300", "400", "500", "700"],
+  weight: "100 900",
   display: "swap",
 });
 
-const notoSansArabic = Noto_Sans_Arabic({
+const notoSansArabic = localFont({
+  src: "../../../fonts/notosansarabic.woff2",
   variable: "--font-luma-ur",
-  subsets: ["arabic"],
-  weight: ["400", "500", "600", "700"],
+  weight: "100 900",
   display: "swap",
 });
 

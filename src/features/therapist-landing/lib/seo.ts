@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { site } from "@/content/site";
+import { organizationId } from "@/lib/site-entities";
 import type { Locale } from "@/lib/locales";
 import type { TherapistLandingContent } from "../content/types";
 import { therapistLandingConfig } from "../config";
@@ -27,13 +28,6 @@ const BRAND_TITLE: Record<Locale, string> = {
   fa: "DeviaTech (دویاتک)",
   ur: "DeviaTech",
 };
-
-/**
- * Stable identifier for DeviaTech as the service provider. Only name and url
- * are asserted here; business facts (address, phone, geo) stay solely in the
- * sitewide LocalBusiness schema in (site)/layout.tsx, which is unchanged.
- */
-const ORGANIZATION_ID = `${site.url}/#organization`;
 
 function openGraphLocale(locale: Locale) {
   const ogLocale = OG_LOCALE[locale];
@@ -88,7 +82,7 @@ export function therapistLandingJsonLd(content: TherapistLandingContent) {
     url,
     provider: {
       "@type": "Organization",
-      "@id": ORGANIZATION_ID,
+      "@id": organizationId,
       name: site.name,
       url: site.url,
     },

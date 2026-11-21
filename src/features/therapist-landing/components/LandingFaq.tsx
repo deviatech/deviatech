@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { LuPlus } from "react-icons/lu";
 import type { TherapistLandingContent } from "../content/types";
 import styles from "../therapistLanding.module.css";
@@ -21,6 +22,19 @@ export default function LandingFaq({ content }: { content: TherapistLandingConte
             </details>
           ))}
         </div>
+
+        {content.faq.guide && (
+          <p className="mt-6 text-sm leading-7 text-[var(--tl-text-body)]">
+            {content.faq.guide.before}{" "}
+            <Link
+              href={content.faq.guide.href}
+              className="underline underline-offset-4 hover:text-[var(--tl-primary)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--tl-focus)]"
+            >
+              {content.faq.guide.label}
+            </Link>{" "}
+            {content.faq.guide.after}
+          </p>
+        )}
       </div>
     </section>
   );

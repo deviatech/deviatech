@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
-export default function Contact() {
+export default function Contact({ initialMessage = "", enquiryLabel = "" }: { initialMessage?: string; enquiryLabel?: string }) {
   const [status, setStatus] = useState<Status>("idle");
   const formStarted = useRef(false);
   const router = useRouter();
@@ -59,7 +59,7 @@ export default function Contact() {
       <div className="mt-8 grid gap-10 md:grid-cols-2">
         <div>
           <Button
-            href={buildWhatsAppLink(site.whatsappDefaultMessage)}
+            href={buildWhatsAppLink(initialMessage || site.whatsappDefaultMessage)}
             target="_blank"
             rel="noopener noreferrer"
             data-ga-event="whatsapp_click"
@@ -70,6 +70,7 @@ export default function Contact() {
           </Button>
         </div>
         <form onSubmit={handleSubmit} onFocus={handleFormStart} className="flex flex-col gap-4">
+          {enquiryLabel && <p className="font-body text-sm font-medium text-ink">Enquiry about {enquiryLabel}</p>}
           <input
             required
             name="name"
@@ -81,7 +82,7 @@ export default function Contact() {
             required
             name="projectType"
             aria-label="Project type"
-            defaultValue=""
+            defaultValue={initialMessage ? "Business website" : ""}
             className="rounded-sm border border-line-grid bg-surface px-4 py-3 text-sm text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-amber"
           >
             <option value="" disabled>Project type</option>
@@ -129,6 +130,7 @@ export default function Contact() {
           <textarea
             required
             name="message"
+            defaultValue={initialMessage}
             aria-label="Project details"
             placeholder="What are you building?"
             rows={4}

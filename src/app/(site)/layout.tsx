@@ -5,6 +5,9 @@ import BlueprintGrid from "@/components/layout/BlueprintGrid";
 import StickyWhatsApp from "@/components/ui/StickyWhatsApp";
 import AnalyticsEvents from "@/components/analytics/AnalyticsEvents";
 import DeferredAnalytics from "@/components/analytics/DeferredAnalytics";
+import { analyticsSiteData } from "@/lib/analytics-site";
+import JsonLd from "@/components/JsonLd";
+import { organizationId, websiteId } from "@/lib/site-entities";
 import { site } from "@/content/site";
 
 const title = "Software Development Agency in Lahore | DeviaTech";
@@ -32,13 +35,10 @@ export const metadata: Metadata = {
     title,
     description,
     url: "/",
-    images: [{ url: "/logo/icon-512.png", width: 512, height: 512 }],
+    images: [site.shareImage],
   },
   twitter: {
-    card: "summary_large_image",
-    title,
-    description,
-    images: ["/logo/icon-512.png"],
+    card: "summary",
   },
   other: {
     "geo.region": site.geo.region,
@@ -47,9 +47,9 @@ export const metadata: Metadata = {
   },
 };
 
-const jsonLd = {
-  "@context": "https://schema.org",
+const organization = {
   "@type": "LocalBusiness",
+  "@id": organizationId,
   name: site.name,
   description,
   url: site.url,
@@ -76,11 +76,13 @@ const jsonLd = {
 export default function SiteLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-      <DeferredAnalytics />
+      <JsonLd data={{
+        "@context": "https://schema.org",
+        "@graph": [
+          organization,
+          { "@type": "WebSite", "@id": websiteId, name: site.name, url: site.url, publisher: { "@id": organizationId } },
+        ],
+      }} />
       <AnalyticsEvents />
       <BlueprintGrid />
       {/*
@@ -96,9 +98,9 @@ export default function SiteLayout({ children }: Readonly<{ children: React.Reac
       <div data-site-shell dir="ltr">
         <Header />
       </div>
-      <main>{children}</main>
+      <main tabIndex={-1}>{children}</main>
       <div data-site-shell dir="ltr">
-        <Footer />
+        <Footer analyticsControls={<DeferredAnalytics {...analyticsSiteData} />} />
       </div>
       <StickyWhatsApp />
     </>
