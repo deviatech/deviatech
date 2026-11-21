@@ -227,6 +227,12 @@ export const en: TherapistLandingContent = {
   },
   faq: {
     heading: "Frequently asked questions",
+    guide: {
+      before: "Preparing your brief? Read the",
+      label: "Clinic website checklist",
+      after: "to see what to gather before you start.",
+      href: "/blog/clinic-website-checklist-private-practice",
+    },
     items: [
       {
         question: "Do I need to prepare all the content?",
