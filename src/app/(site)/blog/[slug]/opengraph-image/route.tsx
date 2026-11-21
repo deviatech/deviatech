@@ -2,16 +2,16 @@ import { ImageResponse } from "next/og";
 import { getPostBySlug } from "@/lib/blog";
 
 export const runtime = "nodejs";
-export const size = { width: 1200, height: 630 };
-export const contentType = "image/png";
+const size = { width: 1200, height: 630 };
 
-export default async function OpenGraphImage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
+// A regular route keeps the public image URL stable across Next.js builds.
+export async function GET(
+  _request: Request,
+  { params }: { params: Promise<{ slug: string }> },
+) {
   const { slug } = await params;
   const post = getPostBySlug(slug);
+  if (!post) return new Response(null, { status: 404 });
 
   return new ImageResponse(
     (
@@ -31,13 +31,13 @@ export default async function OpenGraphImage({
           DEVIATECH / NOTES
         </div>
         <div style={{ display: "flex", fontSize: 64, fontWeight: 700, lineHeight: 1.1, maxWidth: 1000 }}>
-          {post?.title ?? "DeviaTech Blog"}
+          {post.title}
         </div>
         <div style={{ color: "#45516E", display: "flex", fontSize: 28 }}>
           Software, stores, and products built in Lahore.
         </div>
       </div>
     ),
-    { ...size },
+    { ...size, headers: { "Cache-Control": "public, max-age=300, s-maxage=3600" } },
   );
 }
