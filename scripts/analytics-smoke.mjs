@@ -238,6 +238,7 @@ test("preview production exclusion and release gate fail closed", async () => {
     await page.evaluate((key) => localStorage.setItem(key, "accepted"), consentKey);
     await page.reload();
     await settings.click();
+    assert.equal(await page.getByRole("region", { name: "Cookie settings" }).getByRole("link", { name: "Privacy notice" }).getAttribute("href"), "/privacy-policy");
     assert.equal(await allow.count(), 0);
     await page.getByRole("button", { name: "Reject optional cookies" }).click();
     assert.equal(await page.evaluate((key) => localStorage.getItem(key), consentKey), "declined");
@@ -252,9 +253,9 @@ test("preview production exclusion and release gate fail closed", async () => {
   });
 });
 
-for (const [locale, title, allowText, declineText] of [
-  ["fa", "کوکی‌های اختیاری", "پذیرش کوکی‌های اختیاری", "رد کوکی‌های اختیاری"],
-  ["ur", "اختیاری کوکیاں", "اختیاری کوکیاں قبول کریں", "اختیاری کوکیاں مسترد کریں"],
+for (const [locale, title, allowText, declineText, noticeLabel] of [
+  ["fa", "کوکی‌های اختیاری", "پذیرش کوکی‌های اختیاری", "رد کوکی‌های اختیاری", "حریم خصوصی (انگلیسی)"],
+  ["ur", "اختیاری کوکیاں", "اختیاری کوکیاں قبول کریں", "اختیاری کوکیاں مسترد کریں", "رازداری کا نوٹس (انگریزی)"],
 ]) {
   test(`${locale}: localized RTL choices at 320px`, async () => {
     await withBrowser({ width: 320, ready: true }, async ({ page, requests }) => {
@@ -262,6 +263,7 @@ for (const [locale, title, allowText, declineText] of [
       const panel = page.getByRole("region", { name: title });
       await panel.waitFor();
       assert.equal(await panel.evaluate((node) => getComputedStyle(node).direction), "rtl");
+      assert.equal(await panel.getByRole("link", { name: noticeLabel }).getAttribute("href"), "/privacy-policy");
       const buttons = await Promise.all([allowText, declineText].map((name) => page.getByRole("button", { name }).boundingBox()));
       assert(buttons[0] && buttons[1]);
       assert.equal(buttons[0].width, buttons[1].width);
@@ -287,6 +289,7 @@ test("published privacy notice is discoverable and GA-free with a stored opt-in"
       "Cookies and analytics", "How long we keep enquiries", "Your privacy requests",
     ]);
     assert.equal(await page.locator('a[href="mailto:hello@deviatech.com"]').count(), 1);
+    assert.equal(await page.locator("#cookies-and-analytics p").textContent(), "Google Analytics is optional. When it is enabled and you select Accept optional cookies, it uses cookies to help us understand how people use this site. You can reject optional cookies or change your choice at any time in Cookie settings. Your choice will not prevent you from using the website or contacting us.");
     assert.equal(await page.getByRole("button", { name: "Cookie settings" }).count(), 0);
     assert.equal(await page.locator('script[src*="googletagmanager"]').count(), 0);
     assert.deepEqual(await commands(page), []);
@@ -307,4 +310,24 @@ test("published privacy notice is discoverable and GA-free with a stored opt-in"
   const sitemap = await fetch(local + "/sitemap.xml");
   assert.equal(sitemap.status, 200);
   assert.match(await sitemap.text(), /<loc>https:\/\/deviatech\.com\/privacy-policy<\/loc>/);
+});
+
+test("cookie banner privacy link opens the notice without counting consent", async () => {
+  await withBrowser({ width: 390, ready: true }, async ({ page, requests }) => {
+    await page.goto(production + path);
+    const banner = page.getByRole("region", { name: "Optional cookies" });
+    const notice = banner.getByRole("link", { name: "Privacy notice" });
+    await notice.waitFor();
+    assert.equal(await notice.getAttribute("href"), "/privacy-policy");
+    assert.equal(await page.evaluate((key) => localStorage.getItem(key), consentKey), null);
+    await notice.click();
+    await page.waitForURL(production + "/privacy-policy");
+    await page.getByRole("heading", { level: 1, name: "DeviaTech Website Privacy Notice" }).waitFor();
+    assert.equal(await page.evaluate((key) => localStorage.getItem(key), consentKey), null);
+    assert.deepEqual(await commands(page), []);
+    assert.equal(requests.tag, 0);
+    await page.goBack();
+    await banner.getByRole("button", { name: "Accept optional cookies" }).waitFor();
+    assert.equal(requests.tag, 0);
+  });
 });

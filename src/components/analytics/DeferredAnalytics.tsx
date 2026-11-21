@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 import {
   configureAnalytics,
   isAnalyticsHost,
@@ -18,6 +19,7 @@ const copy = {
   en: {
     settings: "Cookie settings",
     heading: "Optional cookies",
+    privacyNotice: "Privacy notice",
     message: "With your permission, Google Analytics uses cookies to help us understand how people use this site. You can change your choice in Cookie settings.",
     accept: "Accept optional cookies", decline: "Reject optional cookies", close: "Close cookie settings",
     active: "Analytics allowed", inactive: "Analytics declined",
@@ -26,6 +28,7 @@ const copy = {
   fa: {
     settings: "تنظیمات کوکی",
     heading: "کوکی‌های اختیاری",
+    privacyNotice: "حریم خصوصی (انگلیسی)",
     message: "با اجازهٔ شما، گوگل آنالیتیکس از کوکی برای بررسی نحوهٔ استفاده از سایت کمک می‌گیرد. می‌توانید انتخابتان را در تنظیمات کوکی تغییر دهید.",
     accept: "پذیرش کوکی‌های اختیاری", decline: "رد کوکی‌های اختیاری", close: "بستن تنظیمات کوکی",
     active: "آمار بازدید مجاز است", inactive: "آمار بازدید رد شده است",
@@ -34,6 +37,7 @@ const copy = {
   ur: {
     settings: "کوکی کی ترتیبات",
     heading: "اختیاری کوکیاں",
+    privacyNotice: "رازداری کا نوٹس (انگریزی)",
     message: "آپ کی اجازت سے گوگل اینالیٹکس کوکیاں استعمال کرتا ہے تاکہ ہم سمجھ سکیں کہ لوگ اس ویب سائٹ کو کیسے استعمال کرتے ہیں۔ آپ کوکی کی ترتیبات میں اپنا انتخاب بدل سکتے ہیں۔",
     accept: "اختیاری کوکیاں قبول کریں", decline: "اختیاری کوکیاں مسترد کریں", close: "کوکی کی ترتیبات بند کریں",
     active: "تجزیات کی اجازت ہے", inactive: "تجزیات مسترد ہیں",
@@ -151,7 +155,16 @@ export default function DeferredAnalytics({
               <h2 ref={headingRef} tabIndex={-1} id="analytics-preferences-title" className="font-display text-base font-semibold">
                 {editing ? text.settings : text.heading}
               </h2>
-              <p className="mt-0.5 font-body text-sm leading-5 text-ink/80">{canGrant ? text.message : text.unavailable}</p>
+              <p className="mt-0.5 font-body text-sm leading-5 text-ink/80">
+                {canGrant ? text.message : text.unavailable}{" "}
+                <Link
+                  href="/privacy-policy"
+                  prefetch={false}
+                  className="font-semibold text-ink underline underline-offset-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+                >
+                  {text.privacyNotice}
+                </Link>
+              </p>
             </div>
           </div>
           <div className={canGrant ? "grid grid-cols-2 items-stretch gap-2" : "flex flex-wrap items-center gap-2"}>
