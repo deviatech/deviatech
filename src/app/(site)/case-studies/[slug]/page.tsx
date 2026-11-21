@@ -6,7 +6,6 @@ import { caseStudies, getCaseStudyBySlug } from "@/content/case-studies";
 import { site } from "@/content/site";
 import Button from "@/components/ui/Button";
 import { buildWhatsAppLink } from "@/lib/whatsapp";
-import CaseStudyViewTracker from "@/components/analytics/CaseStudyViewTracker";
 
 export function generateStaticParams() {
   return caseStudies.map((caseStudy) => ({ slug: caseStudy.slug }));
@@ -67,7 +66,6 @@ export default async function CaseStudyPage({
     <SheetFrame number="C2" label="CASE STUDY">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(caseStudyJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
-      <CaseStudyViewTracker slug={caseStudy.slug} />
       <Link href="/case-studies" className="font-mono text-xs text-ink-soft hover:text-ink">
         Back to case studies
       </Link>

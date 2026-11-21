@@ -5,6 +5,7 @@ import BlueprintGrid from "@/components/layout/BlueprintGrid";
 import StickyWhatsApp from "@/components/ui/StickyWhatsApp";
 import AnalyticsEvents from "@/components/analytics/AnalyticsEvents";
 import DeferredAnalytics from "@/components/analytics/DeferredAnalytics";
+import { analyticsSiteData } from "@/lib/analytics-site";
 import JsonLd from "@/components/JsonLd";
 import { organizationId, websiteId } from "@/lib/site-entities";
 import { site } from "@/content/site";
@@ -82,7 +83,6 @@ export default function SiteLayout({ children }: Readonly<{ children: React.Reac
           { "@type": "WebSite", "@id": websiteId, name: site.name, url: site.url, publisher: { "@id": organizationId } },
         ],
       }} />
-      <DeferredAnalytics />
       <AnalyticsEvents />
       <BlueprintGrid />
       {/*
@@ -98,9 +98,9 @@ export default function SiteLayout({ children }: Readonly<{ children: React.Reac
       <div data-site-shell dir="ltr">
         <Header />
       </div>
-      <main>{children}</main>
+      <main tabIndex={-1}>{children}</main>
       <div data-site-shell dir="ltr">
-        <Footer />
+        <Footer analyticsControls={<DeferredAnalytics {...analyticsSiteData} />} />
       </div>
       <StickyWhatsApp />
     </>

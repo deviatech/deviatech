@@ -22,7 +22,7 @@ const socialLinks = [
 const linkClass =
   "transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-amber";
 
-export default function Footer() {
+export default function Footer({ analyticsControls }: { analyticsControls: React.ReactNode }) {
   return (
     <footer className="bg-footer-bg text-footer-text">
       <div className="mx-auto max-w-6xl px-6 py-16">
@@ -81,8 +81,9 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 border-t border-white/10 pt-6 font-mono text-xs text-footer-text/70">
-          &copy; {new Date().getFullYear()} DeviaTech. All rights reserved.
+        <div className="mt-12 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-white/10 pt-6 font-mono text-xs text-footer-text/70">
+          <span>&copy; {new Date().getFullYear()} DeviaTech. All rights reserved.</span>
+          {analyticsControls}
         </div>
       </div>
     </footer>
