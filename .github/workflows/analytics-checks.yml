@@ -1,9 +1,13 @@
 name: Analytics regression checks
 
 on:
+  workflow_call:
   pull_request:
     paths:
       - ".github/workflows/analytics-checks.yml"
+      - ".github/workflows/deploy.yml"
+      - "Dockerfile"
+      - "scripts/deploy-web.sh"
       - ".env.example"
       - "package*.json"
       - "scripts/analytics-*.mjs"
@@ -22,12 +26,13 @@ jobs:
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           persist-credentials: false
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: "20"
           cache: npm
+      - run: bash -n scripts/deploy-web.sh
       - run: npm ci
       - run: npm run lint -- --quiet
       - run: npm run analytics:test
