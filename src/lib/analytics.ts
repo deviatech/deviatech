@@ -110,7 +110,12 @@ export function updateAnalyticsPath(path: string | null) {
 }
 
 function initializeAnalytics(path: string) {
+  document.cookie = "__Host-ga4-optin=1; Path=/; Secure; SameSite=Strict";
   if (!initialized) {
+    const policy = document.createElement("meta");
+    policy.httpEquiv = "Content-Security-Policy";
+    policy.content = "connect-src 'self'; img-src 'self' data:";
+    document.head.appendChild(policy);
     initialized = true;
     window.dataLayer = window.dataLayer || [];
     window.gtag = function gtag() {
@@ -124,6 +129,7 @@ function initializeAnalytics(path: string) {
     window.gtag("config", GA_ID, {
       ...pageContext(path),
       send_page_view: false,
+      server_container_url: ORIGIN + "/api/analytics",
       allow_google_signals: false,
       allow_ad_personalization_signals: false,
     });
@@ -176,6 +182,7 @@ export async function setAnalyticsPreference(
     // A preference change on the current page is not a navigation.
     pauseAnalytics(true);
     window.gtag?.("consent", "update", { ...ADS_DENIED, analytics_storage: "denied" });
+    document.cookie = "__Host-ga4-optin=; Max-Age=0; Path=/; Secure; SameSite=Strict";
     clearAnalyticsCookies();
     return;
   }

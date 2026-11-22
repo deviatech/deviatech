@@ -20,3 +20,9 @@ This change is phase 1 (consent and reliable page views), not a lead-measurement
 ## Local regression
 
 Run `npm run analytics:test` for the deterministic state-and-payload checks. Start the production build locally (the browser smoke test intercepts the readiness API). Run `npm run analytics:smoke` with Chromium installed (optionally set `CHROMIUM_PATH` and `LOCAL_ORIGIN`). The test maps the canonical origin to the local server, aborts all unexpected external routes, and stubs the Google tag. It proves the local request and queue contract without generating any production data. It does not prove delivery to GA4; use step 4 for that after approval.
+
+### Candidate first-party relay
+
+The browser SDK targets the same-origin /api/analytics prefix. The application accepts GET and POST with the same-site opt-in cookie at /api/analytics/g/collect and constructs a new request for the fixed Google web collector. The accepted fields are event name, measurement ID, protocol version, bounded GA client ID and canonical page locations from the site's own catalogue. The relay derives the title from the path and discards other SDK fields. It forwards no browser headers, cookies or IP. Upstream redirects and timeouts fail closed. Debug mode and GA session attribution are not verified by this candidate.
+
+Before considering release, verify that ingress access logs, error logs and tracing omit the relay query string and request body. Enforce limits at ingress as well as the process-local 120 accepted requests/minute ceiling. Browser source headers do not authenticate a person. A single client can exhaust this shared budget. Confirm all eligible documents receive the restrictive policy before the SDK can start, including documents already open during activation. Disable the runtime gate and recreate the service to stop forwarding; check readiness and the relay independently. Restore the prior image and environment for a full release rollback.

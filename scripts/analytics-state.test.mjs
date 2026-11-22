@@ -29,7 +29,7 @@ function fixture({ origin = production, enabled = true, gate, storageBlocked = f
   const document = {
     title: "private page title",
     referrer: "https://example.test/referrer?sensitive=1",
-    head: { appendChild: (node) => requests.push(node) },
+    head: { appendChild: (node) => { if (node.httpEquiv !== "Content-Security-Policy") requests.push(node); } },
     createElement: () => ({}),
     get cookie() { return "_ga=value; _ga_15GFH194BP=fixture; keepsafe=1"; },
     set cookie(value) { cookieWrites.push(value); },
@@ -123,8 +123,10 @@ test("revocation stops events, clears only Analytics cookies, and can be reverse
   f.api.updateAnalyticsPath(contact);
   f.api.trackEvent("form_start");
   assert.equal(f.events().length, 1);
-  assert.equal(f.cookieWrites.length, 4);
-  assert(f.cookieWrites.every((cookie) => /^_ga(?:_15GFH194BP)?=; Max-Age=0/.test(cookie)));
+  assert.match(f.cookieWrites[0], /^__Host-ga4-optin=1;/);
+  assert.match(f.cookieWrites[1], /^__Host-ga4-optin=; Max-Age=0;/);
+  assert.equal(f.cookieWrites.length, 6);
+  assert(f.cookieWrites.slice(2).every((cookie) => /^_ga(?:_15GFH194BP)?=; Max-Age=0/.test(cookie)));
   await f.api.setAnalyticsPreference("accepted");
   assert.equal(f.window[disableKey], false);
   assert.equal(f.events().length, 2);
