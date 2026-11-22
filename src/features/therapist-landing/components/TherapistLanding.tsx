@@ -1,5 +1,6 @@
 import Link from "next/link";
 import localFont from "next/font/local";
+import { getTemplate } from "@/features/templates/catalog";
 import type { TherapistLandingContent } from "../content/types";
 import LandingHero from "./LandingHero";
 import TrustBar from "./TrustBar";
@@ -41,6 +42,10 @@ const notoSansArabic = localFont({
 });
 
 export default function TherapistLanding({ content }: { content: TherapistLandingContent }) {
+  const childPsychologyDemo = content.locale === "en"
+    ? getTemplate("little-fieldnotes")?.variants.find((variant) => variant.featured)?.demoUrl
+    : undefined;
+
   return (
     <div
       data-therapist-landing
@@ -56,6 +61,15 @@ export default function TherapistLanding({ content }: { content: TherapistLandin
         <Link href="/templates" className="underline underline-offset-4">
           {content.locale === "fa" ? "مشاهدهٔ قالب‌های Morrow، Luma و Alder" : content.locale === "ur" ? "Morrow، Luma اور Alder کے ڈیزائن دیکھیں" : "Compare Morrow, Luma and Alder therapist website templates"}
         </Link>
+        {childPsychologyDemo && (
+          <p className="mt-3 text-sm leading-7 text-[var(--tl-text-body)]">
+            For child psychology,{" "}
+            <a href={childPsychologyDemo} className="underline underline-offset-4">
+              explore the Little Fieldnotes demo
+            </a>
+            {" "}for a fictional practice, not a client project.
+          </p>
+        )}
       </div>
       <BenefitsGrid content={content} />
       <DeviaTechBrandSection content={content} />

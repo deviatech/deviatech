@@ -45,6 +45,9 @@ export default async function CommercialPage({
   const page = getCommercialPageBySlug(slug);
   if (!page) notFound();
   const portfolio = getCaseStudyBySlug(page.portfolioSlug);
+  const whatsappHref = buildWhatsAppLink(
+    page.whatsappMessage ?? `Hi DeviaTech, I want to talk about ${page.name}.`,
+  );
 
   const pageJsonLd = {
     "@context": "https://schema.org",
@@ -92,7 +95,7 @@ export default async function CommercialPage({
       </h1>
       <p className="mt-6 max-w-3xl font-body text-lg leading-8 text-ink-soft">{page.intro}</p>
       <Button
-        href={buildWhatsAppLink(`Hi DeviaTech, I want to talk about ${page.name}.`)}
+        href={whatsappHref}
         target="_blank"
         rel="noopener noreferrer"
         data-ga-event="service_cta_click"
@@ -143,6 +146,14 @@ export default async function CommercialPage({
         <div>
           <h2 className="font-display text-2xl font-semibold text-ink">Pricing</h2>
           <p className="mt-5 font-body leading-7 text-ink-soft">{page.pricing}</p>
+          {page.pricingGuide && (
+            <Link
+              href={page.pricingGuide.href}
+              className="mt-3 inline-block font-body text-sm text-accent-rust underline"
+            >
+              {page.pricingGuide.label}
+            </Link>
+          )}
         </div>
       </div>
 
@@ -173,7 +184,7 @@ export default async function CommercialPage({
         <h2 className="font-display text-2xl font-semibold text-ink">Ready to discuss your project?</h2>
         <p className="mt-3 max-w-2xl font-body leading-7 text-ink-soft">Share what you are trying to launch, improve, or support. We will respond with the next useful step.</p>
         <Button
-          href={buildWhatsAppLink(`Hi DeviaTech, I want to talk about ${page.name}.`)}
+          href={whatsappHref}
           target="_blank"
           rel="noopener noreferrer"
           data-ga-event="service_cta_click"
