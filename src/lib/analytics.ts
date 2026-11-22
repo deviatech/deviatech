@@ -25,18 +25,9 @@ let inSite = false;
 let initialized = false;
 let readinessRequest: Promise<boolean> | undefined;
 let safePaths = new Set<string>();
-let safeLabels = new Set<string>();
 let currentPath: string | null = null;
 let lastPath: string | null = null;
 let referrer = "";
-
-const clickEvents = new Set([
-  "email_click", "phone_click", "whatsapp_click", "dobatalk_click",
-  "service_cta_click", "concept_demo_click", "therapist_whatsapp_click",
-  "language_switch_click", "free_preview_cta_click", "package_cta_click",
-]);
-const contactEvents = new Set(["form_start", "form_submit", "consultation_booked"]);
-const previewEvents = new Set(["lead_form_start", "lead_form_submit", "lead_form_error"]);
 
 export function isAnalyticsHost() {
   return typeof window !== "undefined" && window.location.origin === ORIGIN;
@@ -45,7 +36,7 @@ export function isAnalyticsHost() {
 export function configureAnalytics(paths: readonly string[], labels: readonly string[]) {
   inSite = true;
   safePaths = new Set(paths);
-  safeLabels = new Set(labels);
+  void labels;
 }
 
 export function readAnalyticsPreference(): AnalyticsPreference {
@@ -206,23 +197,7 @@ export function pauseAnalyticsOutsideSite() {
 }
 
 export function trackEvent(name: string, params: AnalyticsParams = {}) {
-  if (!active || preference !== "accepted" || !currentPath) return;
-  const payload: AnalyticsParams = {};
-  if (clickEvents.has(name)) {
-    if (typeof params.label !== "string" || !safeLabels.has(params.label)) return;
-    payload.label = params.label;
-  } else if (contactEvents.has(name)) {
-    // Intentionally ignore form inputs and caller-supplied location.
-  } else if (previewEvents.has(name)) {
-    if (params.locale !== "en" && params.locale !== "fa" && params.locale !== "ur") return;
-    payload.locale = params.locale;
-  } else {
-    return;
-  }
-  window.gtag?.("event", name, {
-    ...payload,
-    location: currentPath,
-    ...pageContext(currentPath),
-    send_to: GA_ID,
-  });
+  // Phase one only measures navigation through updateAnalyticsPath.
+  void name;
+  void params;
 }

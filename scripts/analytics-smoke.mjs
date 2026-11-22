@@ -138,7 +138,7 @@ test("desktop: opt-in, fresh article, Next navigation, exact-once, sanitized pay
     await pageviews(page, 2);
     await page.getByRole("textbox", { name: "Name", exact: true }).fill("private-form-name");
     list = (await commands(page)).map(({ values }) => values);
-    assert(list.some((entry) => entry[0] === "event" && entry[1] === "form_start"));
+    assert(list.every((entry) => entry[0] !== "event" || entry[1] === "page_view"));
     assert.doesNotMatch(JSON.stringify(list), /private-secret|private-fragment|private-form-name|private-origin|private-external|email=/);
 
     // Query-only history needs no pageview; a Back to the previous actual Next route does.

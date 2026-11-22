@@ -96,7 +96,7 @@ test("opt-in on a known route, sanitize context and allow only known event param
   f.api.trackEvent("form_start", { name: "private form data", location: "?private" });
   f.api.trackEvent("unapproved_event", { name: "private" });
   f.api.updateAnalyticsPath(contact);
-  assert.deepEqual(f.events().map((event) => event[1]), ["page_view", "email_click", "form_start", "page_view"]);
+  assert.deepEqual(f.events().map((event) => event[1]), ["page_view", "page_view"]);
   assert.equal(f.events().at(-1)[2].page_referrer, production + blog);
   assert.doesNotMatch(JSON.stringify(f.snapshot()), /private page title|private form data|private@email.test|real-owner|#|[?]email|sensitive=1/);
 });
