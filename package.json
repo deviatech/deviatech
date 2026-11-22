@@ -10,7 +10,7 @@
     "seo:smoke": "bash scripts/seo-smoke.sh",
     "capture:therapist-previews": "node scripts/capture-therapist-previews.mjs",
     "analytics:smoke": "node --test scripts/analytics-smoke.mjs",
-    "analytics:test": "node --test scripts/analytics-state.test.mjs"
+    "analytics:test": "node --test scripts/analytics-state.test.mjs scripts/analytics-relay.test.mjs"
   },
   "dependencies": {
     "gray-matter": "^4.0.3",

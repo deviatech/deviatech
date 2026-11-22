@@ -8,8 +8,20 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
 
+concurrency:
+  group: deviatech-production-release
+  cancel-in-progress: false
+
 jobs:
+  validate:
+    permissions:
+      contents: read
+    uses: ./.github/workflows/analytics-checks.yml
+
   build-and-push:
+    needs: validate
+    outputs:
+      digest: ${{ steps.image.outputs.digest }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -29,6 +41,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push image
+        id: image
         uses: docker/build-push-action@v6
         with:
           context: .
@@ -55,16 +68,11 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             set -e
-            DOCKER_CFG=$(mktemp -d)
-            echo '${{ secrets.GITHUB_TOKEN }}' | docker --config "$DOCKER_CFG" login ghcr.io -u '${{ github.actor }}' --password-stdin
-            docker --config "$DOCKER_CFG" pull ghcr.io/${{ env.IMAGE_NAME }}:latest
-            rm -rf "$DOCKER_CFG"
-            docker stop deviatech-web || true
-            docker rm deviatech-web || true
-            docker run -d \
-              --name deviatech-web \
-              --restart unless-stopped \
-              -p 3011:3000 \
-              --env-file /opt/deviatech/.env \
-              ghcr.io/${{ env.IMAGE_NAME }}:latest
-            docker image prune -f
+            umask 077
+            tmp=$(mktemp -d)
+            trap 'rm -rf "$tmp"' EXIT
+            echo '${{ secrets.GITHUB_TOKEN }}' | docker --config "$tmp" login ghcr.io -u '${{ github.actor }}' --password-stdin
+            export REPO_DIGEST='ghcr.io/deviatech/deviatech@${{ needs.build-and-push.outputs.digest }}'
+            docker --config "$tmp" pull "$REPO_DIGEST"
+            docker run --rm --network none --entrypoint cat "$REPO_DIGEST" /app/deploy-web.sh > "$tmp/deploy-web.sh"
+            bash "$tmp/deploy-web.sh"
