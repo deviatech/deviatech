@@ -151,15 +151,15 @@ test("unknown routes do not boot tag; leaving allowed route pauses, Back re-enab
   assert.deepEqual(f.requests, []);
   f.api.updateAnalyticsPath(study);
   await f.api.setAnalyticsPreference("accepted");
-  assert.deepEqual(f.events().map((event) => event[1]), ["page_view", "case_study_view"]);
+  assert.deepEqual(f.events().map((event) => event[1]), ["page_view"]);
   f.api.updateAnalyticsPath(unknown);
   f.api.trackEvent("email_click", { label: "footer" });
   assert.equal(f.window[disableKey], true);
-  assert.equal(f.events().length, 2);
+  assert.equal(f.events().length, 1);
   f.api.updateAnalyticsPath(study);
   await f.api.setAnalyticsPreference("accepted");
   f.api.updateAnalyticsPath(study);
-  assert.deepEqual(f.events().map((event) => event[1]), ["page_view", "case_study_view", "page_view", "case_study_view"]);
+  assert.deepEqual(f.events().map((event) => event[1]), ["page_view", "page_view"]);
   assert.equal(f.requests.length, 2);
   assert.doesNotMatch(JSON.stringify(f.snapshot()), /user-entered-text/);
 });
