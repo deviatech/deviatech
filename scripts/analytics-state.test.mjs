@@ -8,7 +8,7 @@ const source = fs.readFileSync(new URL("../src/lib/analytics.ts", import.meta.ur
 const { outputText } = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS } });
 const blog = "/blog/clinic-website-checklist-private-practice";
 const contact = "/contact";
-const study = "/case-studies/example";
+const study = "/case-studies/cvilo-ai-resume-builder";
 const unknown = "/blog/user-entered-text";
 const consentKey = "deviatech.analytics-consent.v1";
 const disableKey = "ga-disable-G-15GFH194BP";
@@ -61,6 +61,19 @@ test("nothing is requested without consent, even when there are events and known
   assert.deepEqual(f.requests, []);
   assert.deepEqual(f.events(), []);
   assert.equal(f.storage.get(consentKey), "declined");
+});
+
+test("a case study only sends its canonical page view after opt-in", async () => {
+  const f = fixture();
+  f.api.updateAnalyticsPath(study);
+  await f.api.setAnalyticsPreference("declined");
+  assert.deepEqual(f.events(), []);
+  await f.api.setAnalyticsPreference("accepted");
+  f.api.updateAnalyticsPath(study);
+  await f.api.setAnalyticsPreference("declined");
+  f.api.updateAnalyticsPath(contact);
+  assert.deepEqual(f.events().map(([, name, params]) => [name, params.page_location, params.page_referrer]),
+    [["page_view", production + study, ""]]);
 });
 
 test("a readiness probe is first-party, credential-free, and does not opt in", async () => {

@@ -95,13 +95,6 @@ function reportPageView() {
   // Keep GA-generated engagement events on the sanitized virtual page as well.
   window.gtag?.("config", GA_ID, { ...context, update: true, send_page_view: false });
   window.gtag?.("event", "page_view", { ...context, send_to: GA_ID });
-  if (currentPath.startsWith("/case-studies/")) {
-    window.gtag?.("event", "case_study_view", {
-      ...context,
-      case_study: currentPath.slice("/case-studies/".length),
-      send_to: GA_ID,
-    });
-  }
 }
 
 export function updateAnalyticsPath(path: string | null) {
