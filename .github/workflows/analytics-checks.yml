@@ -35,7 +35,7 @@ jobs:
       - name: Run offline desktop and mobile analytics smoke tests
         shell: bash
         env:
-          GA4_MANUAL_MEASUREMENT_READY: "false"
+          GA4_RELAY_READY: "false"
           NEXT_TELEMETRY_DISABLED: "1"
         run: |
           set -euo pipefail
@@ -46,8 +46,8 @@ jobs:
           server_pid=$!
           trap 'kill "$server_pid" 2>/dev/null || true' EXIT
           for i in {1..30}; do
-            if curl -fsS http://127.0.0.1:3017/api/analytics-readiness >/dev/null; then break; fi
+            if curl -fsS http://127.0.0.1:3017/api/analytics/readiness >/dev/null; then break; fi
             sleep 1
           done
-          curl -fsS http://127.0.0.1:3017/api/analytics-readiness >/dev/null
+          curl -fsS http://127.0.0.1:3017/api/analytics/readiness >/dev/null
           npm run analytics:smoke

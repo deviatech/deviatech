@@ -149,7 +149,7 @@ function initializeAnalytics(path: string) {
 export function readAnalyticsReadiness() {
   if (!isAnalyticsHost()) return Promise.resolve(false);
   // This first-party capability check sends no credentials, referrer, or GA data.
-  readinessRequest ??= fetch("/api/analytics-readiness", {
+  readinessRequest ??= fetch("/api/analytics/readiness", {
     cache: "no-store", credentials: "omit", referrerPolicy: "no-referrer",
   })
     .then(async (response) => response.ok && (await response.json())?.enabled === true)

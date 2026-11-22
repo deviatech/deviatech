@@ -80,7 +80,7 @@ test("a readiness probe is first-party, credential-free, and does not opt in", a
   const f = fixture();
   f.api.updateAnalyticsPath(blog);
   assert.equal(await f.api.readAnalyticsReadiness(), true);
-  assert.deepEqual(f.requests, [{ url: "/api/analytics-readiness", cache: "no-store", credentials: "omit", referrerPolicy: "no-referrer" }]);
+  assert.deepEqual(f.requests, [{ url: "/api/analytics/readiness", cache: "no-store", credentials: "omit", referrerPolicy: "no-referrer" }]);
   assert.deepEqual(f.snapshot(), []);
   await f.api.setAnalyticsPreference("accepted");
   assert.equal(f.requests.length, 2, "reuses the first-party readiness result");

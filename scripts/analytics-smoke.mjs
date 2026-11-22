@@ -30,7 +30,7 @@ async function withBrowser({ width, ready }, fn) {
       requests.external.push(url.origin);
       return route.abort();
     }
-    if (url.pathname === "/api/analytics-readiness") {
+    if (url.pathname === "/api/analytics/readiness") {
       requests.gate++;
       return route.fulfill({ json: { enabled: ready } });
     }
@@ -87,7 +87,7 @@ async function pageviews(page, count) {
 }
 
 test("production runtime gate is false by default and not cacheable", async () => {
-  const response = await fetch(local + "/api/analytics-readiness");
+  const response = await fetch(local + "/api/analytics/readiness");
   assert.equal(response.status, 200);
   assert.equal((await response.json()).enabled, false);
   assert.match(response.headers.get("cache-control"), /no-store/);
@@ -220,7 +220,7 @@ test("preview production exclusion and release gate fail closed", async () => {
     assert.equal(await page.getByRole("button", { name: "Cookie settings" }).count(), 0);
     assert.deepEqual(await commands(page), []);
     assert.equal(requests.gate, 0);
-    const gateResponse = page.waitForResponse((response) => response.url().endsWith("/api/analytics-readiness"));
+    const gateResponse = page.waitForResponse((response) => response.url().endsWith("/api/analytics/readiness"));
     await page.goto(production + path);
     const gate = await gateResponse;
     const headers = await gate.request().allHeaders();

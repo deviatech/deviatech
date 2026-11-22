@@ -1,3 +1,5 @@
+import { createHash } from "node:crypto";
+import { unlink } from "node:fs/promises";
 import { analyticsSiteData } from "@/lib/analytics-site";
 
 const origin = "https://deviatech.com";
@@ -18,12 +20,23 @@ function takeSlot() {
   return true;
 }
 
+// An operator arms one synthetic browser client for the current UTC minute.
+async function consumeDebugGrant(cid: string) {
+  const digest = createHash("sha256").update(cid).digest("hex");
+  try {
+    await unlink(`/tmp/deviatech-ga4-debug/${Math.floor(Date.now() / 60000)}-${digest}`);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 export const dynamic = "force-dynamic";
 export const GET = collect;
 export const POST = collect;
 
 async function collect(request: Request) {
-  if (process.env.GA4_MANUAL_MEASUREMENT_READY !== "true") return new Response(null, { status: 404 });
+  if (process.env.GA4_RELAY_READY !== "true") return new Response(null, { status: 404 });
   const site = request.headers.get("sec-fetch-site");
   const source = request.headers.get("origin");
   const optedIn = request.headers.get("cookie")?.split(";").some(pair => pair.trim() === "__Host-ga4-optin=1");
@@ -51,11 +64,13 @@ async function collect(request: Request) {
   const dr = input.get("dr") ?? "";
   const cid = input.get("cid") ?? "";
   if (/[\r\n]/.test(body) || new Set(input.keys()).size !== input.size ||
-      input.get("v") !== "2" || input.get("tid") !== id || input.get("en") !== "page_view" ||
+      input.get("gcs") !== "G101" || input.get("gcd") !== "13q3r3q3q7l1" ||
+      input.get("npa") !== "1" || input.get("v") !== "2" || input.get("tid") !== id || input.get("en") !== "page_view" ||
       !pages.has(dl) || (dr !== "" && !pages.has(dr)) || !/^\d{1,12}\.\d{1,12}$/.test(cid))
     return new Response(null, { status: 400 });
   if (!takeSlot()) return new Response(null, { status: 429 });
-  const payload = new URLSearchParams({ v: "2", tid: id, en: "page_view", cid, dl, dr, dt: dl.slice(origin.length), npa: "1" });
+  const payload = new URLSearchParams({ v: "2", tid: id, en: "page_view", cid, dl, dr, dt: dl.slice(origin.length), npa: "1", gcs: "G101", gcd: "13q3r3q3q7l1" });
+  if (await consumeDebugGrant(cid)) payload.set("ep.debug_mode", "true");
   try {
     const reply = await fetch("https://www.google-analytics.com/g/collect?" + payload, {
       method: "POST", redirect: "error", cache: "no-store", signal: AbortSignal.timeout(3000),
