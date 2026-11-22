@@ -2,6 +2,8 @@ name: Analytics regression checks
 
 on:
   workflow_call:
+  push:
+    branches: [ga4/limited-relay]
   pull_request:
     paths:
       - ".github/workflows/analytics-checks.yml"
