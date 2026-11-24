@@ -163,8 +163,28 @@ export default async function BlogPostPage({
           </div>
         </section>
       )}
-      {/* The clinic checklist has its own relevant preview CTA in the article. */}
-      {post.slug !== "clinic-website-checklist-private-practice" && (
+      {post.slug === "clinic-website-cost-private-practice" && (
+        <aside className="mt-12 border-t border-line-grid pt-8">
+          <p className="font-mono text-xs tracking-wide text-ink-soft">NEXT STEP</p>
+          <h2 className="mt-2 font-display text-xl font-semibold text-ink">
+            Request a scoped clinic website quote
+          </h2>
+          <p className="mt-2 max-w-xl font-body text-ink-soft">
+            Use the practice preview form and say you&apos;d like a quote. Share the pages
+            and languages you need and how patients should arrange appointments. This form
+            is for website projects, not patient appointments.
+          </p>
+          <Link
+            className="mt-4 inline-block font-body text-sm text-accent-rust underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-amber"
+            href="/therapist-website-design#preview-request-form"
+          >
+            Tell us about your clinic website project
+          </Link>
+        </aside>
+      )}
+      {/* The clinic checklist has its own preview CTA in the article. */}
+      {post.slug !== "clinic-website-checklist-private-practice" &&
+        post.slug !== "clinic-website-cost-private-practice" && (
         <aside className="mt-12 border-t border-line-grid pt-8">
           <p className="font-mono text-xs tracking-wide text-ink-soft">NEXT STEP</p>
           <h2 className="mt-2 font-display text-xl font-semibold text-ink">
