@@ -1,7 +1,7 @@
 ---
 title: "Shopify store development cost in Pakistan"
 date: "2026-08-13"
-updated: "2026-11-25"
+updated: "2026-08-15"
 excerpt: "What a Shopify store really costs in Pakistan: theme work, product setup, COD, shipping, analytics, and the running costs no build quote includes."
 tags: ["shopify", "cost", "pakistan", "ecommerce"]
 faqs:
