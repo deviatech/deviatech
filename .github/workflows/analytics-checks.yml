@@ -9,6 +9,9 @@ on:
       - "scripts/analytics-*.mjs"
       - "src/app/**"
       - "src/components/analytics/**"
+      - "src/components/sections/**"
+      - "src/content/**"
+      - "src/features/therapist-landing/**"
       - "src/components/layout/Footer.tsx"
       - "src/lib/analytics*.ts"
 

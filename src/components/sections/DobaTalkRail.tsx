@@ -54,7 +54,7 @@ export default function DobaTalkRail() {
                 data-ga-event="dobatalk_click"
                 data-ga-label="home_rail"
               >
-                Explore DobaTalk
+                Explore website design for therapists
                 <span
                   aria-hidden="true"
                   className="inline-block transition-transform duration-150 motion-reduce:transition-none group-hover:translate-x-1"
@@ -62,9 +62,6 @@ export default function DobaTalkRail() {
                   →
                 </span>
               </Button>
-              <p className="mt-2 font-body text-sm text-ink-soft">
-                Explore our therapist website design service.
-              </p>
             </div>
           </div>
           <div className="flex justify-center md:justify-end">
