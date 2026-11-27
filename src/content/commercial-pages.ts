@@ -20,9 +20,11 @@ export interface CommercialPage {
   process: string[];
   timeline: string;
   pricing: string;
+  pricingGuide?: { href: string; label: string };
   portfolioSlug: string;
   proof: string;
   cta: string;
+  whatsappMessage?: string;
   faqs: CommercialFaq[];
 }
 
@@ -42,9 +44,21 @@ export const commercialPages: CommercialPage[] = [
     process: ["Discovery and catalogue review", "Store structure, scope, and fixed-price plan", "Build, product setup, and real checkout testing", "Launch, handoff, and post-launch support window"],
     timeline: "Most focused stores take 7-10 days after content and scope are ready.",
     pricing: "Projects start from PKR 40,000. Final pricing depends on product count, theme customisation, integrations, content readiness, and launch support.",
+    pricingGuide: {
+      href: "/blog/shopify-store-development-cost-pakistan",
+      label: "Read our guide to Shopify store development costs in Pakistan",
+    },
     portfolioSlug: "ala-gallery-ecommerce",
     proof: "Ala Gallery is an ecommerce store shaped for an Instagram-led gift business in Lahore.",
     cta: "Get a Shopify store estimate",
+    whatsappMessage: [
+      "Hi DeviaTech, I’d like a Shopify store estimate.",
+      "",
+      "Optional details, if known:",
+      "Approximate number of products:",
+      "Cash on delivery (COD) needed:",
+      "Target launch timing:",
+    ].join("\n"),
     faqs: [
       { question: "Can you set up cash on delivery?", answer: "Yes. COD, payment, shipping, and returns requirements are part of the launch review." },
       { question: "Do I need to provide the products?", answer: "You provide the product information and brand assets. We organise and add them as part of the agreed scope." },
