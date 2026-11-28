@@ -8,7 +8,7 @@ const source = fs.readFileSync(new URL("../src/lib/analytics.ts", import.meta.ur
 const { outputText } = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS } });
 const blog = "/blog/clinic-website-checklist-private-practice";
 const contact = "/contact";
-const study = "/case-studies/example";
+const study = "/case-studies/cvilo-ai-resume-builder";
 const unknown = "/blog/user-entered-text";
 const consentKey = "deviatech.analytics-consent.v1";
 const disableKey = "ga-disable-G-15GFH194BP";
@@ -63,6 +63,19 @@ test("nothing is requested without consent, even when there are events and known
   assert.equal(f.storage.get(consentKey), "declined");
 });
 
+test("a case study only sends its canonical page view after opt-in", async () => {
+  const f = fixture();
+  f.api.updateAnalyticsPath(study);
+  await f.api.setAnalyticsPreference("declined");
+  assert.deepEqual(f.events(), []);
+  await f.api.setAnalyticsPreference("accepted");
+  f.api.updateAnalyticsPath(study);
+  await f.api.setAnalyticsPreference("declined");
+  f.api.updateAnalyticsPath(contact);
+  assert.deepEqual(f.events().map(([, name, params]) => [name, params.page_location, params.page_referrer]),
+    [["page_view", production + study, ""]]);
+});
+
 test("a readiness probe is first-party, credential-free, and does not opt in", async () => {
   const f = fixture();
   f.api.updateAnalyticsPath(blog);
@@ -96,7 +109,7 @@ test("opt-in on a known route, sanitize context and allow only known event param
   f.api.trackEvent("form_start", { name: "private form data", location: "?private" });
   f.api.trackEvent("unapproved_event", { name: "private" });
   f.api.updateAnalyticsPath(contact);
-  assert.deepEqual(f.events().map((event) => event[1]), ["page_view", "email_click", "form_start", "page_view"]);
+  assert.deepEqual(f.events().map((event) => event[1]), ["page_view", "page_view"]);
   assert.equal(f.events().at(-1)[2].page_referrer, production + blog);
   assert.doesNotMatch(JSON.stringify(f.snapshot()), /private page title|private form data|private@email.test|real-owner|#|[?]email|sensitive=1/);
 });
@@ -138,15 +151,15 @@ test("unknown routes do not boot tag; leaving allowed route pauses, Back re-enab
   assert.deepEqual(f.requests, []);
   f.api.updateAnalyticsPath(study);
   await f.api.setAnalyticsPreference("accepted");
-  assert.deepEqual(f.events().map((event) => event[1]), ["page_view", "case_study_view"]);
+  assert.deepEqual(f.events().map((event) => event[1]), ["page_view"]);
   f.api.updateAnalyticsPath(unknown);
   f.api.trackEvent("email_click", { label: "footer" });
   assert.equal(f.window[disableKey], true);
-  assert.equal(f.events().length, 2);
+  assert.equal(f.events().length, 1);
   f.api.updateAnalyticsPath(study);
   await f.api.setAnalyticsPreference("accepted");
   f.api.updateAnalyticsPath(study);
-  assert.deepEqual(f.events().map((event) => event[1]), ["page_view", "case_study_view", "page_view", "case_study_view"]);
+  assert.deepEqual(f.events().map((event) => event[1]), ["page_view", "page_view"]);
   assert.equal(f.requests.length, 2);
   assert.doesNotMatch(JSON.stringify(f.snapshot()), /user-entered-text/);
 });
